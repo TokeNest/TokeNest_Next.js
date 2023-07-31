@@ -16,6 +16,9 @@ export const CustomDrawer = ({
     <Drawer
       container={container}
       anchor="right"
+      ModalProps={{
+        disableAutoFocus: true,
+      }}
       open={open}
       hideBackdrop={true}
       keepMounted={true}
@@ -33,7 +36,7 @@ export const CustomDrawer = ({
       }}
     >
       <Box sx={{ p: 4 }} onClick={onClose}>
-        <Card>dd</Card>
+        <Card>test</Card>
       </Box>
     </Drawer>
   )
