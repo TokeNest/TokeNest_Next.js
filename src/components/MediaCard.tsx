@@ -2,33 +2,54 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { CardActionArea, CardMedia, Skeleton } from '@mui/material'
-import { Item } from '@/api/kiosk-api'
+import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
+import { Product } from '@/api/kiosk-api'
 
 export const MediaCard = ({
-  item: { image, text, heading },
+  product,
   clickEvent,
 }: {
-  item: Item
-  clickEvent: () => void
+  product: Product
+  clickEvent: (prop: Product) => void
 }) => {
+  const { name, info, price, imageUrl } = product
   return (
-    <Card>
-      <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
+    <Card
+      sx={{
+        borderRadius: 3,
+        p: 0,
+      }}
+    >
+      <CardActionArea onClick={() => clickEvent(product)} onDragStart={(e) => e.preventDefault()}>
         <CardMedia
           component="img"
           alt="image"
-          image={image}
-          style={{
-            objectFit: 'cover',
+          image={imageUrl}
+          sx={{
+            height: 200,
+            p: 1,
+            borderRadius: 3,
           }}
         />
+        <CardHeader
+          sx={{
+            px: 1,
+            py: 0,
+          }}
+          title={name}
+          subheader={
+            <Typography
+              sx={{
+                textAlign: 'right',
+              }}
+            >
+              {price}
+            </Typography>
+          }
+        />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {heading}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {text}
+          <Typography variant="body1" color="text.primary">
+            {info}
           </Typography>
         </CardContent>
       </CardActionArea>
