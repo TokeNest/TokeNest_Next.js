@@ -19,7 +19,7 @@ import { AppDispatch } from '@/redux/store'
 import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
 import { OptionList } from '@/components/KioskDrawer/OptionList'
-import { Product } from '@/api/kiosk-api'
+import { Product } from '@/variables/interface/kiosk-api'
 
 const KioskHeader = ({ clickEvent }: { clickEvent: () => void }) => {
   return (

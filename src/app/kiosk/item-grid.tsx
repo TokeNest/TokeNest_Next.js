@@ -1,21 +1,18 @@
 'use client'
 import Grid from '@mui/material/Unstable_Grid2'
-import { MediaCard } from '@/components/MediaCard'
 import { Card } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { setDrawerStatus } from '@/redux/slice/drawer-slice'
-import useSWR from 'swr'
-import { mockFetcher } from '@/api/mock/kiosk-api-mock'
-import { Product } from '@/api/kiosk-api'
+import { Product } from '@/variables/interface/kiosk-api'
+import { MediaCard } from '@/components/MediaCard'
 
-export const ItemContainer = () => {
-  const { data, isLoading } = useSWR('a', mockFetcher)
+export const ItemContainer = ({ productData }: { productData: any }) => {
   const dispatch = useDispatch<AppDispatch>()
+  const { data }: { data: Product[] } = productData
   const clickEvent = (product: Product) =>
     dispatch(setDrawerStatus({ isShow: true, data: product }))
-  if (!data) return <div>Loading... {isLoading}</div>
   return (
     <Card
       sx={{
@@ -26,7 +23,7 @@ export const ItemContainer = () => {
     >
       <CardContent sx={{ px: 4 }}>
         <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4}>
-          {data[0].data.map((product, i) => (
+          {data.map((product, i) => (
             <Grid xs={3} key={i}>
               <MediaCard product={product} clickEvent={clickEvent} />
             </Grid>

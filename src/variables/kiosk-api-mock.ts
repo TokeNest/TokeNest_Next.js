@@ -1,5 +1,5 @@
-import { Category, Product } from '@/api/kiosk-api'
-import CoffeeMockImg from '@/public/mock/coffee.jpg'
+import CoffeeMockImg from '@/public/coffee.jpg'
+import { Category, Product } from '@/variables/interface/kiosk-api'
 
 const mockDefaultOptions = [
   {
@@ -83,7 +83,7 @@ const mockDefaultOptions = [
     ],
   },
 ]
-const mockProductData: Product[] = [
+export const mockProductData: Product[] = [
   {
     name: '아메리카노',
     info: '쓰다 😀',
