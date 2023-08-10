@@ -10,6 +10,6 @@ const connectors: [MetaMask | Network, Web3ReactHooks][] = [
   [metaMask, metaMaskHooks],
   [network, networkHooks],
 ]
-export const Web3ContextProvider = ({ children }: { children: React.ReactNode }) => (
-  <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
-)
+export const Web3ContextProvider = ({ children }: { children: React.ReactNode }) => {
+  return <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
+}

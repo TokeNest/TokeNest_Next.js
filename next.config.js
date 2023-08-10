@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   modularizeImports: {
     '@mui/icons-material': {
@@ -21,6 +21,7 @@ const nextConfig = {
     infuraKey: process.env.INFURA_KEY,
     alchemyKey: process.env.ALCHEMY_KEY,
     walletConnectProjectId: process.env.WALLET_CONNECT_PROJECT_ID,
+    klaytnTestnet: process.env.BAOBAB_TESTNET_RPC_URL,
   },
 }
 
