@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
-import { Product } from '@/api/kiosk-api'
+import { Product } from '@/variables/interface/kiosk-api'
 
 export const MediaCard = ({
   product,
