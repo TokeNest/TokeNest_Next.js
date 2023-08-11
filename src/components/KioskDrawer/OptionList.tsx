@@ -1,8 +1,8 @@
+import { ProductOption } from '@/variables/interface/kiosk-api'
 import { Box, Divider, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { useState } from 'react'
-import { ProductOption } from '@/variables/interface/kiosk-api'
 
 export const OptionList = ({
   option: { optionName, optionInfo, defaultValue },
