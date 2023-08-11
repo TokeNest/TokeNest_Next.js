@@ -134,8 +134,8 @@ export const OrderInfo = ({ product }: { product: Product | null }) => {
             </Grid>
           </Grid>
         </Paper>
-        {options.map((option) => (
-          <OptionList option={option} />
+        {options.map((option, i) => (
+          <OptionList key={i} option={option} />
         ))}
       </CardContent>
       <KioskFooter clickEvent={closeEvent} />
