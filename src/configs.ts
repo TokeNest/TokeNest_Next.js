@@ -5,7 +5,7 @@ const CONFIG = {
       info: {
         title: 'Swagger API',
         version: '0.0.1',
-        description: 'API doc',
+        description: 'API swagger',
       },
     },
   },
