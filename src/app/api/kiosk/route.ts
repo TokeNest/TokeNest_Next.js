@@ -5,3 +5,7 @@ import { NextResponse } from 'next/server'
 export async function GET(request: Request) {
   return NextResponse.json({ data: mockProductData })
 }
+
+export async function POST() {
+  return NextResponse.json({ message: 'message from api' })
+}
