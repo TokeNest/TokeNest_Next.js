@@ -1,5 +1,5 @@
 import CoffeeMockImg from '@/public/coffee.jpg'
-import { Category, Product } from '@/variables/interface/kiosk-api'
+import { Category, Product } from '@/variables/interface/kiosk'
 
 const mockDefaultOptions = [
   {

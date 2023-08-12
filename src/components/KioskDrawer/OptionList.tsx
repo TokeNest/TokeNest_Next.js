@@ -1,4 +1,4 @@
-import { ProductOption } from '@/variables/interface/kiosk-api'
+import { ProductOption } from '@/variables/interface/kiosk'
 import { Box, Divider, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'

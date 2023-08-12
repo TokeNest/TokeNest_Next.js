@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Product } from '@/variables/interface/kiosk-api'
+import { Product } from '@/variables/interface/kiosk'
 
 interface DrawerState {
   isShow: boolean
