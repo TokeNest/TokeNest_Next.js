@@ -5,10 +5,12 @@ import 'server-only'
 export const getApiDocs = async () =>
   createSwaggerSpec({
     apiFolder: 'src/app/api',
+    schemaFolders: ['model'],
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Next Swagger API Example',
+        title: 'TokeNest API Swagger',
+        description: 'TokeNest에서 사용하는 API 정리',
         version: '1.0',
       },
       components: {

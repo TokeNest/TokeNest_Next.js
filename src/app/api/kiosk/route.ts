@@ -15,6 +15,15 @@ export async function GET(request: Request) {
   return NextResponse.json({ data: mockProductData })
 }
 
+/**
+ *@swagger
+ * /api/kiosk:
+ *  post:
+ *    description: POST TEST
+ *    response:
+ *      200:
+ *        description: TEST COMPLETE
+ */
 export async function POST() {
   return NextResponse.json({ message: 'message from api' })
 }
