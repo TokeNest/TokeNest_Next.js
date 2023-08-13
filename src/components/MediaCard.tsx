@@ -4,6 +4,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
 import { Product } from '@/variables/interface/kiosk'
+import { calculatePrice } from '@/utils/calculate-util'
+import { useAppSelector } from '@/redux/store'
 
 export const MediaCard = ({
   product,
@@ -12,7 +14,9 @@ export const MediaCard = ({
   product: Product
   clickEvent: (prop: Product) => void
 }) => {
-  const { name, info, price, imageUrl } = product
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
+  const { name, tokenRatio, tokenAddress, info, price, imageUrl } = product
+  const resPrice = calculatePrice(marketList, price, tokenRatio, tokenAddress)
   return (
     <Card
       sx={{
@@ -43,7 +47,7 @@ export const MediaCard = ({
                 textAlign: 'right',
               }}
             >
-              {price}
+              {resPrice}
             </Typography>
           }
         />

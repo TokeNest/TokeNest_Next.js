@@ -15,11 +15,12 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import * as React from 'react'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
 import { OptionList } from '@/components/KioskDrawer/OptionList'
 import { Product } from '@/variables/interface/kiosk'
+import { calculatePrice } from '@/utils/calculate-util'
 
 const KioskHeader = ({ clickEvent }: { clickEvent: () => void }) => {
   return (
@@ -64,10 +65,12 @@ const KioskFooter = ({ clickEvent }: { clickEvent: () => void }) => {
   )
 }
 export const OrderInfo = ({ product }: { product: Product | null }) => {
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
   const dispatch = useDispatch<AppDispatch>()
   const closeEvent = () => dispatch(closeDrawer())
   if (product === null) return <div />
-  const { name, imageUrl, description, price, options } = product
+  const { tokenAddress, tokenRatio, name, imageUrl, description, price, options } = product
+  const resPrice = calculatePrice(marketList, price, tokenRatio, tokenAddress)
   return (
     <Card
       elevation={0}
@@ -106,7 +109,7 @@ export const OrderInfo = ({ product }: { product: Product | null }) => {
                 title={<Typography variant="h3">{name}</Typography>}
                 subheader={
                   <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-                    {price}
+                    {resPrice}
                   </Typography>
                 }
               />

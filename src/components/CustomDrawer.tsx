@@ -40,8 +40,9 @@ export const CustomDrawer = () => {
         sx={{
           height: 1,
         }}
-        children={<OrderInfo product={data} />}
-      />
+      >
+        <OrderInfo product={data} />
+      </Container>
     </Drawer>
   )
 }

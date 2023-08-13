@@ -3,7 +3,7 @@ import { MARKET, TOKEN } from '@/web3/contractList'
 export interface TokenInfo {
   address: TOKEN
   decimal: number
-  amount?: string
+  price: string
 }
 export interface MarketInfo {
   market: MARKET

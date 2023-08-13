@@ -1,4 +1,8 @@
+import { TOKEN } from '@/web3/contractList'
+
 export interface Product {
+  tokenAddress: TOKEN
+  tokenRatio: number
   name: string
   info: string
   description: string

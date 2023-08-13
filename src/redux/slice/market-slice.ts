@@ -2,23 +2,25 @@ import { createSlice } from '@reduxjs/toolkit'
 import { MarketInfo } from '@/variables/interface/web3'
 
 const initialState = {
-  marketList: [] as MarketInfo[],
+  value: {
+    marketList: [] as MarketInfo[],
+  },
 }
 export const market = createSlice({
   name: 'market',
   initialState,
   reducers: {
     setMarketList: (_, { payload: marketList }: { payload: MarketInfo[] }) => ({
-      marketList,
+      value: {
+        marketList,
+      },
     }),
-    setMarketPrice: (state) => {
-      // const targetMarket = state.marketList.find(
-      //   ({ marketContract }) => marketContract === payload.market
-      // )
-      // if (targetMarket) {
-      //   targetMarket.tokenA.amount = payload.reserve0
-      //   targetMarket.tokenB.amount = payload.reserve1
-      // }
+    setMarketPrice: (state, { payload }) => {
+      const targetMarket = state.value.marketList.find(({ market }) => market === payload.market)
+      if (targetMarket) {
+        targetMarket.tokenA.price = payload.token0Value
+        targetMarket.tokenB.price = payload.token1Value
+      }
     },
   },
 })

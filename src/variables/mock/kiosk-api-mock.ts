@@ -1,5 +1,6 @@
 import CoffeeMockImg from '@/public/coffee.jpg'
 import { Category, Product } from '@/variables/interface/kiosk'
+import { TOKEN } from '@/web3/contractList'
 
 const mockDefaultOptions = [
   {
@@ -85,6 +86,8 @@ const mockDefaultOptions = [
 ]
 export const mockProductData: Product[] = [
   {
+    tokenAddress: TOKEN.WDOT,
+    tokenRatio: 1,
     name: '아메리카노',
     info: '쓰다 😀',
     description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -93,6 +96,8 @@ export const mockProductData: Product[] = [
     options: mockDefaultOptions,
   },
   {
+    tokenAddress: TOKEN.WDOT,
+    tokenRatio: 1,
     name: '에스프레소',
     info: '맛없다 😎',
     description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -101,6 +106,8 @@ export const mockProductData: Product[] = [
     options: [],
   },
   {
+    tokenAddress: TOKEN.WDOT,
+    tokenRatio: 1,
     name: '카페라떼',
     info: '맛있다 😋',
     description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -109,6 +116,8 @@ export const mockProductData: Product[] = [
     options: [],
   },
   {
+    tokenAddress: TOKEN.WDOT,
+    tokenRatio: 1,
     name: '콜드브루',
     info: '멋있다 😋',
     description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -117,6 +126,8 @@ export const mockProductData: Product[] = [
     options: [],
   },
   {
+    tokenAddress: TOKEN.WDOT,
+    tokenRatio: 1,
     name: '레쓰비',
     info: '으악 😋',
     description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',

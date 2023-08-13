@@ -7,10 +7,12 @@ export const mockDefaultMarketList: MarketInfo[] = [
     tokenA: {
       address: TOKEN.WDOT,
       decimal: 6,
+      price: '0',
     },
     tokenB: {
       address: TOKEN.USDT,
       decimal: 6,
+      price: '0',
     },
   },
 ]
