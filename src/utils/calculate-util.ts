@@ -1,5 +1,5 @@
 import { MarketInfo } from '@/variables/interface/web3'
-import { TOKEN } from '@/web3/contractList'
+import { TOKEN } from '@/variables/enum/web3-enum'
 import BigNumber from 'bignumber.js'
 
 export const calculatePrice = (

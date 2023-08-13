@@ -3,19 +3,19 @@ import { Product } from '@/variables/interface/kiosk'
 
 interface DrawerState {
   isShow: boolean
-  data: null | Product
+  product: null | Product
 }
 const initialState = {
-  value: { isShow: false, data: null } as DrawerState,
+  value: { isShow: false, product: null } as DrawerState,
 }
 export const drawer = createSlice({
   name: 'drawer',
   initialState,
   reducers: {
-    setDrawerStatus: (_, action: PayloadAction<DrawerState>) => ({
+    setDrawerStatus: (_, { payload }: PayloadAction<DrawerState>) => ({
       value: {
-        isShow: action.payload.isShow,
-        data: action.payload.data,
+        isShow: payload.isShow,
+        product: payload.product,
       },
     }),
     closeDrawer: () => initialState,

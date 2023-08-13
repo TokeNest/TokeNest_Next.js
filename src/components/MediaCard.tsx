@@ -4,19 +4,15 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
 import { Product } from '@/variables/interface/kiosk'
-import { calculatePrice } from '@/utils/calculate-util'
-import { useAppSelector } from '@/redux/store'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setDrawerStatus } from '@/redux/slice/drawer-slice'
+import { useDispatch } from 'react-redux'
 
-export const MediaCard = ({
-  product,
-  clickEvent,
-}: {
-  product: Product
-  clickEvent: (prop: Product) => void
-}) => {
+export const MediaCard = ({ product }: { product: Product }) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const clickEvent = () => dispatch(setDrawerStatus({ isShow: true, product }))
+
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
-  const { name, tokenRatio, tokenAddress, info, price, imageUrl } = product
-  const resPrice = calculatePrice(marketList, price, tokenRatio, tokenAddress)
   return (
     <Card
       sx={{
@@ -24,11 +20,11 @@ export const MediaCard = ({
         p: 0,
       }}
     >
-      <CardActionArea onClick={() => clickEvent(product)} onDragStart={(e) => e.preventDefault()}>
+      <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
         <CardMedia
           component="img"
           alt="image"
-          image={imageUrl}
+          image={product.productImageUrl}
           sx={{
             height: 200,
             p: 1,
@@ -40,20 +36,20 @@ export const MediaCard = ({
             px: 1,
             py: 0,
           }}
-          title={name}
+          title={product.productName}
           subheader={
             <Typography
               sx={{
                 textAlign: 'right',
               }}
             >
-              {resPrice}
+              {product.productPrice}
             </Typography>
           }
         />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            {info}
+            {product.productIntroduction}
           </Typography>
         </CardContent>
       </CardActionArea>

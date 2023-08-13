@@ -1,4 +1,4 @@
-import { MARKET, TOKEN } from '@/web3/contractList'
+import { MARKET, TOKEN } from '@/variables/enum/web3-enum'
 
 /**
  * 토큰에 관한 정보.

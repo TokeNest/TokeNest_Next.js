@@ -3,10 +3,10 @@ import { Drawer } from '@mui/material'
 import * as React from 'react'
 import { useAppSelector } from '@/redux/store'
 import Container from '@mui/material/Container'
-import { OrderInfo } from '@/app/kiosk/order-info'
+import OrderInfo from '@/app/kiosk/order-info'
 
-export const CustomDrawer = () => {
-  const { isShow, data } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
+export default function CustomDrawer() {
+  const { isShow, product } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
   return (
     <Drawer
       anchor="right"
@@ -41,7 +41,7 @@ export const CustomDrawer = () => {
           height: 1,
         }}
       >
-        <OrderInfo product={data} />
+        <OrderInfo product={product} />
       </Container>
     </Drawer>
   )

@@ -1,142 +1,103 @@
 import CoffeeMockImg from '@/public/coffee.jpg'
-import { Category, Product } from '@/variables/interface/kiosk'
-import { TOKEN } from '@/web3/contractList'
+import { OptionGroup, Product } from '@/variables/interface/kiosk'
+import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 
-const mockDefaultOptions = [
+const mockDefaultOptions: OptionGroup[] = [
   {
-    optionName: '사이즈',
-    defaultValue: 0,
-    optionInfo: [
+    optionGroupId: 0,
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '사이즈',
+    defaultOptionId: 1,
+    options: [
       {
-        label: 'SHORT',
-        value: 0,
+        optionId: 0,
+        optionName: 'Short',
+        optionInfo: '237ml',
+        optionPrice: 100,
       },
       {
-        label: 'TALL',
-        value: 1,
+        optionId: 1,
+        optionName: 'Tall',
+        optionInfo: '355ml',
+        optionPrice: 500,
       },
       {
-        label: 'GRANDE',
-        value: 2,
+        optionId: 2,
+        optionName: 'Grande',
+        optionInfo: '473ml',
+        optionPrice: 1000,
       },
       {
-        label: 'VENTI',
-        value: 3,
+        optionId: 3,
+        optionName: 'Venti',
+        optionInfo: '591ml',
+        optionPrice: 1500,
       },
     ],
   },
   {
-    optionName: '온도',
-    defaultValue: 0,
-    optionInfo: [
+    optionGroupId: 1,
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '온도',
+    defaultOptionId: 0,
+    options: [
       {
-        label: 'HOT',
-        value: 0,
+        optionId: 0,
+        optionName: 'ICE',
+        optionPrice: 0,
       },
       {
-        label: 'ICE',
-        value: 1,
-      },
-    ],
-  },
-  {
-    optionName: '얼음',
-    defaultValue: 0,
-    optionInfo: [
-      {
-        label: '선택 안 함',
-        value: 0,
-      },
-      {
-        label: '얼음 적게',
-        value: 1,
-      },
-      {
-        label: '얼음 보통',
-        value: 2,
-      },
-      {
-        label: '얼음 많이',
-        value: 3,
-      },
-    ],
-  },
-  {
-    optionName: '샷 추가',
-    defaultValue: 0,
-    optionInfo: [
-      {
-        label: '선택 안 함',
-        value: 0,
-      },
-      {
-        label: '1 샷 추가',
-        value: 1,
-      },
-      {
-        label: '2 샷 추가',
-        value: 2,
-      },
-      {
-        label: '3 샷 추가',
-        value: 3,
+        optionId: 1,
+        optionName: 'HOT',
+        optionPrice: 500,
       },
     ],
   },
 ]
 export const mockProductData: Product[] = [
   {
-    tokenAddress: TOKEN.WDOT,
-    tokenRatio: 1,
-    name: '아메리카노',
-    info: '쓰다 😀',
-    description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
-    imageUrl: CoffeeMockImg.src,
-    price: 1000,
-    options: mockDefaultOptions,
+    productId: 0,
+    productName: '아메리카노',
+    productIntroduction: '쓰다 😀',
+    productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
+    productPrice: 1000,
+    productImageUrl: CoffeeMockImg.src,
+    optionGroups: mockDefaultOptions,
   },
   {
-    tokenAddress: TOKEN.WDOT,
-    tokenRatio: 1,
-    name: '에스프레소',
-    info: '맛없다 😎',
-    description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
-    imageUrl: CoffeeMockImg.src,
-    price: 2000,
-    options: [],
+    productId: 1,
+    productName: '에스프레소',
+    productIntroduction: '맛없다 😎',
+    productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
+    productPrice: 2000,
+    productImageUrl: CoffeeMockImg.src,
+    optionGroups: mockDefaultOptions,
   },
   {
-    tokenAddress: TOKEN.WDOT,
-    tokenRatio: 1,
-    name: '카페라떼',
-    info: '맛있다 😋',
-    description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
-    imageUrl: CoffeeMockImg.src,
-    price: 1500,
-    options: [],
+    productId: 2,
+    productName: '카페라떼',
+    productIntroduction: '맛있다 😋',
+    productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
+    productPrice: 1500,
+    productImageUrl: CoffeeMockImg.src,
+    optionGroups: [],
   },
   {
-    tokenAddress: TOKEN.WDOT,
-    tokenRatio: 1,
-    name: '콜드브루',
-    info: '멋있다 😋',
-    description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
-    imageUrl: CoffeeMockImg.src,
-    price: 2500,
-    options: [],
+    productId: 3,
+    productName: '콜드브루',
+    productIntroduction: '멋있다 😋',
+    productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
+    productPrice: 2500,
+    productImageUrl: CoffeeMockImg.src,
+    optionGroups: [],
   },
   {
-    tokenAddress: TOKEN.WDOT,
-    tokenRatio: 1,
-    name: '레쓰비',
-    info: '으악 😋',
-    description: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
-    imageUrl: CoffeeMockImg.src,
-    price: 1000,
-    options: [],
+    productId: 4,
+    productName: '레쓰비',
+    productIntroduction: '으악 😋',
+    productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
+    productPrice: 1000,
+    productImageUrl: CoffeeMockImg.src,
+    optionGroups: [],
   },
 ]
-export const getCategoryProductList: Promise<Category[]> = new Promise((resolve) =>
-  setTimeout(() => resolve([{ index: 0, name: 'coffee', data: mockProductData }]), 1000)
-)
-export const mockFetcher = (url: string) => getCategoryProductList.then((res) => res)
