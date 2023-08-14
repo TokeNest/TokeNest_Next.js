@@ -23,6 +23,7 @@ const nextConfig = {
     walletConnectProjectId: process.env.WALLET_CONNECT_PROJECT_ID,
     klaytnTestnet: process.env.BAOBAB_TESTNET_RPC_URL,
     apiBaseUrl: process.env.API_BASE_URL,
+    mongodbUrl: process.env.MONGODB_URL,
   },
 }
 
