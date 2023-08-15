@@ -5,7 +5,7 @@ import { useAppSelector } from '@/redux/store'
 import Container from '@mui/material/Container'
 import OrderInfo from '@/app/kiosk/order-info'
 
-export default function CustomDrawer() {
+export default function KioskDrawer() {
   const { isShow, product } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
   return (
     <Drawer

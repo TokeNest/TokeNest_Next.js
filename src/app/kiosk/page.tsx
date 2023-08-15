@@ -2,9 +2,9 @@ import React from 'react'
 import { Box, Card } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import ItemContainer from '@/app/kiosk/item-grid'
+import ItemContainer from '@/app/kiosk/item-container'
 import { axiosFetcher } from '@/utils/api-fetcher-util'
-import CustomDrawer from '@/components/CustomDrawer'
+import KioskDrawer from '@/components/KioskDrawer'
 
 export default async function KioskPage() {
   const productData = await axiosFetcher('kiosk')
@@ -29,7 +29,7 @@ export default async function KioskPage() {
           </Grid>
         </CardContent>
       </Card>
-      <CustomDrawer />
+      <KioskDrawer />
     </Box>
   )
 }

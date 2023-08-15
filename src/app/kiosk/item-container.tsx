@@ -1,4 +1,3 @@
-'use client'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Product } from '@/variables/interface/kiosk'
 import { MediaCard } from '@/components/MediaCard'
