@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const MONGODB_URI = process.env.mongodbUrl
+const MONGODB_URI = process.env.mongodbUrl!
 console.log(MONGODB_URI)
 
 if (!MONGODB_URI) {
