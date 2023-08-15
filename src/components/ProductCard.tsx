@@ -8,10 +8,15 @@ import { Product } from '@/variables/interface/kiosk'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setDrawerStatus } from '@/redux/slice/drawer-slice'
 import { useDispatch } from 'react-redux'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
-export const MediaCard = ({ product }: { product: Product }) => {
+export default function ProductCard({ product }: { product: Product }) {
+  const { setIsShowDrawer } = useDrawerContext()
   const dispatch = useDispatch<AppDispatch>()
-  const clickEvent = () => dispatch(setDrawerStatus({ isShow: true, product }))
+  const clickEvent = () => {
+    setIsShowDrawer(true)
+    dispatch(setDrawerStatus({ product }))
+  }
 
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
   return (

@@ -2,11 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Product } from '@/variables/interface/kiosk'
 
 interface DrawerState {
-  isShow: boolean
   product: null | Product
 }
 const initialState = {
-  value: { isShow: false, product: null } as DrawerState,
+  value: { product: null } as DrawerState,
 }
 export const drawer = createSlice({
   name: 'drawer',
@@ -14,7 +13,6 @@ export const drawer = createSlice({
   reducers: {
     setDrawerStatus: (_, { payload }: PayloadAction<DrawerState>) => ({
       value: {
-        isShow: payload.isShow,
         product: payload.product,
       },
     }),

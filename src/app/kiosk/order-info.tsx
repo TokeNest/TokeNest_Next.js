@@ -1,17 +1,14 @@
 import { Card, CardActions, CardHeader, IconButton } from '@mui/material'
-import { closeDrawer } from '@/redux/slice/drawer-slice'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
+import { useAppSelector } from '@/redux/store'
 import Button from '@mui/material/Button'
-import { Product } from '@/variables/interface/kiosk'
 import ProductInfo from '@/components/KioskDrawer/ProductInfo'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
-export default function OrderInfo({ product }: { product: Product | null }) {
-  const dispatch = useDispatch<AppDispatch>()
-  const handleCloseDrawer = () => dispatch(closeDrawer())
+export default function OrderInfo() {
+  const { product } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
   if (product === null) return <div />
   return (
     <Card
@@ -22,18 +19,19 @@ export default function OrderInfo({ product }: { product: Product | null }) {
         flexDirection: 'column',
       }}
     >
-      <OrderHeader clickEvent={handleCloseDrawer} />
+      <OrderHeader />
       <ProductInfo product={product} />
-      <OrderFooter clickEvent={handleCloseDrawer} />
+      <OrderFooter />
     </Card>
   )
 }
 
-function OrderHeader({ clickEvent }: { clickEvent: () => void }) {
+function OrderHeader() {
+  const { setIsShowDrawer } = useDrawerContext()
   return (
     <CardHeader
       action={
-        <IconButton size="large" onClick={clickEvent}>
+        <IconButton size="large" onClick={() => setIsShowDrawer(false)}>
           <ArrowBackIosNewRoundedIcon />
         </IconButton>
       }
@@ -52,7 +50,8 @@ function OrderHeader({ clickEvent }: { clickEvent: () => void }) {
   )
 }
 
-function OrderFooter({ clickEvent }: { clickEvent: () => void }) {
+function OrderFooter() {
+  const { setIsShowDrawer } = useDrawerContext()
   return (
     <CardActions
       sx={{
@@ -67,7 +66,7 @@ function OrderFooter({ clickEvent }: { clickEvent: () => void }) {
         sx={{
           flexGrow: 1,
         }}
-        onClick={clickEvent}
+        onClick={() => setIsShowDrawer(false)}
       >
         장바구니 담기
       </Button>

@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Unstable_Grid2'
 import { Product } from '@/variables/interface/kiosk'
-import { MediaCard } from '@/components/MediaCard'
+import ProductCard from '@/components/ProductCard'
 
-export default function ItemContainer({ productData }: { productData: any }) {
+export default function ProductContainer({ productData }: { productData: any }) {
   const { data }: { data: Product[] } = productData
   return data.map((product, i) => (
     <Grid xs={3} key={i}>
-      <MediaCard product={product} />
+      <ProductCard product={product} />
     </Grid>
   ))
 }
