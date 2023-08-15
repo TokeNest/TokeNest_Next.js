@@ -7,9 +7,9 @@ import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { updateOptionsState } from '@/redux/slice/order-info-slice'
+import { setCalculateOptionPrice } from '@/utils/calculate-util'
 
 export default function OptionGroups({ optionGroups }: { optionGroups: OptionGroup[] }) {
-  const { optionsState } = useAppSelector(({ orderInfoReducer }) => orderInfoReducer)
   const dispatch = useDispatch<AppDispatch>()
   const handleChangeOption = (optionGroupId: number, totalPrice: number) => {
     dispatch(
@@ -49,12 +49,17 @@ function RadioOptionGroup({
   optionGroup: OptionRadioGroup
   handleChangeOption: (optionGroupId: number, totalPrice: number) => void
 }) {
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
   const [tabValue, setTabValue] = useState(defaultOptionId)
   const handleChange = (_: React.SyntheticEvent, id: number) => {
     setTabValue(id)
     const option = options.find(({ optionId }) => optionId === id)
     if (option) {
-      handleChangeOption(optionGroupId, option.optionPrice)
+      const { tokenOption, optionPrice } = option
+      handleChangeOption(
+        optionGroupId,
+        setCalculateOptionPrice(marketList, optionPrice, tokenOption)
+      )
     }
   }
   return (

@@ -1,6 +1,7 @@
 import CoffeeMockImg from '@/public/coffee.jpg'
 import { OptionGroup, Product } from '@/variables/interface/kiosk'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
+import { TOKEN } from '@/variables/enum/web3-enum'
 
 const mockDefaultOptions: OptionGroup[] = [
   {
@@ -14,6 +15,10 @@ const mockDefaultOptions: OptionGroup[] = [
         optionName: 'Short',
         optionInfo: '237ml',
         optionPrice: 100,
+        tokenOption: {
+          tokenAddress: TOKEN.WDOT,
+          tokenRatio: 100,
+        },
       },
       {
         optionId: 1,

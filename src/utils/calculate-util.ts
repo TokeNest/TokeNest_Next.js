@@ -1,21 +1,24 @@
 import { MarketInfo } from '@/variables/interface/web3'
-import { TOKEN } from '@/variables/enum/web3-enum'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import { Product } from '@/variables/interface/kiosk'
+import { Product, TokenOption } from '@/variables/interface/kiosk'
 
-export const calculatePrice = (
+export const setCalculateOptionPrice = (
   marketList: MarketInfo[],
-  price: number,
-  tokenRatio: number,
-  tokenAddress: TOKEN
+  optionPrice: number,
+  tokenOption: TokenOption | undefined
 ) => {
-  const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
-  if (marketInfo) {
-    const percentage = new BigNumber(tokenRatio).dividedBy(100)
-    return new BigNumber(marketInfo.tokenB.price).times(percentage).plus(price).toNumber()
+  if (tokenOption) {
+    const { tokenAddress, tokenRatio } = tokenOption
+    const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
+    if (marketInfo) {
+      const percentage = new BigNumber(tokenRatio).dividedBy(100)
+      return new BigNumber(marketInfo.tokenB.price).times(percentage).plus(optionPrice).toNumber()
+    } else {
+      return optionPrice
+    }
   } else {
-    return price
+    return optionPrice
   }
 }
 
