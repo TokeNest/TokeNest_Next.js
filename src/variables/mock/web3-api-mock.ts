@@ -6,12 +6,12 @@ export const mockDefaultMarketList: MarketInfo[] = [
     market: MARKET.WDOT_USDT_PAIR,
     tokenA: {
       address: TOKEN.WDOT,
-      decimal: 6,
+      decimal: 18,
       price: '0',
     },
     tokenB: {
       address: TOKEN.USDT,
-      decimal: 6,
+      decimal: 18,
       price: '0',
     },
   },

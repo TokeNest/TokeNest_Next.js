@@ -6,7 +6,7 @@ import {
 import { Box, Divider, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
@@ -15,14 +15,13 @@ import { setCalculateOptionPrice } from '@/utils/calculate-util'
 
 export default function OptionGroups({ optionGroups }: { optionGroups: OptionGroup[] }) {
   const dispatch = useDispatch<AppDispatch>()
-  const handleChangeOption = (optionGroupId: number, totalPrice: number) => {
+  const handleChangeOption = (optionGroupId: number, totalPrice: number) =>
     dispatch(
       updateOptionsState({
         optionGroupId,
         totalPrice,
       })
     )
-  }
 
   return optionGroups.map((optionGroup) => {
     const { optionGroupId, optionGroupType, optionGroupName } = optionGroup
@@ -53,11 +52,11 @@ function RadioOptionGroup({
   optionGroup: OptionRadioGroup
   handleChangeOption: (optionGroupId: number, totalPrice: number) => void
 }) {
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const [tabValue, setTabValue] = useState(defaultOptionId)
-  const handleChange = (_: React.SyntheticEvent, id: number) => {
-    setTabValue(id)
-    const option = options.find(({ optionId }) => optionId === id)
+  const handleChange = (_: React.SyntheticEvent, id: number) => setTabValue(id)
+  useEffect(() => {
+    const option = options.find(({ optionId }) => optionId === tabValue)
     if (option) {
       const { tokenOption, optionPrice } = option
       handleChangeOption(
@@ -65,7 +64,8 @@ function RadioOptionGroup({
         setCalculateOptionPrice(marketList, optionPrice, tokenOption)
       )
     }
-  }
+  }, [handleChangeOption, optionGroupId, options, marketList, tabValue])
+
   return (
     <Tabs value={tabValue} onChange={handleChange} centered>
       {options.map(({ optionName, optionId }) => (

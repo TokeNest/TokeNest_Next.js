@@ -8,7 +8,7 @@ const mockDefaultOptions: OptionGroup[] = [
     optionGroupId: 0,
     optionGroupType: OPTION_TYPE.RADIO,
     optionGroupName: '사이즈',
-    defaultOptionId: 1,
+    defaultOptionId: 0,
     options: [
       {
         optionId: 0,
@@ -17,7 +17,7 @@ const mockDefaultOptions: OptionGroup[] = [
         optionPrice: 100,
         tokenOption: {
           tokenAddress: TOKEN.WDOT,
-          tokenRatio: 100,
+          tokenRatio: 1,
         },
       },
       {
@@ -30,7 +30,11 @@ const mockDefaultOptions: OptionGroup[] = [
         optionId: 2,
         optionName: 'Grande',
         optionInfo: '473ml',
-        optionPrice: 1000,
+        optionPrice: 0,
+        tokenOption: {
+          tokenAddress: TOKEN.WDOT,
+          tokenRatio: 100,
+        },
       },
       {
         optionId: 3,

@@ -68,7 +68,7 @@ function ProductDetailInfo({
             title={<Typography variant="h3">{productName}</Typography>}
             subheader={
               <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-                {calculateTotalPrice}
+                {calculateTotalPrice.toFixed(0)}
               </Typography>
             }
           />

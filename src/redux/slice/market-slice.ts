@@ -1,28 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { MarketInfo } from '@/variables/interface/web3-interface'
+import { MarketInfo, MarketPrice } from '@/variables/interface/web3-interface'
 
 const initialState = {
-  value: {
-    marketList: [] as MarketInfo[],
-  },
+  marketList: [] as MarketInfo[],
 }
 export const market = createSlice({
   name: 'market',
   initialState,
   reducers: {
     setMarketList: (_, { payload: marketList }: { payload: MarketInfo[] }) => ({
-      value: {
-        marketList,
-      },
+      marketList,
     }),
-    setMarketPrice: (state, { payload }) => {
-      const targetMarket = state.value.marketList.find(({ market }) => market === payload.market)
-      if (targetMarket) {
-        targetMarket.tokenA.price = payload.token0Value
-        targetMarket.tokenB.price = payload.token1Value
-      }
+    updateMarketPrice: (state, { payload }: { payload: MarketPrice[] }) => {
+      payload.forEach(({ market, tokenA, tokenB }) => {
+        const index = state.marketList.findIndex((res) => res.market === market)
+        if (index !== -1) {
+          state.marketList[index].tokenA.price = tokenA
+          state.marketList[index].tokenB.price = tokenB
+        }
+      })
     },
   },
 })
-export const { setMarketList, setMarketPrice } = market.actions
+export const { setMarketList, updateMarketPrice } = market.actions
 export default market.reducer

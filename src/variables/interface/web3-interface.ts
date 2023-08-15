@@ -17,3 +17,9 @@ export interface MarketInfo {
   tokenA: TokenInfo
   tokenB: TokenInfo
 }
+
+export interface MarketPrice {
+  market: MARKET
+  tokenA: string
+  tokenB: string
+}

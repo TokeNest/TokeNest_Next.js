@@ -1,7 +1,7 @@
 import { MarketInfo } from '@/variables/interface/web3-interface'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import { Product, TokenOption } from '@/variables/interface/kiosk-interface'
+import { OptionGroup, Product, TokenOption } from '@/variables/interface/kiosk-interface'
 import { OptionState } from '@/redux/slice/order-info-slice'
 
 export const setCalculateOptionPrice = (
@@ -14,13 +14,10 @@ export const setCalculateOptionPrice = (
     const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
     if (marketInfo) {
       const percentage = new BigNumber(tokenRatio).dividedBy(100)
-      return new BigNumber(marketInfo.tokenB.price).times(percentage).plus(optionPrice).toNumber()
-    } else {
-      return optionPrice
+      return new BigNumber(marketInfo.tokenA.price).times(percentage).plus(optionPrice).toNumber()
     }
-  } else {
-    return optionPrice
   }
+  return optionPrice
 }
 
 export const setDefaultOptionsPrice = (product: Product) =>
@@ -50,3 +47,27 @@ export const setCalculateTotalPrice = (
   productPrice: number,
   productQuantity: number
 ) => optionsState.reduce((pre, { totalPrice }) => pre + totalPrice, productPrice) * productQuantity
+
+export const setProductCardPrice = (optionGroups: OptionGroup[], marketList: MarketInfo[]) =>
+  optionGroups.reduce((pre, optionGroup) => {
+    const { optionGroupType, options } = optionGroup
+    switch (optionGroupType) {
+      case OPTION_TYPE.RADIO: {
+        const option = options.find(({ optionId }) => optionId === optionGroup.defaultOptionId)
+        return option
+          ? pre + setCalculateOptionPrice(marketList, option.optionPrice, option.tokenOption)
+          : pre
+      }
+      case OPTION_TYPE.CHECKBOX:
+        return (
+          pre +
+          options
+            .filter(({ optionId }) => optionGroup.defaultOptionIds.includes(optionId))
+            .reduce(
+              (optionTotal, { optionPrice, tokenOption }) =>
+                optionTotal + setCalculateOptionPrice(marketList, optionPrice, tokenOption),
+              0
+            )
+        )
+    }
+  }, 0)

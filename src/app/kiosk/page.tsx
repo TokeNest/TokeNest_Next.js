@@ -2,11 +2,12 @@ import React from 'react'
 import { Card } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import ProductContainer from '@/app/kiosk/product-container'
 import { axiosFetcher } from '@/utils/api-fetcher-util'
+import { Product } from '@/variables/interface/kiosk-interface'
+import ProductCard from '@/components/ProductCard'
 
 export default async function KioskPage() {
-  const productData = await axiosFetcher('kiosk')
+  const { data: products }: { data: Product[] } = await axiosFetcher('kiosk')
   return (
     <Card
       sx={{
@@ -17,7 +18,11 @@ export default async function KioskPage() {
     >
       <CardContent sx={{ px: 4 }}>
         <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4}>
-          <ProductContainer productData={productData} />
+          {products.map((product) => (
+            <Grid xs={3} key={product.productId}>
+              <ProductCard product={product} />
+            </Grid>
+          ))}
         </Grid>
       </CardContent>
     </Card>
