@@ -1,14 +1,13 @@
 import _mongoose, { connect } from 'mongoose'
 
 declare global {
-  var mongoose: {
+  let mongoose: {
     promise: ReturnType<typeof connect> | null
     conn: typeof _mongoose | null
   }
 }
 
 const MONGODB_URI = process.env.mongodbUrl
-console.log(MONGODB_URI)
 
 if (!MONGODB_URI) {
   console.log('Please define the MONGODB_URI environment variable inside .env')

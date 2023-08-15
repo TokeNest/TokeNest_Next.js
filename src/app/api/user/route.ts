@@ -10,10 +10,9 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   await dbConnect()
-  var user = new UserModel({
+  const user = new UserModel({
     name: '최형택',
   })
   await user.save()
-
   return NextResponse.json(user.toJSON())
 }
