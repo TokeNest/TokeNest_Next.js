@@ -1,7 +1,8 @@
-import { MarketInfo } from '@/variables/interface/web3'
+import { MarketInfo } from '@/variables/interface/web3-interface'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import { Product, TokenOption } from '@/variables/interface/kiosk'
+import { Product, TokenOption } from '@/variables/interface/kiosk-interface'
+import { OptionState } from '@/redux/slice/order-info-slice'
 
 export const setCalculateOptionPrice = (
   marketList: MarketInfo[],
@@ -43,3 +44,9 @@ export const setDefaultOptionsPrice = (product: Product) =>
         }
     }
   })
+
+export const setCalculateTotalPrice = (
+  optionsState: OptionState[],
+  productPrice: number,
+  productQuantity: number
+) => optionsState.reduce((pre, { totalPrice }) => pre + totalPrice, productPrice) * productQuantity

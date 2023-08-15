@@ -1,4 +1,8 @@
-import { OptionCheckboxGroup, OptionGroup, OptionRadioGroup } from '@/variables/interface/kiosk'
+import {
+  OptionCheckboxGroup,
+  OptionGroup,
+  OptionRadioGroup,
+} from '@/variables/interface/kiosk-interface'
 import { Box, Divider, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'

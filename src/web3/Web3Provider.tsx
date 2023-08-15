@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { setMarketList, setMarketPrice } from '@/redux/slice/market-slice'
 import { axiosFetcher } from '@/utils/api-fetcher-util'
-import { MarketInfo } from '@/variables/interface/web3'
+import { MarketInfo } from '@/variables/interface/web3-interface'
 import { ContractContext, pairAbi } from '@/web3/abi/pair-abi'
 import BigNumber from 'bignumber.js'
 

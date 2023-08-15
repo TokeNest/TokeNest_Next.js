@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { MarketInfo } from '@/variables/interface/web3'
+import { MarketInfo } from '@/variables/interface/web3-interface'
 
 const initialState = {
   value: {

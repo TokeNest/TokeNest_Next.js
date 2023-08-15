@@ -1,5 +1,5 @@
 import CoffeeMockImg from '@/public/coffee.jpg'
-import { OptionGroup, Product } from '@/variables/interface/kiosk'
+import { OptionGroup, Product } from '@/variables/interface/kiosk-interface'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 import { TOKEN } from '@/variables/enum/web3-enum'
 

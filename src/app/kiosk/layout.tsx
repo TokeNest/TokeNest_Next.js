@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import KioskDrawer from '@/components/KioskDrawer'
+import KioskDrawer from '@/app/kiosk/kiosk-drawer'
 import DrawerProvider from '@/app/kiosk/drawer-provider'
 
 export default function KioskLayout({ children }: { children: React.ReactNode }) {

@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Unstable_Grid2'
-import { Product } from '@/variables/interface/kiosk'
+import { Product } from '@/variables/interface/kiosk-interface'
 import ProductCard from '@/components/ProductCard'
 
 export default function ProductContainer({ productData }: { productData: any }) {

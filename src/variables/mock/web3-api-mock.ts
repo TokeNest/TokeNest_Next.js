@@ -1,4 +1,4 @@
-import { MarketInfo } from '@/variables/interface/web3'
+import { MarketInfo } from '@/variables/interface/web3-interface'
 import { MARKET, TOKEN } from '@/variables/enum/web3-enum'
 
 export const mockDefaultMarketList: MarketInfo[] = [

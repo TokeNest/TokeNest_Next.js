@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface OptionState {
+export interface OptionState {
   optionGroupId: number
   totalPrice: number
 }
