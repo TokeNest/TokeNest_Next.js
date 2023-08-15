@@ -1,6 +1,8 @@
 import { MarketInfo } from '@/variables/interface/web3'
 import { TOKEN } from '@/variables/enum/web3-enum'
 import BigNumber from 'bignumber.js'
+import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
+import { Product } from '@/variables/interface/kiosk'
 
 export const calculatePrice = (
   marketList: MarketInfo[],
@@ -16,3 +18,25 @@ export const calculatePrice = (
     return price
   }
 }
+
+export const setDefaultOptionsPrice = (product: Product) =>
+  product.optionGroups.map((optionGroup) => {
+    const { optionGroupType, optionGroupId, options } = optionGroup
+    switch (optionGroupType) {
+      case OPTION_TYPE.RADIO:
+        const { defaultOptionId } = optionGroup
+        return {
+          optionGroupId,
+          totalPrice:
+            options.find(({ optionId }) => optionId === defaultOptionId)?.optionPrice ?? 0,
+        }
+      case OPTION_TYPE.CHECKBOX:
+        const { defaultOptionIds } = optionGroup
+        return {
+          optionGroupId,
+          totalPrice: options
+            .filter(({ optionId }) => defaultOptionIds.includes(optionId))
+            .reduce((pre, { optionPrice }) => pre + optionPrice, 0),
+        }
+    }
+  })

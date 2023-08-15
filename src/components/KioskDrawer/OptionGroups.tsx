@@ -4,46 +4,20 @@ import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { useState } from 'react'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { updateOptionsState } from '@/redux/slice/order-info-slice'
 
-export default function OptionGroups({
-  handleChangeProductPrice,
-  optionGroups,
-}: {
-  handleChangeProductPrice: (totalPrice: number) => void
-  optionGroups: OptionGroup[]
-}) {
-  const [optionGroupPrice, setOptionGroupPrice] = useState(
-    optionGroups.map((optionGroup) => {
-      switch (optionGroup.optionGroupType) {
-        case OPTION_TYPE.RADIO: {
-          const { optionGroupId, defaultOptionId, options } = optionGroup
-          return {
-            optionGroupId,
-            totalPrice:
-              options.find(({ optionId }) => optionId === defaultOptionId)?.optionPrice ?? 0,
-          }
-        }
-        case OPTION_TYPE.CHECKBOX: {
-          const { optionGroupId, defaultOptionIds, options } = optionGroup
-          return {
-            optionGroupId,
-            totalPrice: options
-              .filter(({ optionId }) => defaultOptionIds.includes(optionId))
-              .reduce((pre, { optionPrice }) => pre + optionPrice, 0),
-          }
-        }
-      }
-    })
-  )
+export default function OptionGroups({ optionGroups }: { optionGroups: OptionGroup[] }) {
+  const { optionsState } = useAppSelector(({ orderInfoReducer }) => orderInfoReducer)
+  const dispatch = useDispatch<AppDispatch>()
   const handleChangeOption = (optionGroupId: number, totalPrice: number) => {
-    setOptionGroupPrice((state) => {
-      const optionGroup = state.find(({ optionGroupId: id }) => id === optionGroupId)
-      if (optionGroup) {
-        optionGroup.totalPrice = totalPrice
-      }
-      return state
-    })
-    handleChangeProductPrice(optionGroupPrice.reduce((pre, { totalPrice }) => pre + totalPrice, 0))
+    dispatch(
+      updateOptionsState({
+        optionGroupId,
+        totalPrice,
+      })
+    )
   }
 
   return optionGroups.map((optionGroup) => {

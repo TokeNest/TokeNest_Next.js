@@ -6,16 +6,18 @@ import Typography from '@mui/material/Typography'
 import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
 import { Product } from '@/variables/interface/kiosk'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { setDrawerStatus } from '@/redux/slice/drawer-slice'
 import { useDispatch } from 'react-redux'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
+import { setOptionsState } from '@/redux/slice/order-info-slice'
+import { setDefaultOptionsPrice } from '@/utils/calculate-util'
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { setIsShowDrawer } = useDrawerContext()
+  const { setIsShowDrawer, setProduct } = useDrawerContext()
   const dispatch = useDispatch<AppDispatch>()
   const clickEvent = () => {
     setIsShowDrawer(true)
-    dispatch(setDrawerStatus({ product }))
+    setProduct(product)
+    dispatch(setOptionsState(setDefaultOptionsPrice(product)))
   }
 
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)

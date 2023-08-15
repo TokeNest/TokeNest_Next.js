@@ -2,13 +2,12 @@ import { Card, CardActions, CardHeader, IconButton } from '@mui/material'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { useAppSelector } from '@/redux/store'
 import Button from '@mui/material/Button'
 import ProductInfo from '@/components/KioskDrawer/ProductInfo'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export default function OrderInfo() {
-  const { product } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
+  const { product } = useDrawerContext()
   if (product === null) return <div />
   return (
     <Card
