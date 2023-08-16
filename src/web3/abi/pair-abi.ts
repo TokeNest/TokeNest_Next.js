@@ -53,7 +53,7 @@ export interface MethodConstantReturnContext<TCallReturn> {
 
 export interface MethodReturnContext extends MethodPayableReturnContext {}
 
-export type ContractContext = Web3ContractContext<
+export type PairContractContext = Web3ContractContext<
   PairAbi,
   PairAbiMethodNames,
   PairAbiEventsContext,
@@ -128,7 +128,6 @@ export type PairAbiMethodNames =
   | 'decimals'
   | 'factory'
   | 'getReserves'
-  | 'getTokenValue'
   | 'initialize'
   | 'kLast'
   | 'mint'
@@ -188,10 +187,6 @@ export interface GetReservesResponse {
   _reserve0: string
   _reserve1: string
   _blockTimestampLast: string
-}
-export interface GetTokenValueResponse {
-  token0Value: string
-  token1Value: string
 }
 export interface PairAbi {
   /**
@@ -279,13 +274,6 @@ export interface PairAbi {
    * Type: function
    */
   getReserves(): MethodConstantReturnContext<GetReservesResponse>
-  /**
-   * Payable: false
-   * Constant: true
-   * StateMutability: view
-   * Type: function
-   */
-  getTokenValue(): MethodConstantReturnContext<GetTokenValueResponse>
   /**
    * Payable: false
    * Constant: false
@@ -493,7 +481,6 @@ export interface PairAbi {
    */
   transferFrom(from: string, to: string, amount: string): MethodReturnContext
 }
-
 export const pairAbi = [
   {
     inputs: [
@@ -901,24 +888,6 @@ export const pairAbi = [
         internalType: 'uint32',
         name: '_blockTimestampLast',
         type: 'uint32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getTokenValue',
-    outputs: [
-      {
-        internalType: 'uint112',
-        name: 'token0Value',
-        type: 'uint112',
-      },
-      {
-        internalType: 'uint112',
-        name: 'token1Value',
-        type: 'uint112',
       },
     ],
     stateMutability: 'view',

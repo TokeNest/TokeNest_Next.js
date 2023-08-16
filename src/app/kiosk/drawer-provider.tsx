@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState } from 'react'
-import { Product } from '@/variables/interface/kiosk'
+import { Product } from '@/variables/interface/kiosk-interface'
 
 interface DrawerContextType {
   isShowDrawer: boolean

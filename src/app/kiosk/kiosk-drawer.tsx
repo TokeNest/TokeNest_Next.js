@@ -1,12 +1,14 @@
 'use client'
 import { Drawer } from '@mui/material'
 import * as React from 'react'
-import Container from '@mui/material/Container'
-import OrderInfo from '@/app/kiosk/order-info'
+import KioskOrderInfo from '@/components/KioskDrawer/OrderInfo/KioskOrderInfo'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
+import KioskProductInfo from '@/components/KioskDrawer/KioskProductInfo'
+import KioskOrderHeader from '@/components/KioskDrawer/OrderInfo/KioskOrderHeader'
+import KioskOrderFooter from '@/components/KioskDrawer/OrderInfo/KioskOrderFooter'
 
 export default function KioskDrawer() {
-  const { isShowDrawer } = useDrawerContext()
+  const { isShowDrawer, product } = useDrawerContext()
   return (
     <Drawer
       anchor="right"
@@ -36,13 +38,11 @@ export default function KioskDrawer() {
       hideBackdrop={false}
       keepMounted={false}
     >
-      <Container
-        sx={{
-          height: 1,
-        }}
-      >
-        <OrderInfo />
-      </Container>
+      <KioskOrderInfo>
+        <KioskOrderHeader />
+        <KioskProductInfo product={product} />
+        <KioskOrderFooter />
+      </KioskOrderInfo>
     </Drawer>
   )
 }

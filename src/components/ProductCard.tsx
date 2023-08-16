@@ -1,26 +1,33 @@
 'use client'
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
-import { Product } from '@/variables/interface/kiosk'
+import { CardActionArea, CardHeader, CardMedia } from '@mui/material'
+import { Product } from '@/variables/interface/kiosk-interface'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useDispatch } from 'react-redux'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { setOptionsState } from '@/redux/slice/order-info-slice'
-import { setDefaultOptionsPrice } from '@/utils/calculate-util'
+import { setDefaultOptionsPrice, setProductCardPrice } from '@/utils/calculate-util'
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { optionGroups, productPrice } = product
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const [defaultProductPrice, setDefaultProductPrice] = useState(productPrice)
   const { setIsShowDrawer, setProduct } = useDrawerContext()
   const dispatch = useDispatch<AppDispatch>()
   const clickEvent = () => {
-    setIsShowDrawer(true)
-    setProduct(product)
     dispatch(setOptionsState(setDefaultOptionsPrice(product)))
+    setProduct(product)
+    setIsShowDrawer(true)
   }
 
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
+  useEffect(() => {
+    setDefaultProductPrice(productPrice + setProductCardPrice(optionGroups, marketList))
+  }, [optionGroups, marketList, productPrice])
+
   return (
     <Card
       sx={{
@@ -51,7 +58,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 textAlign: 'right',
               }}
             >
-              {product.productPrice}
+              {defaultProductPrice.toFixed(0)}
             </Typography>
           }
         />
@@ -64,17 +71,3 @@ export default function ProductCard({ product }: { product: Product }) {
     </Card>
   )
 }
-
-export const SkeletonMediaCard = () => (
-  <Card>
-    <Skeleton animation="wave" variant="rectangular" sx={{ height: 240, width: 240 }} />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="div">
-        <Skeleton />
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        <Skeleton />
-      </Typography>
-    </CardContent>
-  </Card>
-)

@@ -1,4 +1,4 @@
-import { Product } from '@/variables/interface/kiosk'
+import { Product } from '@/variables/interface/kiosk-interface'
 import * as React from 'react'
 import CardContent from '@mui/material/CardContent'
 import { ButtonGroup, CardActions, CardHeader, CardMedia, Paper } from '@mui/material'
@@ -11,8 +11,12 @@ import OptionGroups from '@/components/KioskDrawer/OptionGroups'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useDispatch } from 'react-redux'
 import { minusProductQuantity, plusProductQuantity } from '@/redux/slice/order-info-slice'
+import { setCalculateTotalPrice } from '@/utils/calculate-util'
 
-export default function ProductInfo({ product }: { product: Product }) {
+export default function KioskProductInfo({ product }: { product: Product | null }) {
+  if (!product) {
+    return <div />
+  }
   return (
     <CardContent
       sx={{
@@ -44,8 +48,7 @@ function ProductDetailInfo({
   const { optionsState, productQuantity } = useAppSelector(
     ({ orderInfoReducer }) => orderInfoReducer
   )
-  const calculatePrice =
-    optionsState.reduce((pre, { totalPrice }) => pre + totalPrice, productPrice) * productQuantity
+  const calculateTotalPrice = setCalculateTotalPrice(optionsState, productPrice, productQuantity)
   return (
     <>
       <CardMedia
@@ -65,7 +68,7 @@ function ProductDetailInfo({
             title={<Typography variant="h3">{productName}</Typography>}
             subheader={
               <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-                {calculatePrice}
+                {calculateTotalPrice.toFixed(0)}
               </Typography>
             }
           />
