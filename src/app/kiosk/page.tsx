@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from '@mui/material'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { axiosFetcher } from '@/utils/api-fetcher-util'
