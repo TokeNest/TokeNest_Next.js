@@ -1,4 +1,4 @@
-import { mockProductData } from '@/variables/kiosk-api-mock'
+import { mockProductData } from '@/variables/mock/kiosk-api-mock'
 import { Request } from 'next/dist/compiled/@edge-runtime/primitives'
 import { NextResponse } from 'next/server'
 

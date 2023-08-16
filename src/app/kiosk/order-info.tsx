@@ -1,31 +1,38 @@
-import {
-  ButtonGroup,
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  Paper,
-} from '@mui/material'
-import { closeDrawer } from '@/redux/slice/drawer-slice'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
+import { Card, CardActions, CardHeader, IconButton } from '@mui/material'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
 import * as React from 'react'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
-import Grid from '@mui/material/Unstable_Grid2'
 import Button from '@mui/material/Button'
-import { OptionList } from '@/components/KioskDrawer/OptionList'
-import { Product } from '@/variables/interface/kiosk-api'
+import ProductInfo from '@/components/KioskDrawer/ProductInfo'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
-const KioskHeader = ({ clickEvent }: { clickEvent: () => void }) => {
+export default function OrderInfo() {
+  const { product } = useDrawerContext()
+  if (product === null) return <div />
+  return (
+    <Card
+      elevation={0}
+      sx={{
+        height: 1,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <OrderHeader />
+      <ProductInfo product={product} />
+      <OrderFooter />
+    </Card>
+  )
+}
+
+function OrderHeader() {
+  const { setIsShowDrawer } = useDrawerContext()
   return (
     <CardHeader
       action={
-        <IconButton size="large" onClick={clickEvent} children={<ArrowBackIosNewRoundedIcon />} />
+        <IconButton size="large" onClick={() => setIsShowDrawer(false)}>
+          <ArrowBackIosNewRoundedIcon />
+        </IconButton>
       }
       title={<Typography variant="h4">주문 옵션</Typography>}
       sx={{
@@ -41,7 +48,9 @@ const KioskHeader = ({ clickEvent }: { clickEvent: () => void }) => {
     />
   )
 }
-const KioskFooter = ({ clickEvent }: { clickEvent: () => void }) => {
+
+function OrderFooter() {
+  const { setIsShowDrawer } = useDrawerContext()
   return (
     <CardActions
       sx={{
@@ -56,89 +65,10 @@ const KioskFooter = ({ clickEvent }: { clickEvent: () => void }) => {
         sx={{
           flexGrow: 1,
         }}
-        onClick={clickEvent}
+        onClick={() => setIsShowDrawer(false)}
       >
         장바구니 담기
       </Button>
     </CardActions>
-  )
-}
-export const OrderInfo = ({ product }: { product: Product | null }) => {
-  const dispatch = useDispatch<AppDispatch>()
-  const closeEvent = () => dispatch(closeDrawer())
-  if (product === null) return <div />
-  const { name, imageUrl, description, price, options } = product
-  return (
-    <Card
-      elevation={0}
-      sx={{
-        height: 1,
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <KioskHeader clickEvent={closeEvent} />
-      <CardContent
-        sx={{
-          height: 1,
-        }}
-      >
-        <Paper
-          elevation={0}
-          sx={{
-            display: 'flex',
-          }}
-        >
-          <CardMedia
-            component="img"
-            alt="image"
-            image={imageUrl}
-            sx={{
-              width: 400,
-              height: 400,
-              p: 1,
-              borderRadius: 6,
-            }}
-          />
-          <Grid container justifyContent="space-around">
-            <Grid xs={12}>
-              <CardHeader
-                title={<Typography variant="h3">{name}</Typography>}
-                subheader={
-                  <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-                    {price}
-                  </Typography>
-                }
-              />
-            </Grid>
-            <Grid xs={12}>
-              <Typography
-                sx={{
-                  px: 4,
-                }}
-                variant="h4"
-              >
-                {description}
-              </Typography>
-            </Grid>
-            <Grid xs={12}>
-              <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                <ButtonGroup size="large" variant="text" aria-label="text button group">
-                  <Button startIcon={<AddIcon />}>더하기</Button>
-                  <Button disableRipple sx={{ px: 4 }}>
-                    0
-                  </Button>
-                  <Button endIcon={<RemoveIcon />}>빼기</Button>
-                </ButtonGroup>
-              </CardActions>
-            </Grid>
-          </Grid>
-        </Paper>
-        {options.map((option, i) => (
-          <OptionList key={i} option={option} />
-        ))}
-      </CardContent>
-      <KioskFooter clickEvent={closeEvent} />
-    </Card>
   )
 }

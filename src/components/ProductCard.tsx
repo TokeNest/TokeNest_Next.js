@@ -1,18 +1,26 @@
+'use client'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardActionArea, CardHeader, CardMedia, Skeleton } from '@mui/material'
-import { Product } from '@/variables/interface/kiosk-api'
+import { Product } from '@/variables/interface/kiosk'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { useDispatch } from 'react-redux'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
+import { setOptionsState } from '@/redux/slice/order-info-slice'
+import { setDefaultOptionsPrice } from '@/utils/calculate-util'
 
-export const MediaCard = ({
-  product,
-  clickEvent,
-}: {
-  product: Product
-  clickEvent: (prop: Product) => void
-}) => {
-  const { name, info, price, imageUrl } = product
+export default function ProductCard({ product }: { product: Product }) {
+  const { setIsShowDrawer, setProduct } = useDrawerContext()
+  const dispatch = useDispatch<AppDispatch>()
+  const clickEvent = () => {
+    setIsShowDrawer(true)
+    setProduct(product)
+    dispatch(setOptionsState(setDefaultOptionsPrice(product)))
+  }
+
+  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer.value)
   return (
     <Card
       sx={{
@@ -20,11 +28,11 @@ export const MediaCard = ({
         p: 0,
       }}
     >
-      <CardActionArea onClick={() => clickEvent(product)} onDragStart={(e) => e.preventDefault()}>
+      <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
         <CardMedia
           component="img"
           alt="image"
-          image={imageUrl}
+          image={product.productImageUrl}
           sx={{
             height: 200,
             p: 1,
@@ -36,20 +44,20 @@ export const MediaCard = ({
             px: 1,
             py: 0,
           }}
-          title={name}
+          title={product.productName}
           subheader={
             <Typography
               sx={{
                 textAlign: 'right',
               }}
             >
-              {price}
+              {product.productPrice}
             </Typography>
           }
         />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            {info}
+            {product.productIntroduction}
           </Typography>
         </CardContent>
       </CardActionArea>
