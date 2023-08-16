@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import drawerReducer from './slice/drawer-slice'
 import marketReducer from './slice/market-slice'
+import orderInfoReducer from './slice/order-info-slice'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
-    drawerReducer,
     marketReducer,
+    orderInfoReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

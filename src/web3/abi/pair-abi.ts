@@ -53,14 +53,14 @@ export interface MethodConstantReturnContext<TCallReturn> {
 
 export interface MethodReturnContext extends MethodPayableReturnContext {}
 
-export type ContractContext = Web3ContractContext<
-  Pair,
-  PairMethodNames,
-  PairEventsContext,
-  PairEvents
+export type PairContractContext = Web3ContractContext<
+  PairAbi,
+  PairAbiMethodNames,
+  PairAbiEventsContext,
+  PairAbiEvents
 >
-export type PairEvents = 'Approval' | 'Burn' | 'Mint' | 'Swap' | 'Sync' | 'Transfer'
-export interface PairEventsContext {
+export type PairAbiEvents = 'Approval' | 'Burn' | 'Mint' | 'Swap' | 'Sync' | 'Transfer'
+export interface PairAbiEventsContext {
   Approval(
     parameters: {
       filter?: { owner?: string | string[]; spender?: string | string[] }
@@ -116,7 +116,8 @@ export interface PairEventsContext {
     callback?: (error: Error, event: EventData) => void
   ): EventResponse
 }
-export type PairMethodNames =
+export type PairAbiMethodNames =
+  | 'new'
   | 'DOMAIN_SEPARATOR'
   | 'MINIMUM_LIQUIDITY'
   | 'PERMIT_TYPEHASH'
@@ -183,11 +184,20 @@ export interface TransferEventEmittedResponse {
   value: string
 }
 export interface GetReservesResponse {
-  reserve0: string
-  reserve1: string
-  blockTimestampLast: string
+  _reserve0: string
+  _reserve1: string
+  _blockTimestampLast: string
 }
-export interface Pair {
+export interface PairAbi {
+  /**
+   * Payable: false
+   * Constant: false
+   * StateMutability: nonpayable
+   * Type: constructor
+   * @param _name Type: string, Indexed: false
+   * @param _symbol Type: string, Indexed: false
+   */
+  'new'(_name: string, _symbol: string): MethodReturnContext
   /**
    * Payable: false
    * Constant: true
@@ -198,14 +208,14 @@ export interface Pair {
   /**
    * Payable: false
    * Constant: true
-   * StateMutability: pure
+   * StateMutability: view
    * Type: function
    */
   MINIMUM_LIQUIDITY(): MethodConstantReturnContext<string>
   /**
    * Payable: false
    * Constant: true
-   * StateMutability: pure
+   * StateMutability: view
    * Type: function
    */
   PERMIT_TYPEHASH(): MethodConstantReturnContext<string>
@@ -214,10 +224,10 @@ export interface Pair {
    * Constant: true
    * StateMutability: view
    * Type: function
-   * @param owner Type: address, Indexed: false
-   * @param spender Type: address, Indexed: false
+   * @param parameter0 Type: address, Indexed: false
+   * @param parameter1 Type: address, Indexed: false
    */
-  allowance(owner: string, spender: string): MethodConstantReturnContext<string>
+  allowance(parameter0: string, parameter1: string): MethodConstantReturnContext<string>
   /**
    * Payable: false
    * Constant: false
@@ -232,9 +242,9 @@ export interface Pair {
    * Constant: true
    * StateMutability: view
    * Type: function
-   * @param account Type: address, Indexed: false
+   * @param parameter0 Type: address, Indexed: false
    */
-  balanceOf(account: string): MethodConstantReturnContext<string>
+  balanceOf(parameter0: string): MethodConstantReturnContext<string>
   /**
    * Payable: false
    * Constant: false
@@ -269,10 +279,10 @@ export interface Pair {
    * Constant: false
    * StateMutability: nonpayable
    * Type: function
-   * @param parameter0 Type: address, Indexed: false
-   * @param parameter1 Type: address, Indexed: false
+   * @param _token0 Type: address, Indexed: false
+   * @param _token1 Type: address, Indexed: false
    */
-  initialize(parameter0: string, parameter1: string): MethodReturnContext
+  initialize(_token0: string, _token1: string): MethodReturnContext
   /**
    * Payable: false
    * Constant: true
@@ -300,9 +310,9 @@ export interface Pair {
    * Constant: true
    * StateMutability: view
    * Type: function
-   * @param owner Type: address, Indexed: false
+   * @param parameter0 Type: address, Indexed: false
    */
-  nonces(owner: string): MethodConstantReturnContext<string>
+  nonces(parameter0: string): MethodConstantReturnContext<string>
   /**
    * Payable: false
    * Constant: false
@@ -472,6 +482,70 @@ export interface Pair {
   transferFrom(from: string, to: string, amount: string): MethodReturnContext
 }
 export const pairAbi = [
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'InsufficientAmount',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'InsufficientLiquidity',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'InvalidAddressParameters',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'Locked',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'Overflow',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'Unauthorized',
+    type: 'error',
+  },
   {
     anonymous: false,
     inputs: [
@@ -663,7 +737,7 @@ export const pairAbi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -676,19 +750,19 @@ export const pairAbi = [
         type: 'bytes32',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: 'owner',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'spender',
+        name: '',
         type: 'address',
       },
     ],
@@ -731,7 +805,7 @@ export const pairAbi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
       },
     ],
@@ -802,17 +876,17 @@ export const pairAbi = [
     outputs: [
       {
         internalType: 'uint112',
-        name: 'reserve0',
+        name: '_reserve0',
         type: 'uint112',
       },
       {
         internalType: 'uint112',
-        name: 'reserve1',
+        name: '_reserve1',
         type: 'uint112',
       },
       {
         internalType: 'uint32',
-        name: 'blockTimestampLast',
+        name: '_blockTimestampLast',
         type: 'uint32',
       },
     ],
@@ -823,12 +897,12 @@ export const pairAbi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: '_token0',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '',
+        name: '_token1',
         type: 'address',
       },
     ],
@@ -886,7 +960,7 @@ export const pairAbi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'owner',
+        name: '',
         type: 'address',
       },
     ],

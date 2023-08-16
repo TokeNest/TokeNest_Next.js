@@ -2,15 +2,15 @@ import * as React from 'react'
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry'
 import AppHeader from '@/components/AppHeader'
 import { ReduxProvider } from '@/redux/provider'
-import { Web3ContextProvider } from '@/web3/Web3Provider'
 import { Container } from '@mui/material'
+import Web3Provider from '@/web3/Web3Provider'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         <ReduxProvider>
-          <Web3ContextProvider>
+          <Web3Provider>
             <ThemeRegistry>
               <AppHeader />
               <Container
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {children}
               </Container>
             </ThemeRegistry>
-          </Web3ContextProvider>
+          </Web3Provider>
         </ReduxProvider>
       </body>
     </html>

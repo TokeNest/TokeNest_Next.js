@@ -1,12 +1,14 @@
 'use client'
 import { Drawer } from '@mui/material'
 import * as React from 'react'
-import { useAppSelector } from '@/redux/store'
-import Container from '@mui/material/Container'
-import { OrderInfo } from '@/app/kiosk/order-info'
+import KioskOrderInfo from '@/components/KioskDrawer/OrderInfo/KioskOrderInfo'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
+import KioskProductInfo from '@/components/KioskDrawer/KioskProductInfo'
+import KioskOrderHeader from '@/components/KioskDrawer/OrderInfo/KioskOrderHeader'
+import KioskOrderFooter from '@/components/KioskDrawer/OrderInfo/KioskOrderFooter'
 
-export const CustomDrawer = () => {
-  const { isShow, data } = useAppSelector(({ drawerReducer }) => drawerReducer.value)
+export default function KioskDrawer() {
+  const { isShowDrawer, product } = useDrawerContext()
   return (
     <Drawer
       anchor="right"
@@ -32,16 +34,15 @@ export const CustomDrawer = () => {
           borderBottomLeftRadius: 20,
         },
       }}
-      open={isShow}
+      open={isShowDrawer}
       hideBackdrop={false}
       keepMounted={false}
     >
-      <Container
-        sx={{
-          height: 1,
-        }}
-        children={<OrderInfo product={data} />}
-      />
+      <KioskOrderInfo>
+        <KioskOrderHeader />
+        <KioskProductInfo product={product} />
+        <KioskOrderFooter />
+      </KioskOrderInfo>
     </Drawer>
   )
 }
