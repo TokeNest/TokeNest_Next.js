@@ -24,6 +24,7 @@ const nextConfig = {
     klaytnTestnet: process.env.BAOBAB_TESTNET_RPC_URL,
     apiBaseUrl: process.env.API_BASE_URL,
     mongodbUrl: process.env.MONGODB_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
   },
 }
 

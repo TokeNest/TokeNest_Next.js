@@ -28,8 +28,12 @@
     "@web3-react/types": "^8.2.0",
     "@web3-react/url": "^8.2.0",
     "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.7",
     "eventemitter3": "^5.0.1",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.3",
     "next": "^13.4.16",
     "next-swagger-doc": "^0.4.0",
     "node-gyp": "^9.4.0",
@@ -44,6 +48,8 @@
     "web3": "^4.0.3"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
