@@ -15,6 +15,7 @@ export const userRepository = {
   update,
   softDelete: _softDelete,
   delete: _delete,
+  createAddress,
 }
 
 async function authenticate({ userId, password }: { userId: string; password: string }) {
@@ -63,14 +64,7 @@ async function create(params: any) {
   }
 
   // user setting
-  const user = new User({
-    user_name: params.user_name,
-    user_password: params.user_password,
-    user_phone: params.user_phone,
-    user_email: params.user_email,
-    user_wallet_address: params.user_wallet_address,
-    user_account_type: params.user_account_type,
-  })
+  const user = new User(params)
 
   // hash password
   if (params.user_password) {
@@ -78,22 +72,6 @@ async function create(params: any) {
   }
 
   await user.save()
-
-  console.log(params)
-  // save address
-  const addresses = params.addresses
-  for (const address_param of addresses) {
-    const address = new Address({
-      user: user,
-      address_name: address_param.address_name,
-      road_address: address_param.road_address,
-      address_detail: address_param.address_detail,
-    })
-    await address.save()
-    user.addresses.push(address._id)
-  }
-  await user.save()
-
 }
 
 async function update(id: string, params: any) {
@@ -134,4 +112,24 @@ async function _softDelete(id: string) {
 
 async function _delete(id: string) {
   await User.findByIdAndRemove(id)
+}
+
+async function createAddress(userId: string, addresses: any) {
+  try {
+    const user = new User(getById(userId))
+
+    for (const address_param of addresses) {
+      const address = new Address({ user: user._id, ...address_param })
+      await address.save()
+
+      // setting relationship
+      user.addresses.push(address)
+      await user.save()
+    }
+
+  } catch (e) {
+    throw 'Error with ' + e
+  }
+
+
 }

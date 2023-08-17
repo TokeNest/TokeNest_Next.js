@@ -31,11 +31,6 @@ register.schema = joi.object({
     // 42개의 숫자와 문자
     .pattern(/^[a-zA-Z0-9]{42}$/)
     .required(),
-  addresses: joi.array().items({
-    address_name: joi.string(),
-    road_address: joi.string(),
-    address_detail: joi.string(),
-  }),
   user_account_type: joi.string().required(),
 })
 
