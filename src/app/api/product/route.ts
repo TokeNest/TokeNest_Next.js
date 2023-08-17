@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import dbConnect from '@/lib/dbconnect'
 import { ProductModel } from '@/models'
-import { ProductRequestDto } from '@/dto/product/ProductRequestDto'
+import { ProductRequestDto } from '@/app/_helpers/server/dto/product/ProductRequestDto'
 
 export async function GET(request: Request) {
   await dbConnect()
