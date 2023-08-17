@@ -1,18 +1,12 @@
-import { useDrawerContext } from '@/app/kiosk/drawer-provider'
-import { CardHeader, IconButton } from '@mui/material'
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
+import { CardHeader } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+import KioskOrderHeaderBackButton from '@/components/kiosk/KioskDrawer/KioskOrderInfo/interaction/KioskOrderHeaderBackButton'
 
 export default function KioskOrderHeader() {
-  const { setIsShowDrawer } = useDrawerContext()
   return (
     <CardHeader
-      action={
-        <IconButton size="large" onClick={() => setIsShowDrawer(false)}>
-          <ArrowBackIosNewRoundedIcon />
-        </IconButton>
-      }
+      action={<KioskOrderHeaderBackButton />}
       title={<Typography variant="h4">주문 옵션</Typography>}
       sx={{
         '& .MuiCardHeader-action': {
