@@ -48,7 +48,7 @@ export const setCalculateTotalPrice = (
   productQuantity: number
 ) => optionsState.reduce((pre, { totalPrice }) => pre + totalPrice, productPrice) * productQuantity
 
-export const setProductCardPrice = (optionGroups: OptionGroup[], marketList: MarketInfo[]) =>
+export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketInfo[]) =>
   optionGroups.reduce((pre, optionGroup) => {
     const { optionGroupType, options } = optionGroup
     switch (optionGroupType) {

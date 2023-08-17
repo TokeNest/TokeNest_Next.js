@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import { axiosFetcher } from '@/utils/api-fetcher-util'
 import { Product } from '@/variables/interface/kiosk-interface'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/kiosk/ProductCard'
 
 export default async function KioskPage() {
   const { data: products }: { data: Product[] } = await axiosFetcher('kiosk')
