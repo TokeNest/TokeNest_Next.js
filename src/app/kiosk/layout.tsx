@@ -1,8 +1,9 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import KioskDrawer from '@/app/kiosk/kiosk-drawer'
+import KioskDrawer from '@/components/kiosk/KioskDrawer/KioskDrawer'
 import DrawerProvider from '@/app/kiosk/drawer-provider'
-import KioskOrderBadge from '@/components/KioskDrawer/KioskOrderBadge'
+import KioskOrderBadge from '@/components/kiosk/KioskDrawer/KioskOrderBadge'
+import KioskOrderInfo from '@/components/kiosk/KioskDrawer/KioskOrderInfo/KioskOrderInfo'
 
 export default function KioskLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,7 +16,9 @@ export default function KioskLayout({ children }: { children: React.ReactNode })
         }}
       >
         {children}
-        <KioskDrawer />
+        <KioskDrawer>
+          <KioskOrderInfo />
+        </KioskDrawer>
       </Box>
       <KioskOrderBadge />
     </DrawerProvider>

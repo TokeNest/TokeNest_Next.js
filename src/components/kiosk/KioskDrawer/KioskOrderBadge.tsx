@@ -7,6 +7,7 @@ import SaveIcon from '@mui/icons-material/Save'
 import PrintIcon from '@mui/icons-material/Print'
 import ShareIcon from '@mui/icons-material/Share'
 import { SpeedDial, SpeedDialAction } from '@mui/material'
+import { useAppSelector } from '@/redux/store'
 
 const actions = [
   { icon: <FileCopyIcon />, name: 'Copy' },
@@ -16,6 +17,7 @@ const actions = [
 ]
 
 export default function KioskOrderBadge() {
+  const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -29,7 +31,7 @@ export default function KioskOrderBadge() {
         },
       }}
       icon={
-        <Badge badgeContent={4} color="secondary" overlap="circular">
+        <Badge badgeContent={basket.length} color="secondary" overlap="circular">
           <ShoppingCartIcon sx={{ fontSize: 36 }} />
         </Badge>
       }
