@@ -17,6 +17,29 @@ function isPublicPath(req: NextRequest) {
     'POST:/api/account/login',
     'POST:/api/account/logout',
     'POST:/api/account/register',
+    'POST:/api/store',
+    'GET:/api/store',
+    'POST:/api/product',
+    'GET:/api/product',
   ]
-  return publicPaths.includes(`${req.method}:${req.nextUrl.pathname}`)
+  const path = `${req.method}:${req.nextUrl.pathname}`
+  return publicPaths.includes(path) || checkPathWithParams(path)
+}
+
+function checkPathWithParams(path: string) {
+  let isPathHasParam: boolean = false
+  const pathsWithParam = [
+    'GET:/api/store/',
+    'PUT:/api/store/',
+    'DELETE:/api/store/',
+    'GET:/api/product/',
+    'PUT:/api/product/',
+    'DELETE:/api/product/',
+  ]
+  pathsWithParam.forEach((pathWithParam) => {
+    if (path.includes(pathWithParam)) {
+      isPathHasParam = true
+    }
+  })
+  return isPathHasParam
 }

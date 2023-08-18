@@ -1,5 +1,5 @@
-import { userRepository } from '_helpers/server'
-import { apiHandler } from '_helpers/server/api'
+import { apiHandler } from '@/app/_helpers/server/api'
+import { userRepository } from '@/app/_helpers/server/_repository'
 
 module.exports = apiHandler({
   POST: register,

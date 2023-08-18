@@ -1,3 +1,7 @@
+import joi from 'joi'
+
+export { validateMiddleware }
+
 async function validateMiddleware(req: Request, schema: joi.ObjectSchema) {
   if (!schema) {
     return
