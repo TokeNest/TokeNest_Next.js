@@ -11,7 +11,7 @@ export const db = {
   User: userModel(),
   Address: addressModel(),
   Product_Option_Group: productOptionGroupModel(),
-  Product_option: productOptionModel(),
+  Product_Option: productOptionModel(),
   Store: storeModel(),
 }
 

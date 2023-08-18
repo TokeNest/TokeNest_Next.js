@@ -3,20 +3,21 @@ import { productRepository } from '@/app/_helpers/server/_repository'
 import joi from 'joi'
 
 module.exports = apiHandler({
-  GET: getAll,
-  POST: create,
+  GET: getById,
+  PUT: update,
+  DELETE: _delete,
 })
 
-async function getAll(req: Request) {
-  return await productRepository.getAll()
+async function getById(req: Request, { params: { product_id } }: any) {
+  return await productRepository.getById(product_id)
 }
 
-async function create(req: Request) {
+async function update(req: Request, { params: { product_id } }: any) {
   const body = await req.json()
-  await productRepository.create(body)
+  await productRepository.update(product_id, body)
 }
 
-create.schema = joi.object({
+update.schema = joi.object({
   product_name: joi.string().required(),
   product_info: joi.string().required(),
   product_status: joi.string().required(),
@@ -24,3 +25,7 @@ create.schema = joi.object({
   product_price: joi.number().required(),
   store_id: joi.string().required(),
 })
+
+async function _delete(req: Request, { params: { product_id } }: any) {
+  await productRepository.softDelete(product_id)
+}

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { errorHandler, jwtMiddleware, validateMiddleware } from './';
+import { errorHandler } from '@/app/_helpers/server/api/errorHandler'
+import { validateMiddleware } from '@/app/_helpers/server/api/validateMiddleware'
+import { jwtMiddleware } from '@/app/_helpers/server/api/jwtMiddleware'
+
 export { apiHandler }
 
 function apiHandler(handler: any) {
@@ -10,6 +13,7 @@ function apiHandler(handler: any) {
     if (typeof handler[method] !== 'function') {
       return
     }
+
     wrappedHandler[method] = async (req: NextRequest, ...args: any) => {
       try {
         const json = await req.json()
@@ -27,6 +31,5 @@ function apiHandler(handler: any) {
       }
     }
   })
-
   return wrappedHandler
 }
