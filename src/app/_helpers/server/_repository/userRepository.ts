@@ -2,9 +2,10 @@ import { db } from '../db'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { headers } from 'next/headers'
+import { userRequestDto } from '@/app/_helpers/server/dto/user/userRequestDto'
+import { addressRequestDto } from '@/app/_helpers/server/dto/user/addressRequestDto'
 
 const User = db.User
-const Address = db.Address
 
 export const userRepository = {
   authenticate,
@@ -15,7 +16,6 @@ export const userRepository = {
   update,
   softDelete: _softDelete,
   delete: _delete,
-  createAddress,
 }
 
 async function authenticate({ userId, password }: { userId: string; password: string }) {
@@ -37,7 +37,25 @@ async function authenticate({ userId, password }: { userId: string; password: st
 }
 
 async function getAll() {
-  return await User.find()
+  const users = await User.find().populate('addresses')
+  let result: userRequestDto[] = []
+  for (const user of users) {
+    const userDto = new userRequestDto({
+      userName: user.user_name,
+      userPassword: user.user_password,
+      userPhone: user.user_phone,
+      userEmail: user.user_email,
+      userWalletAddress: user.user_wallet_address,
+      addresses: user.addresses.map((address: any) => ({
+        addressName: address.address_name,
+        roadAddress: address.road_address,
+        addressDetail: address.address_detail,
+      })),
+      userAccountType: user.user_account_type,
+    })
+    result.push(userDto)
+  }
+  return result
 }
 
 async function getById(id: string) {
@@ -112,24 +130,4 @@ async function _softDelete(id: string) {
 
 async function _delete(id: string) {
   await User.findByIdAndRemove(id)
-}
-
-async function createAddress(userId: string, addresses: any) {
-  try {
-    const user = new User(getById(userId))
-
-    for (const address_param of addresses) {
-      const address = new Address({ user: user._id, ...address_param })
-      await address.save()
-
-      // setting relationship
-      user.addresses.push(address)
-      await user.save()
-    }
-
-  } catch (e) {
-    throw 'Error with ' + e
-  }
-
-
 }

@@ -11,7 +11,7 @@ function errorHandler(err: Error | string) {
   }
 
   if (err.name === 'JsonWebTokenError') {
-    cookies.delete('authorization')
+    cookies().delete('authorization')
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 

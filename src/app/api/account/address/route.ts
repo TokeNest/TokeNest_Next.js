@@ -1,25 +1,28 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userRepository } from '@/app/_helpers/server/_repository'
+import { parse } from 'url'
+import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
 
 
 module.exports = apiHandler({
-  POST: create
+  POST: create,
 })
 
 async function create(req: Request) {
   const body = await req.json()
-  const searchParams = new URL(req.url)
-  const user_id = searchParams.get('user_id')
-  await userRepository.createAddress(user_id,body)
+
+  // get param
+  const url = req.url
+  const urlObj = parse(url, true)
+  const userId: string = urlObj.query.userId as string
+
+  await addressRepository.create(userId, body)
 }
 
 create.schema = joi.object({
-  addresses: joi.array().items({
-    address_name: joi.string(),
-    road_address: joi.string(),
-    address_detail: joi.string(),
-  }),
+  address_name: joi.string().required(),
+  road_address: joi.string().required(),
+  address_detail: joi.string().required(),
 })
 

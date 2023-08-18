@@ -17,6 +17,8 @@ function isPublicPath(req: NextRequest) {
     'POST:/api/account/login',
     'POST:/api/account/logout',
     'POST:/api/account/register',
+    'POST:/api/account/address',
+    'GET:/api/users'
   ]
   return publicPaths.includes(`${req.method}:${req.nextUrl.pathname}`)
 }
