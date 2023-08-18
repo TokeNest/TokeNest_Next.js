@@ -9,15 +9,9 @@ module.exports = apiHandler({
   POST: create,
 })
 
-async function create(req: Request) {
+async function create(req: Request, { params: { user_id } }: any) {
   const body = await req.json()
-
-  // get param
-  const url = req.url
-  const urlObj = parse(url, true)
-  const userId: string = urlObj.query.userId as string
-
-  await addressRepository.create(userId, body)
+  await addressRepository.create(user_id, body)
 }
 
 create.schema = joi.object({

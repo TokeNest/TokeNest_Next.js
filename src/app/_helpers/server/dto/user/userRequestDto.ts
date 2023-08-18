@@ -4,7 +4,7 @@ export {userRequestDto}
 
 class userRequestDto {
   userName: String
-  userPassword: String
+  userPasswordHash: String
   userPhone: String
   userEmail: String
   userWalletAddress: String
@@ -14,7 +14,7 @@ class userRequestDto {
 
   constructor(user: userRequestDto) {
     this.userName = user.userName
-    this.userPassword = user.userPassword
+    this.userPasswordHash = user.userPasswordHash
     this.userPhone = user.userPhone
     this.userEmail = user.userEmail
     this.userWalletAddress = user.userWalletAddress

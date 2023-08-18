@@ -51,8 +51,7 @@ function userModel() {
   const userSchema = new Schema(
     {
       user_name: { type: String, required: true },
-      user_hash: { type: String, required: true },
-      user_password: { type: String, required: true },
+      user_password_hash: { type: String, required: true },
       user_phone: { type: String, required: true },
       user_email: { type: String, required: true },
       user_wallet_address: { type: String, unique: true, required: true },

@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { headers } from 'next/headers'
 import { userRequestDto } from '@/app/_helpers/server/dto/user/userRequestDto'
-import { addressRequestDto } from '@/app/_helpers/server/dto/user/addressRequestDto'
 
 const User = db.User
 
@@ -18,10 +17,13 @@ export const userRepository = {
   delete: _delete,
 }
 
-async function authenticate({ userId, password }: { userId: string; password: string }) {
-  const user = await User.findOne({ userId })
+async function authenticate({ user_wallet_address, user_password }: {
+  user_wallet_address: string;
+  user_password: string
+}) {
+  const user = await User.findOne({ user_wallet_address })
 
-  if (!(user && bcrypt.compareSync(password, user.user_hash))) {
+  if (!(user && bcrypt.compareSync(user_password, user.user_password_hash))) {
     throw 'Invalid Value: UserWalletAddress or password is incorrect'
   }
 
@@ -31,7 +33,6 @@ async function authenticate({ userId, password }: { userId: string; password: st
   })
 
   return {
-    user: user.toJSON(),
     token,
   }
 }
@@ -42,7 +43,7 @@ async function getAll() {
   for (const user of users) {
     const userDto = new userRequestDto({
       userName: user.user_name,
-      userPassword: user.user_password,
+      userPasswordHash: user.user_password_hash,
       userPhone: user.user_phone,
       userEmail: user.user_email,
       userWalletAddress: user.user_wallet_address,
@@ -60,7 +61,20 @@ async function getAll() {
 
 async function getById(id: string) {
   try {
-    return await User.findById(id)
+    const user = await User.findById(id).populate('addresses')
+    return new userRequestDto({
+      userName: user.user_name,
+      userPasswordHash: user.user_password_hash,
+      userPhone: user.user_phone,
+      userEmail: user.user_email,
+      userWalletAddress: user.user_wallet_address,
+      addresses: user.addresses.map((address: any) => ({
+        addressName: address.address_name,
+        roadAddress: address.road_address,
+        addressDetail: address.address_detail,
+      })),
+      userAccountType: user.user_account_type,
+    })
   } catch {
     throw 'User Not Found'
   }
@@ -68,8 +82,21 @@ async function getById(id: string) {
 
 async function getCurrent() {
   try {
-    const currentUserId = headers().get('userId')
-    return await User.findById(currentUserId)
+    const currentUserWalletAddress = headers().get('userWalletAddress')
+    const user = await User.findOne({ user_wallet_address: currentUserWalletAddress }).populate('addresses')
+    return new userRequestDto({
+      userName: user.user_name,
+      userPasswordHash: user.user_password_hash,
+      userPhone: user.user_phone,
+      userEmail: user.user_email,
+      userWalletAddress: user.user_wallet_address,
+      addresses: user.addresses.map((address: any) => ({
+        addressName: address.address_name,
+        roadAddress: address.road_address,
+        addressDetail: address.address_detail,
+      })),
+      userAccountType: user.user_account_type,
+    })
   } catch {
     throw 'Current User Not Found'
   }
@@ -86,14 +113,14 @@ async function create(params: any) {
 
   // hash password
   if (params.user_password) {
-    user.user_hash = bcrypt.hashSync(params.user_password, 10)
+    user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
 
   await user.save()
 }
 
 async function update(id: string, params: any) {
-  const user = await getById(id)
+  const user = await User.findById(id)
 
   // validate
   if (
@@ -105,7 +132,7 @@ async function update(id: string, params: any) {
 
   // hash password if it was entered
   if (params.user_password) {
-    params.user_hash = bcrypt.hashSync(params.user_password, 10)
+    params.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
 
   // copy params properties to user
@@ -115,7 +142,7 @@ async function update(id: string, params: any) {
 }
 
 async function _softDelete(id: string) {
-  const user = await getById(id)
+  const user = await User.findById(id)
 
   // validate
   if (user.deleted_date !== null) {

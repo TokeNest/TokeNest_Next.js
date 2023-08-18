@@ -19,6 +19,6 @@ async function login(req: Request) {
 }
 
 login.schema = joi.object({
-  user_name: joi.string().required(),
+  user_wallet_address: joi.string().required(),
   user_password: joi.string().required(),
 })

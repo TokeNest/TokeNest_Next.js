@@ -21,7 +21,7 @@ async function _delete(req: Request, { params: { id } }: any) {
   await userRepository.softDelete(id)
 
   // auto logout if deleted self
-  if (id === req.headers.get('userId')) {
+  if (id === req.headers.get('userWalletAddress')) {
     cookies().delete('authorization')
     return { deleteSelf: true }
   }
