@@ -1,18 +1,24 @@
 'use client'
 import * as React from 'react'
-import { CardHeader, CardMedia } from '@mui/material'
+import { CardHeader, CardMedia, Paper } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import ProductDetailInfoTotalPrice from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductDetailInfo/interaction/ProductDetailInfoTotalPrice'
 import { Product } from '@/variables/interface/kiosk-interface'
+import KioskProductQuantityButton from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductQuantityButton/KioskProductQuantityButton'
 
-export default function KioskProductDetailInfo({ children }: { children: React.ReactNode }) {
+export default function KioskProductDetailInfo() {
   const { product } = useDrawerContext()
   const { productPrice, productImageUrl, productName, productInfo, optionGroups } =
     product as Product
   return (
-    <>
+    <Paper
+      elevation={0}
+      sx={{
+        display: 'flex',
+      }}
+    >
       <CardMedia
         component="img"
         alt="image"
@@ -46,8 +52,8 @@ export default function KioskProductDetailInfo({ children }: { children: React.R
             {productInfo}
           </Typography>
         </Grid>
-        {children}
+        <KioskProductQuantityButton />
       </Grid>
-    </>
+    </Paper>
   )
 }

@@ -3,6 +3,8 @@ import * as React from 'react'
 import KioskOrderHeader from '@/components/kiosk/KioskDrawer/KioskOrderInfo/KioskOrderHeader'
 import KioskProductInfo from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductInfo'
 import KioskOrderFooter from '@/components/kiosk/KioskDrawer/KioskOrderInfo/KioskOrderFooter'
+import KioskProductDetailInfo from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductDetailInfo/KioskProductDetailInfo'
+import KioskProductOptionGroups from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductOptionGroups/KioskProductOptionGroups'
 
 export default function KioskOrderInfo() {
   return (
@@ -20,7 +22,10 @@ export default function KioskOrderInfo() {
         }}
       >
         <KioskOrderHeader />
-        <KioskProductInfo />
+        <KioskProductInfo>
+          <KioskProductDetailInfo />
+          <KioskProductOptionGroups />
+        </KioskProductInfo>
         <KioskOrderFooter />
       </Card>
     </Container>
