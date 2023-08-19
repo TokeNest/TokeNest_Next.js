@@ -9,7 +9,8 @@ import { Product } from '@/variables/interface/kiosk-interface'
 
 export default function KioskProductDetailInfo({ children }: { children: React.ReactNode }) {
   const { product } = useDrawerContext()
-  const { productPrice, productImageUrl, productName, productInfo } = product as Product
+  const { productPrice, productImageUrl, productName, productInfo, optionGroups } =
+    product as Product
   return (
     <>
       <CardMedia
@@ -27,7 +28,12 @@ export default function KioskProductDetailInfo({ children }: { children: React.R
         <Grid xs={12}>
           <CardHeader
             title={<Typography variant="h3">{productName}</Typography>}
-            subheader={<ProductDetailInfoTotalPrice productPrice={productPrice} />}
+            subheader={
+              <ProductDetailInfoTotalPrice
+                optionGroups={optionGroups}
+                productPrice={productPrice}
+              />
+            }
           />
         </Grid>
         <Grid xs={12}>

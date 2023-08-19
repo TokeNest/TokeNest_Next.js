@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { OrderProduct } from '@/variables/interface/kiosk-interface'
 
 interface CartState {
-  basket: any[]
+  basket: OrderProduct[]
 }
 
 const initialState: CartState = {
@@ -11,7 +12,7 @@ export const cart = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addCartBasket: (state, { payload }) => {
+    addCartBasket: (state, { payload }: { payload: OrderProduct }) => {
       state.basket = [...state.basket, payload]
     },
   },

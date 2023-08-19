@@ -1,37 +1,33 @@
 'use client'
 import { OptionCheckboxGroup, OptionRadioGroup } from '@/variables/interface/kiosk-interface'
-import { useAppSelector } from '@/redux/store'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import * as React from 'react'
-import { useEffect, useState } from 'react'
-import { setCalculateOptionPrice } from '@/utils/calculate-util'
+import { useCallback, useState } from 'react'
 import { Tab, Tabs } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
 
 export function RadioOptionGroup({
   optionGroup: { options, defaultOptionId, optionGroupId },
-  handleChangeOption,
 }: {
   optionGroup: OptionRadioGroup
-  handleChangeOption: (optionGroupId: number, totalPrice: number) => void
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const dispatch = useDispatch<AppDispatch>()
   const [tabValue, setTabValue] = useState(defaultOptionId)
-  const handleChange = (_: React.SyntheticEvent, id: number) => setTabValue(id)
-  useEffect(() => {
-    const option = options.find(({ optionId }) => optionId === tabValue)
-    if (option) {
-      const { tokenOption, optionPrice } = option
-      handleChangeOption(
-        optionGroupId,
-        setCalculateOptionPrice(marketList, optionPrice, tokenOption)
-      )
-    }
-  }, [handleChangeOption, optionGroupId, options, marketList, tabValue])
+  const handleChange = useCallback(
+    (_: React.SyntheticEvent, id: string) => {
+      dispatch(setOrderProductOptionIds({ optionGroupId, optionIds: [id] }))
+      setTabValue(id)
+    },
+    [dispatch, optionGroupId]
+  )
 
   return (
     <Tabs value={tabValue} onChange={handleChange} centered>
-      {options.map(({ optionName, optionId }) => (
+      {options.map(({ optionName, optionId }, i) => (
         <Tab
-          key={optionId}
+          key={i}
           value={optionId}
           label={optionName}
           sx={{
@@ -45,10 +41,8 @@ export function RadioOptionGroup({
 
 export function CheckboxOptionGroup({
   optionGroup: { options, defaultOptionIds, optionGroupId },
-  handleChangeOption,
 }: {
   optionGroup: OptionCheckboxGroup
-  handleChangeOption: (optionGroupId: number, totalPrice: number) => void
 }) {
   return (
     <div>

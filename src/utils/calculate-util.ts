@@ -1,9 +1,27 @@
 import { MarketInfo } from '@/variables/interface/web3-interface'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import { OptionGroup, Product, TokenOption } from '@/variables/interface/kiosk-interface'
-import { OptionState } from '@/redux/slice/order-info-slice'
+import {
+  OptionGroup,
+  OrderProductOptionGroup,
+  TokenOption,
+} from '@/variables/interface/kiosk-interface'
 
+const getOptionMarketPrice = (
+  optionPrice: number,
+  tokenOption: TokenOption | undefined,
+  marketList: MarketInfo[]
+) => {
+  if (tokenOption) {
+    const { tokenAddress, tokenRatio } = tokenOption
+    const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
+    if (marketInfo) {
+      const percentage = new BigNumber(tokenRatio).dividedBy(100)
+      return new BigNumber(marketInfo.tokenA.price).times(percentage).plus(optionPrice).toNumber()
+    }
+  }
+  return optionPrice
+}
 export const setCalculateOptionPrice = (
   marketList: MarketInfo[],
   optionPrice: number,
@@ -19,34 +37,6 @@ export const setCalculateOptionPrice = (
   }
   return optionPrice
 }
-
-export const setDefaultOptionsPrice = (product: Product) =>
-  product.optionGroups.map((optionGroup) => {
-    const { optionGroupType, optionGroupId, options } = optionGroup
-    switch (optionGroupType) {
-      case OPTION_TYPE.RADIO:
-        const { defaultOptionId } = optionGroup
-        return {
-          optionGroupId,
-          totalPrice:
-            options.find(({ optionId }) => optionId === defaultOptionId)?.optionPrice ?? 0,
-        }
-      case OPTION_TYPE.CHECKBOX:
-        const { defaultOptionIds } = optionGroup
-        return {
-          optionGroupId,
-          totalPrice: options
-            .filter(({ optionId }) => defaultOptionIds.includes(optionId))
-            .reduce((pre, { optionPrice }) => pre + optionPrice, 0),
-        }
-    }
-  })
-
-export const setCalculateTotalPrice = (
-  optionsState: OptionState[],
-  productPrice: number,
-  productQuantity: number
-) => optionsState.reduce((pre, { totalPrice }) => pre + totalPrice, productPrice) * productQuantity
 
 export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketInfo[]) =>
   optionGroups.reduce((pre, optionGroup) => {
@@ -71,3 +61,20 @@ export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketI
         )
     }
   }, 0)
+
+export const calculateTotalPrice = (
+  productPrice: number,
+  optionGroupsInfo: OrderProductOptionGroup[],
+  optionGroups: OptionGroup[],
+  marketList: MarketInfo[]
+) => {
+  const optionIds = optionGroupsInfo.flatMap(({ optionIds }) => optionIds)
+  return optionGroups
+    .flatMap(({ options }) => options)
+    .filter(({ optionId }) => optionIds.includes(optionId))
+    .reduce(
+      (pre, { optionPrice, tokenOption }) =>
+        pre + getOptionMarketPrice(optionPrice, tokenOption, marketList),
+      productPrice
+    )
+}

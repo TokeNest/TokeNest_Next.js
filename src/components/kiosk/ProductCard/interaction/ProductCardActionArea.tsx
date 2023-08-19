@@ -1,12 +1,12 @@
 'use client'
 import CardActionArea from '@mui/material/CardActionArea'
-import { setOptionsState } from '@/redux/slice/order-info-slice'
-import { setDefaultOptionsPrice } from '@/utils/calculate-util'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
 import React from 'react'
 import { Product } from '@/variables/interface/kiosk-interface'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { convertOrderProduct } from '@/utils/redux-util'
+import { setOrderProduct } from '@/redux/slice/order-product-slice'
 
 export default function ProductCardActionArea({
   children,
@@ -18,9 +18,9 @@ export default function ProductCardActionArea({
   const dispatch = useDispatch<AppDispatch>()
   const { setIsShowDrawer, setProduct } = useDrawerContext()
   const clickEvent = () => {
-    dispatch(setOptionsState(setDefaultOptionsPrice(product)))
     setProduct(product)
     setIsShowDrawer(true)
+    dispatch(setOrderProduct(convertOrderProduct(product)))
   }
   return (
     <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>

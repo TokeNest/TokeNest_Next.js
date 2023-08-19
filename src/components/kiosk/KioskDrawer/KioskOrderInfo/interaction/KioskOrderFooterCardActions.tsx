@@ -1,18 +1,17 @@
 'use client'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
-import { birdOvo } from '@/variables/mock/asciiArt'
-import { addCartBasket } from '@/redux/slice/cart-slice'
 import { CardActions } from '@mui/material'
 import React from 'react'
+import { addCartBasket } from '@/redux/slice/cart-slice'
 
 export default function KioskOrderFooterCardActions({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch<AppDispatch>()
   const { setIsShowDrawer } = useDrawerContext()
+  const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const handleAddCartBasket = () => {
-    console.log(birdOvo)
-    dispatch(addCartBasket([birdOvo]))
+    dispatch(addCartBasket(orderProduct))
     setIsShowDrawer(false)
   }
   return (

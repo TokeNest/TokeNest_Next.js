@@ -1,18 +1,25 @@
 'use client'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { setCalculateTotalPrice } from '@/utils/calculate-util'
 import { useAppSelector } from '@/redux/store'
+import { OptionGroup } from '@/variables/interface/kiosk-interface'
+import { calculateTotalPrice } from '@/utils/calculate-util'
 
-export default function ProductDetailInfoTotalPrice({ productPrice }: { productPrice: number }) {
-  const { optionsState, productQuantity } = useAppSelector(
-    ({ orderInfoReducer }) => orderInfoReducer
+export default function ProductDetailInfoTotalPrice({
+  optionGroups,
+  productPrice,
+}: {
+  optionGroups: OptionGroup[]
+  productPrice: number
+}) {
+  const [{ marketList }, { optionGroupsInfo, productQuantity }] = useAppSelector(
+    ({ marketReducer, orderProductReducer }) => [marketReducer, orderProductReducer]
   )
-
-  const calculateTotalPrice = setCalculateTotalPrice(optionsState, productPrice, productQuantity)
+  const calculatePrice =
+    calculateTotalPrice(productPrice, optionGroupsInfo, optionGroups, marketList) * productQuantity
   return (
     <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-      {calculateTotalPrice.toFixed(0)}
+      {calculatePrice.toFixed(0)}
     </Typography>
   )
 }

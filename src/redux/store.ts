@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import marketReducer from './slice/market-slice'
 import cartReducer from './slice/cart-slice'
-import orderInfoReducer from './slice/order-info-slice'
+import orderProductReducer from './slice/order-product-slice'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
     marketReducer,
-    orderInfoReducer,
     cartReducer,
+    orderProductReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })
