@@ -1,18 +1,50 @@
 import mongoose from 'mongoose'
 import * as process from 'process'
+import { GridFSBucket } from 'mongodb'
 
 const Schema = mongoose.Schema
 
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
+// file upload logic
+mongoose.connection.once('open', () => {
+  const gfs = new GridFSBucket(mongoose.connection.db, {
+    bucketName: 'uploads',
+  })
+})
+//
+// async function uploadFile(fileName: string, buffer, contentType: string) {
+//   const uploadStream = gfs.openUploadStream(fileName, {
+//     contentType,
+//   })
+//
+//   return await new Promise((resolve, reject) => {
+//     buffer
+//       .pipe(uploadStream)
+//       .on('error', reject)
+//       .on('finish', () => {
+//         resolve(true)
+//       })
+//   })
+// }
+
 export const db = {
+  File: fileModel(),
   Product: productModel(),
   User: userModel(),
   Address: addressModel(),
   Product_Option_Group: productOptionGroupModel(),
   Product_Option: productOptionModel(),
   Store: storeModel(),
+}
+
+function fileModel() {
+  const fileSchema = new Schema({
+    fileName: { type: String },
+    fileDir: { type: String },
+  })
+  return mongoose.models.File || mongoose.model('File', fileSchema)
 }
 
 function addressModel() {

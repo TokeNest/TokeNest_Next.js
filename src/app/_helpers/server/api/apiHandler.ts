@@ -15,10 +15,11 @@ function apiHandler(handler: any) {
     }
 
     wrappedHandler[method] = async (req: NextRequest, ...args: any) => {
-      try {
-        const json = await req.json()
-        req.json = () => json
-      } catch {}
+      // validate of body is json
+      // try {
+      //   const data = await req.json()
+      //   req.json = () => data
+      // } catch {}
 
       try {
         await jwtMiddleware(req)

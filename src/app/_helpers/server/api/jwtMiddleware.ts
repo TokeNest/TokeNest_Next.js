@@ -9,7 +9,7 @@ async function jwtMiddleware(req: NextRequest) {
   }
 
   const id = auth.verifyToken()
-  req.headers.set('userWalletAddress', id)
+  req.headers.set('user_id', id)
 }
 
 function isPublicPath(req: NextRequest) {
@@ -21,6 +21,7 @@ function isPublicPath(req: NextRequest) {
     'GET:/api/store',
     'POST:/api/product',
     'GET:/api/product',
+    'POST:/api/upload',
   ]
   const path = `${req.method}:${req.nextUrl.pathname}`
   return publicPaths.includes(path) || checkPathWithParams(path)
@@ -35,7 +36,6 @@ function checkPathWithParams(path: string) {
     'GET:/api/product/',
     'PUT:/api/product/',
     'DELETE:/api/product/',
-    'POST:/api/account/address/'
   ]
   pathsWithParam.forEach((pathWithParam) => {
     if (path.includes(pathWithParam)) {

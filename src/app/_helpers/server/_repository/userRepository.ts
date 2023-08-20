@@ -17,28 +17,35 @@ export const userRepository = {
   delete: _delete,
 }
 
-async function authenticate({ user_wallet_address, user_password }: {
-  user_wallet_address: string;
+async function authenticate({
+  user_wallet_address,
+  user_password,
+}: {
+  user_wallet_address: string
   user_password: string
 }) {
-  const user = await User.findOne({ user_wallet_address })
+  const user = await User.findOne({ user_wallet_address: user_wallet_address, deleted_date: null })
 
-  if (!(user && bcrypt.compareSync(user_password, user.user_password_hash))) {
+  if (!user) {
+    throw new Error('This User is not exist or already deleted.')
+  }
+  if (!bcrypt.compareSync(user_password, user.user_password_hash)) {
     throw 'Invalid Value: UserWalletAddress or password is incorrect'
   }
 
   // create jwt token that is valid for7 days
-  const token = jwt.sign({ sub: user.user_wallet_address }, process.env.JWT_SECRET!, {
+  const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET!, {
     expiresIn: '7d',
   })
 
   return {
+    user: user,
     token,
   }
 }
 
 async function getAll() {
-  const users = await User.find().populate('addresses')
+  const users = await User.find({ deleted_date: null }).populate('addresses')
   let result: userRequestDto[] = []
   for (const user of users) {
     const userDto = new userRequestDto({
@@ -61,7 +68,7 @@ async function getAll() {
 
 async function getById(id: string) {
   try {
-    const user = await User.findById(id).populate('addresses')
+    const user = await (await findUserWithIsDeleted(id)).populate('addresses')
     return new userRequestDto({
       userName: user.user_name,
       userPasswordHash: user.user_password_hash,
@@ -82,8 +89,8 @@ async function getById(id: string) {
 
 async function getCurrent() {
   try {
-    const currentUserWalletAddress = headers().get('userWalletAddress')
-    const user = await User.findOne({ user_wallet_address: currentUserWalletAddress }).populate('addresses')
+    const currentUserId = await headers().get('user_id')
+    const user = await User.findById(currentUserId).populate('addresses')
     return new userRequestDto({
       userName: user.user_name,
       userPasswordHash: user.user_password_hash,
@@ -108,7 +115,7 @@ async function create(params: any) {
     throw 'UserWalletAddress "' + params.user_wallet_address + '"is already taken'
   }
 
-  // user setting
+  // find setting
   const user = new User(params)
 
   // hash password
@@ -117,10 +124,11 @@ async function create(params: any) {
   }
 
   await user.save()
+  return user._id
 }
 
 async function update(id: string, params: any) {
-  const user = await User.findById(id)
+  const user = await findUserWithIsDeleted(id)
 
   // validate
   if (
@@ -135,19 +143,15 @@ async function update(id: string, params: any) {
     params.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
 
-  // copy params properties to user
+  // copy params properties to find
   Object.assign(user, params)
 
   await user.save()
+  return user._id
 }
 
 async function _softDelete(id: string) {
-  const user = await User.findById(id)
-
-  // validate
-  if (user.deleted_date !== null) {
-    throw 'UserWalletAddress "' + user.user_wallet_address + '"is Already Deleted'
-  }
+  const user = await findUserWithIsDeleted(id)
 
   // soft delete
   user.deleted_date = new Date()
@@ -157,4 +161,12 @@ async function _softDelete(id: string) {
 
 async function _delete(id: string) {
   await User.findByIdAndRemove(id)
+}
+
+async function findUserWithIsDeleted(id: string) {
+  const user = await User.findOne({ _id: id, deleted_date: null })
+  if (!user) {
+    throw new Error(`Invalid Value: This User -> ${id} id not exist or already deleted`)
+  }
+  return user
 }

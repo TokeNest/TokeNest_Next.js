@@ -37,11 +37,10 @@ async function create(user_id: string, params: any) {
     // setting relationship
     user.addresses.push(address)
     await user.save()
-
+    return address._id
   } catch (e) {
     throw 'Error with ' + e
   }
-
 }
 
 async function update(id: string, params: any) {
@@ -51,13 +50,11 @@ async function update(id: string, params: any) {
     Object.assign(address, params)
 
     await address.save()
-
   } catch (e) {
     throw 'Error Update Address with ' + e
   }
-
 }
 
 async function _delete(id: string) {
-    await Address.findByIdAndRemove(id)
+  await Address.findByIdAndRemove(id)
 }

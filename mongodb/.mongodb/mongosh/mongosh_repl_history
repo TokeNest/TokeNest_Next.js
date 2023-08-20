@@ -1,0 +1,18 @@
+db.changeUserPassword("root", "1111")
+db.system.users.find()
+db.getUsers()
+use admin
+exit
+db.getUsers()
+db.createUser( { user: "myUserAdmin", pwd: passwordPrompt(), /* or cleartext password*/ roles: [ { role: "userAdminAnyDatabase", db: "admin" }, { role: "readWriteAnyDatabase", db: "admin" }] } )
+use admin
+db.getUsers()
+db.users.find()
+db.users
+db.users()
+db.users
+show
+use admin
+db.adminCommand({shutdown: 1})
+usa dminadminCommand({shutdown: 1})
+usa dmin
