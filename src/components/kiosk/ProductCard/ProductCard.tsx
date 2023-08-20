@@ -10,28 +10,16 @@ import Image from 'next/image'
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <Card
-      sx={{
-        borderRadius: 3,
-        p: 0,
-      }}
-    >
+    <Card sx={{ borderRadius: 3, p: 0 }}>
       <ProductCardActionArea product={product}>
-        <CardMedia
-          sx={{
-            p: 1,
-            height: 200,
-          }}
-        >
+        <CardMedia sx={{ p: 1, height: 200 }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             <Image
               fill={true}
               src={product.productImageUrl}
               alt={product.productName}
               sizes="(max-width: 200px) 100vw"
-              style={{
-                objectFit: 'cover',
-              }}
+              style={{ objectFit: 'cover' }}
             />
           </div>
         </CardMedia>

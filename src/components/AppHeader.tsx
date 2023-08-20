@@ -1,4 +1,3 @@
-'use client'
 import * as React from 'react'
 import Toolbar from '@mui/material/Toolbar'
 import AppBar from '@mui/material/AppBar'
@@ -14,12 +13,7 @@ export default function AppHeader() {
   return (
     <AppBar
       position="fixed"
-      sx={{
-        bgcolor: 'primary.light',
-        zIndex: 1000,
-        height: '4rem',
-        alignItems: 'center',
-      }}
+      sx={{ bgcolor: 'primary.light', zIndex: 1000, height: '4rem', alignItems: 'center' }}
     >
       <Toolbar
         sx={{ width: '75rem', flexGrow: 1, display: 'flex', justifyContent: 'space-around' }}

@@ -21,20 +21,9 @@ export default function ProductCardHeader({
 
   return (
     <CardHeader
-      sx={{
-        px: 1,
-        py: 0,
-      }}
+      sx={{ px: 1, py: 0 }}
       title={productName}
-      subheader={
-        <Typography
-          sx={{
-            textAlign: 'right',
-          }}
-        >
-          {currentPrice.toFixed(0)}
-        </Typography>
-      }
+      subheader={<Typography sx={{ textAlign: 'right' }}>{currentPrice.toFixed(0)}</Typography>}
     />
   )
 }

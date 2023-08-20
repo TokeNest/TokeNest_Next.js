@@ -26,14 +26,7 @@ export function RadioOptionGroup({
   return (
     <Tabs value={tabValue} onChange={handleChange} centered>
       {options.map(({ optionName, optionId }, i) => (
-        <Tab
-          key={i}
-          value={optionId}
-          label={optionName}
-          sx={{
-            flexGrow: 1,
-          }}
-        />
+        <Tab key={i} value={optionId} label={optionName} sx={{ flexGrow: 1 }} />
       ))}
     </Tabs>
   )

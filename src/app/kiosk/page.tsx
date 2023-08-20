@@ -9,13 +9,7 @@ import ProductCard from '@/components/kiosk/ProductCard/ProductCard'
 export default async function KioskPage() {
   const { data: products }: { data: Product[] } = await axiosFetcher('kiosk')
   return (
-    <Card
-      sx={{
-        height: 1,
-        bgcolor: 'primary.light',
-        borderRadius: 2,
-      }}
-    >
+    <Card sx={{ height: 1, bgcolor: 'primary.light', borderRadius: 2 }}>
       <CardContent sx={{ px: 4 }}>
         <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4}>
           {products.map((product) => (

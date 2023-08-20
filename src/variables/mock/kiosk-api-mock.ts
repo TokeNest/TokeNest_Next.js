@@ -62,6 +62,42 @@ const mockDefaultOptions: OptionGroup[] = [
       },
     ],
   },
+  {
+    optionGroupId: '11',
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '얼음',
+    defaultOptionId: '12',
+    options: [
+      {
+        optionId: '12',
+        optionName: '적게',
+        optionPrice: 0,
+      },
+      {
+        optionId: '13',
+        optionName: '많이',
+        optionPrice: 500,
+      },
+    ],
+  },
+  {
+    optionGroupId: '14',
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '물',
+    defaultOptionId: '15',
+    options: [
+      {
+        optionId: '15',
+        optionName: '적게',
+        optionPrice: 0,
+      },
+      {
+        optionId: '16',
+        optionName: '많이',
+        optionPrice: 500,
+      },
+    ],
+  },
 ]
 export const mockProductData: Product[] = [
   {

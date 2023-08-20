@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Unstable_Grid2'
 import { ButtonGroup, CardActions } from '@mui/material'
 import * as React from 'react'
-import QuantityButtonGroup from '@/components/kiosk/KioskDrawer/KioskProductInfo/KioskProductQuantityButton/interaction/QuantityButtonGroup'
+import { QuantityButtonGroup } from '@/components/kiosk/KioskDrawer/order/interaction'
 
-export default function KioskProductQuantityButton() {
+export default function OrderQuantityButton() {
   return (
     <Grid xs={12}>
       <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
