@@ -2,6 +2,7 @@ import { apiHandler } from '@/app/_helpers/server/api'
 import { userRepository } from '@/app/_helpers/server/_repository'
 import { cookies } from 'next/headers'
 import joi from 'joi'
+import { updateAccountInfo } from '@/variables/interface/api/account'
 
 module.exports = apiHandler({
   GET: getById,
@@ -14,7 +15,7 @@ async function getById(req: Request, { params: { id } }: any) {
 }
 
 async function updateUser(req: Request, { params: { id } }: any) {
-  const body = await req.json()
+  const body: updateAccountInfo = await req.json()
   return await userRepository.update(id, body)
 }
 

@@ -11,8 +11,8 @@ export const storeRepository = {
   delete: _delete,
 }
 
-async function getAll() {
-  return await Store.find({ deleted_date: null })
+function getAll() {
+  return Store.find({ deleted_date: null })
 }
 
 async function getById(id: string) {

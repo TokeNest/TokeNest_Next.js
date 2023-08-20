@@ -8,7 +8,7 @@ module.exports = apiHandler({
 })
 
 async function getAll(req: Request) {
-  return await storeRepository.getAll()
+  return storeRepository.getAll()
 }
 
 async function create(req: Request) {

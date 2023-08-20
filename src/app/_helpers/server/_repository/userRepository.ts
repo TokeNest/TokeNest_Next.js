@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { headers } from 'next/headers'
 import { userRequestDto } from '@/app/_helpers/server/dto/user/userRequestDto'
+import { AccountInfo, updateAccountInfo } from '@/variables/interface/api/account'
 
 const User = db.User
 
@@ -38,17 +39,13 @@ async function authenticate({
     expiresIn: '7d',
   })
 
-  return {
-    user: user,
-    token,
-  }
+  return { user, token }
 }
 
 async function getAll() {
   const users = await User.find({ deleted_date: null }).populate('addresses')
-  let result: userRequestDto[] = []
-  for (const user of users) {
-    const userDto = new userRequestDto({
+  return users.map((user) => {
+    return new userRequestDto({
       userName: user.user_name,
       userPasswordHash: user.user_password_hash,
       userPhone: user.user_phone,
@@ -61,9 +58,7 @@ async function getAll() {
       })),
       userAccountType: user.user_account_type,
     })
-    result.push(userDto)
-  }
-  return result
+  })
 }
 
 async function getById(id: string) {
@@ -89,7 +84,7 @@ async function getById(id: string) {
 
 async function getCurrent() {
   try {
-    const currentUserId = await headers().get('user_id')
+    const currentUserId = headers().get('user_id')
     const user = await User.findById(currentUserId).populate('addresses')
     return new userRequestDto({
       userName: user.user_name,
@@ -109,7 +104,7 @@ async function getCurrent() {
   }
 }
 
-async function create(params: any) {
+async function create(params: AccountInfo) {
   // validate
   if (await User.findOne({ user_wallet_address: params.user_wallet_address })) {
     throw 'UserWalletAddress "' + params.user_wallet_address + '"is already taken'
@@ -127,7 +122,7 @@ async function create(params: any) {
   return user._id
 }
 
-async function update(id: string, params: any) {
+async function update(id: string, params: updateAccountInfo) {
   const user = await findUserWithIsDeleted(id)
 
   // validate
