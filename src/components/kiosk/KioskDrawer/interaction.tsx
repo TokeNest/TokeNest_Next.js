@@ -7,7 +7,7 @@ import { AppDispatch, useAppSelector } from '@/redux/store'
 import { addCartBasket } from '@/redux/slice/cart-slice'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
-  const { isShowDrawer } = useDrawerContext()
+  const { drawerState } = useDrawerContext()
   return (
     <Drawer
       anchor="right"
@@ -20,7 +20,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
-      open={isShowDrawer}
+      open={drawerState.isShow}
       hideBackdrop={false}
       keepMounted={false}
     >
@@ -31,12 +31,13 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 
 export function KioskFooterCardActions({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch<AppDispatch>()
-  const { setIsShowDrawer } = useDrawerContext()
+  const { setDrawerState } = useDrawerContext()
   const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const handleAddCartBasket = () => {
     dispatch(addCartBasket(orderProduct))
-    setIsShowDrawer(false)
+    setDrawerState((state) => ({ isShow: false, type: state.type }))
   }
+
   return (
     <CardActions sx={{ height: 1 / 10, alignItems: 'stretch' }} onClick={handleAddCartBasket}>
       {children}
@@ -45,9 +46,12 @@ export function KioskFooterCardActions({ children }: { children: React.ReactNode
 }
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
-  const { setIsShowDrawer } = useDrawerContext()
+  const { setDrawerState } = useDrawerContext()
   return (
-    <IconButton size="large" onClick={() => setIsShowDrawer(false)}>
+    <IconButton
+      size="large"
+      onClick={() => setDrawerState((state) => ({ isShow: false, type: state.type }))}
+    >
       {children}
     </IconButton>
   )

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
+import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 
 export default function ProductCardActionArea({
   children,
@@ -16,10 +17,10 @@ export default function ProductCardActionArea({
   product: Product
 }) {
   const dispatch = useDispatch<AppDispatch>()
-  const { setIsShowDrawer, setProduct } = useDrawerContext()
+  const { setDrawerState, setProduct } = useDrawerContext()
   const clickEvent = () => {
     setProduct(product)
-    setIsShowDrawer(true)
+    setDrawerState({ isShow: true, type: DRAWER_TYPE.ORDER })
     dispatch(setOrderProduct(convertOrderProduct(product)))
   }
   return (
