@@ -1,4 +1,4 @@
-'use component'
+'use client'
 import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 import * as React from 'react'
 import { useCallback, useEffect } from 'react'

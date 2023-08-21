@@ -1,4 +1,4 @@
-'use component'
+'use client'
 import CardActionArea from '@mui/material/CardActionArea'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import React from 'react'

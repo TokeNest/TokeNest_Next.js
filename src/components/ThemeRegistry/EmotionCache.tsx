@@ -1,4 +1,4 @@
-'use component'
+'use client'
 
 import * as React from 'react'
 import type { EmotionCache, Options as OptionsOfCreateCache } from '@emotion/cache'

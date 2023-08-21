@@ -1,4 +1,4 @@
-'use component'
+'use client'
 import Typography from '@mui/material/Typography'
 import { CardHeader } from '@mui/material'
 import * as React from 'react'

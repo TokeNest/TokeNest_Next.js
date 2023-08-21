@@ -1,4 +1,4 @@
-'use component'
+'use client'
 
 import React, { createContext, useContext, useState } from 'react'
 import { Product } from '@/variables/interface/kiosk-interface'
