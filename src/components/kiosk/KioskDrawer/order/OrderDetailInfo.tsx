@@ -1,4 +1,4 @@
-'use client'
+'use component'
 import * as React from 'react'
 import { CardHeader, CardMedia, Paper } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'

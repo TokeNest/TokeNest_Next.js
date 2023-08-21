@@ -1,10 +1,10 @@
-'use client'
+'use component'
 import Typography from '@mui/material/Typography'
 import { CardHeader } from '@mui/material'
 import * as React from 'react'
 import { useCallback } from 'react'
 import { Product } from '@/variables/interface/kiosk-interface'
-import { getCurrentPrice } from '@/utils/calculate-util'
+import { getCurrentPrice } from '@/utils/component/calculate-util'
 import { useAppSelector } from '@/redux/store'
 
 export default function ProductCardHeader({

@@ -1,7 +1,7 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
+import { addressService } from '@/app/_helpers/server/_service/addressService'
 
 module.exports = apiHandler({
   POST: create,
@@ -9,8 +9,7 @@ module.exports = apiHandler({
 })
 
 async function create(req: Request, { params: { id } }: any) {
-  const body = await req.json()
-  return await addressRepository.create(id, body)
+  return addressService.join(id, await req.json())
 }
 
 create.schema = joi.object({
@@ -20,5 +19,5 @@ create.schema = joi.object({
 })
 
 async function getByUserId(req: Request, { params: { id } }: any) {
-  return await addressRepository.getByUserId(id)
+  return addressService.getAddressByUserId(id)
 }

@@ -1,10 +1,10 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userRepository } from '@/app/_helpers/server/_repository'
+import { userService } from '@/app/_helpers/server/_service/userService'
 
 module.exports = apiHandler({
-  GET: getCurrent
+  GET: getCurrent,
 })
 
 async function getCurrent() {
-  return await userRepository.getCurrent()
+  return userService.getCurrentUser()
 }

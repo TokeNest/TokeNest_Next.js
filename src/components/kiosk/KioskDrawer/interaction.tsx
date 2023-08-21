@@ -1,4 +1,4 @@
-'use client'
+'use component'
 import { CardActions, Drawer, IconButton } from '@mui/material'
 import * as React from 'react'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'

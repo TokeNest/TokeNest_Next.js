@@ -2,7 +2,7 @@ import React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2'
-import { axiosFetcher } from '@/utils/api-fetcher-util'
+import { axiosFetcher } from '@/utils/component/api-fetcher-util'
 import { Product } from '@/variables/interface/kiosk-interface'
 import ProductCard from '@/components/kiosk/ProductCard/ProductCard'
 

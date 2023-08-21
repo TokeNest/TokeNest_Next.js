@@ -1,16 +1,14 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userRepository } from '@/app/_helpers/server/_repository'
-import { AccountInfo } from '@/variables/interface/api/account'
+import { userService } from '@/app/_helpers/server/_service/userService'
 
 module.exports = apiHandler({
   POST: register,
 })
 
 async function register(req: Request) {
-  const body: AccountInfo = await req.json()
-  return await userRepository.create(body)
+  return userService.join(await req.json())
 }
 
 register.schema = joi.object({

@@ -29,16 +29,6 @@ mongoose.connection.once('open', () => {
 //   })
 // }
 
-export const db = {
-  File: fileModel(),
-  Product: productModel(),
-  User: userModel(),
-  Address: addressModel(),
-  Product_Option_Group: productOptionGroupModel(),
-  Product_Option: productOptionModel(),
-  Store: storeModel(),
-}
-
 function fileModel() {
   const fileSchema = new Schema({
     fileName: { type: String },
@@ -251,4 +241,14 @@ function storeModel() {
     },
   })
   return mongoose.models.Store || mongoose.model('Store', schema)
+}
+
+export const db = {
+  File: fileModel(),
+  Product: productModel(),
+  User: userModel(),
+  Address: addressModel(),
+  Product_Option_Group: productOptionGroupModel(),
+  Product_Option: productOptionModel(),
+  Store: storeModel(),
 }

@@ -1,4 +1,4 @@
-'use client'
+'use component'
 import { OptionCheckboxGroup, OptionRadioGroup } from '@/variables/interface/kiosk-interface'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import * as React from 'react'

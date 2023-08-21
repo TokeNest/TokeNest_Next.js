@@ -1,4 +1,4 @@
-'use client'
+'use component'
 
 import { Provider } from 'react-redux'
 import React from 'react'

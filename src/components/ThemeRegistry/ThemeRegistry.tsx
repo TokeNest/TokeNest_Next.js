@@ -1,4 +1,4 @@
-'use client'
+'use component'
 
 import * as React from 'react'
 import { ThemeProvider } from '@mui/material/styles'

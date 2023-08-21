@@ -1,4 +1,4 @@
-'use client'
+'use component'
 import * as React from 'react'
 import Badge from '@mui/material/Badge'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'

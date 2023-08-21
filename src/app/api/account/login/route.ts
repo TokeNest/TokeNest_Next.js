@@ -1,7 +1,7 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userRepository } from '@/app/_helpers/server/_repository'
 import { cookies } from 'next/headers'
 import joi from 'joi'
+import { userService } from '@/app/_helpers/server/_service/userService'
 
 module.exports = apiHandler({
   POST: login,
@@ -9,13 +9,12 @@ module.exports = apiHandler({
 
 async function login(req: Request) {
   const body = await req.json()
-  const { user, token } = await userRepository.authenticate(body)
+  const { user, token } = await userService.authenticate(body)
 
   // return jwt token in http only cookie
   cookies().set('authorization', token, { httpOnly: true })
 
-  return user
-
+  return user._id
 }
 
 login.schema = joi.object({

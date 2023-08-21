@@ -2,7 +2,7 @@ import { apiHandler } from '@/app/_helpers/server/api'
 import { userRepository } from '@/app/_helpers/server/_repository'
 import { cookies } from 'next/headers'
 import joi from 'joi'
-import { updateAccountInfo } from '@/variables/interface/api/account'
+import { userService } from '@/app/_helpers/server/_service/userService'
 
 module.exports = apiHandler({
   GET: getById,
@@ -11,12 +11,11 @@ module.exports = apiHandler({
 })
 
 async function getById(req: Request, { params: { id } }: any) {
-  return await userRepository.getById(id)
+  return await userService.getUserById(id)
 }
 
 async function updateUser(req: Request, { params: { id } }: any) {
-  const body: updateAccountInfo = await req.json()
-  return await userRepository.update(id, body)
+  return await userService.update(id, await req.json())
 }
 
 updateUser.schema = joi.object({
@@ -39,10 +38,11 @@ async function _delete(req: Request, { params: { id } }: any) {
   // auto logout and soft delete if deleted self
   if (id === req.headers.get('user_id')) {
     cookies().delete('authorization')
-    await userRepository.softDelete(id)
+    await userService.softDelete(id)
     return { deleteSelf: true }
   }
 
+  // hard delete if manager try deleted
   await userRepository.delete(id)
   return { manager: true }
 }

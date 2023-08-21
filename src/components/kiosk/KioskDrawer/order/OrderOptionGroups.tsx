@@ -1,4 +1,4 @@
-'use client'
+'use component'
 import { Box, Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'

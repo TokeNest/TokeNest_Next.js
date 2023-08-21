@@ -1,60 +1,43 @@
 import { db } from '@/app/_helpers/server'
+import { UserInfo } from '@/variables/interface/api/user'
+import { AddressInfo } from '@/variables/interface/api/address'
 
-const User = db.User
 const Address = db.Address
+const User = db.User
+
+const getById = async function (id: string) {
+  return Address.findById(id).exec()
+}
+
+const getByUser = async function (userInfo: UserInfo) {
+  return Address.find({ user: new User({ ...userInfo }) }).exec()
+}
+
+const save = async function (id: string, addressInfo: AddressInfo) {
+  const user = await User.findOne({ _id: id, deleted_date: null }).exec()
+  const address = new Address({ user, ...addressInfo })
+  address.save()
+  // setting relationship
+  user.addresses.push(address)
+  user.save()
+  return address._id
+}
+
+const update = async function (id: string, addressInfo: AddressInfo) {
+  const address = await getById(id)
+  Object.assign(address, addressInfo)
+  return address.save()._id
+}
+
+const _delete = async function (id: string) {
+  await Address.findByIdAndRemove(id).exec()
+  return id
+}
 
 export const addressRepository = {
-  getByUserId,
   getById,
-  create,
+  getByUser,
+  save,
   update,
   delete: _delete,
-}
-
-async function getById(id: string) {
-  try {
-    return await Address.findById(id)
-  } catch (e) {
-    throw 'Address not found'
-  }
-}
-async function getByUserId(userId: string) {
-  try {
-    const user = await User.findById(userId)
-    return await Address.find().where({ user: user })
-  } catch (e) {
-    throw 'Address not found'
-  }
-}
-
-async function create(user_id: string, params: any) {
-  try {
-    const user = new User(await User.findById(user_id))
-    console.log(params)
-    const address = new Address({ user: user, ...params })
-    await address.save()
-
-    // setting relationship
-    user.addresses.push(address)
-    await user.save()
-    return address._id
-  } catch (e) {
-    throw 'Error with ' + e
-  }
-}
-
-async function update(id: string, params: any) {
-  try {
-    const address = await getById(id)
-
-    Object.assign(address, params)
-
-    await address.save()
-  } catch (e) {
-    throw 'Error Update Address with ' + e
-  }
-}
-
-async function _delete(id: string) {
-  await Address.findByIdAndRemove(id)
 }
