@@ -5,6 +5,9 @@ import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { addCartBasket } from '@/redux/slice/cart-slice'
+import Typography from '@mui/material/Typography'
+import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
+import Button from '@mui/material/Button'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
   const { drawerState } = useDrawerContext()
@@ -54,5 +57,28 @@ export function KioskHeaderBackButton({ children }: { children: React.ReactNode 
     >
       {children}
     </IconButton>
+  )
+}
+
+export function KioskHeaderTypography() {
+  const { drawerState } = useDrawerContext()
+  return (
+    <Typography variant="h4">
+      {drawerState.type === DRAWER_TYPE.ORDER ? '주문 옵션' : '장바구니'}
+    </Typography>
+  )
+}
+export function KioskFooterTypography() {
+  const { drawerState } = useDrawerContext()
+  const isOrderType = drawerState.type === DRAWER_TYPE.ORDER
+  return (
+    <Button
+      variant={isOrderType ? 'outlined' : 'contained'}
+      size="large"
+      color="primary"
+      sx={{ flexGrow: 1 }}
+    >
+      {isOrderType ? '장바구니 담기' : '결제하기'}
+    </Button>
   )
 }

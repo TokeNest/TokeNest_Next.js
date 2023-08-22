@@ -1,7 +1,9 @@
 import { CardHeader } from '@mui/material'
-import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { KioskHeaderBackButton } from '@/components/kiosk/KioskDrawer/interaction'
+import {
+  KioskHeaderBackButton,
+  KioskHeaderTypography,
+} from '@/components/kiosk/KioskDrawer/interaction'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 
 export default function KioskHeader() {
@@ -12,7 +14,7 @@ export default function KioskHeader() {
           <ArrowBackIosNewRoundedIcon />
         </KioskHeaderBackButton>
       }
-      title={<Typography variant="h4">주문 옵션</Typography>}
+      title={<KioskHeaderTypography />}
       sx={{
         height: 1 / 10,
         '& .MuiCardHeader-action': {
