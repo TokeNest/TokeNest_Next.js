@@ -21,7 +21,8 @@ function isPublicPath(req: NextRequest) {
     'GET:/api/store',
     'POST:/api/product',
     'GET:/api/product',
-    'POST:/api/upload',
+    'POST:/api/file',
+    'GET:/api/file',
   ]
   const path = `${req.method}:${req.nextUrl.pathname}`
   return publicPaths.includes(path) || checkPathWithParams(path)
