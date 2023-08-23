@@ -7,7 +7,7 @@ import {
   TokenOption,
 } from '@/variables/interface/kiosk-interface'
 
-const getOptionMarketPrice = (
+export const getOptionMarketPrice = (
   optionPrice: number,
   tokenOption: TokenOption | undefined,
   marketList: MarketInfo[]
