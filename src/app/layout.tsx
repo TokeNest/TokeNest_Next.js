@@ -17,12 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 component="main"
                 maxWidth="lg"
                 disableGutters
-                sx={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  pt: '4rem',
-                  minHeight: 1920,
-                }}
+                sx={{ position: 'relative', overflow: 'hidden', pt: '4rem', minHeight: 1920 }}
               >
                 {children}
               </Container>

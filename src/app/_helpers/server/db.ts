@@ -6,13 +6,21 @@ const Schema = mongoose.Schema
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
-export const db = {
-  Product: productModel(),
-  User: userModel(),
-  Address: addressModel(),
-  Product_Option_Group: productOptionGroupModel(),
-  Product_Option: productOptionModel(),
-  Store: storeModel(),
+function fileModel() {
+  const fileSchema = new Schema(
+    {
+      fileName: { type: String, required: true },
+      fileDir: { type: String, required: true },
+      deleted_date: { type: Date, default: null },
+    },
+    {
+      timestamps: {
+        createdAt: 'created_date',
+        updateAt: 'updated_date',
+      },
+    }
+  )
+  return mongoose.models.File || mongoose.model('File', fileSchema)
 }
 
 function addressModel() {
@@ -51,8 +59,7 @@ function userModel() {
   const userSchema = new Schema(
     {
       user_name: { type: String, required: true },
-      user_hash: { type: String, required: true },
-      user_password: { type: String, required: true },
+      user_password_hash: { type: String, required: true },
       user_phone: { type: String, required: true },
       user_email: { type: String, required: true },
       user_wallet_address: { type: String, unique: true, required: true },
@@ -62,7 +69,7 @@ function userModel() {
           ref: 'Address',
         },
       ],
-      user_account_Type: { type: String, required: true },
+      user_account_type: { type: String, required: true },
       deleted_date: { type: Date, default: null },
     },
     {
@@ -233,4 +240,14 @@ function storeModel() {
     },
   })
   return mongoose.models.Store || mongoose.model('Store', schema)
+}
+
+export const db = {
+  File: fileModel(),
+  Product: productModel(),
+  User: userModel(),
+  Address: addressModel(),
+  Product_Option_Group: productOptionGroupModel(),
+  Product_Option: productOptionModel(),
+  Store: storeModel(),
 }

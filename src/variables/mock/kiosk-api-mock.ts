@@ -5,13 +5,13 @@ import { TOKEN } from '@/variables/enum/web3-enum'
 
 const mockDefaultOptions: OptionGroup[] = [
   {
-    optionGroupId: 0,
+    optionGroupId: '1',
     optionGroupType: OPTION_TYPE.RADIO,
     optionGroupName: '사이즈',
-    defaultOptionId: 0,
+    defaultOptionId: '3',
     options: [
       {
-        optionId: 0,
+        optionId: '3',
         optionName: 'Short',
         optionInfo: '237ml',
         optionPrice: 100,
@@ -21,13 +21,13 @@ const mockDefaultOptions: OptionGroup[] = [
         },
       },
       {
-        optionId: 1,
+        optionId: '4',
         optionName: 'Tall',
         optionInfo: '355ml',
         optionPrice: 500,
       },
       {
-        optionId: 2,
+        optionId: '5',
         optionName: 'Grande',
         optionInfo: '473ml',
         optionPrice: 0,
@@ -37,7 +37,7 @@ const mockDefaultOptions: OptionGroup[] = [
         },
       },
       {
-        optionId: 3,
+        optionId: '6',
         optionName: 'Venti',
         optionInfo: '591ml',
         optionPrice: 1500,
@@ -45,19 +45,55 @@ const mockDefaultOptions: OptionGroup[] = [
     ],
   },
   {
-    optionGroupId: 1,
+    optionGroupId: '7',
     optionGroupType: OPTION_TYPE.RADIO,
     optionGroupName: '온도',
-    defaultOptionId: 0,
+    defaultOptionId: '9',
     options: [
       {
-        optionId: 0,
+        optionId: '9',
         optionName: 'ICE',
         optionPrice: 0,
       },
       {
-        optionId: 1,
+        optionId: '10',
         optionName: 'HOT',
+        optionPrice: 500,
+      },
+    ],
+  },
+  {
+    optionGroupId: '11',
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '얼음',
+    defaultOptionId: '12',
+    options: [
+      {
+        optionId: '12',
+        optionName: '적게',
+        optionPrice: 0,
+      },
+      {
+        optionId: '13',
+        optionName: '많이',
+        optionPrice: 500,
+      },
+    ],
+  },
+  {
+    optionGroupId: '14',
+    optionGroupType: OPTION_TYPE.RADIO,
+    optionGroupName: '물',
+    defaultOptionId: '15',
+    options: [
+      {
+        optionId: '15',
+        optionName: '적게',
+        optionPrice: 0,
+      },
+      {
+        optionId: '16',
+        optionName: '많이',
         optionPrice: 500,
       },
     ],
@@ -65,7 +101,7 @@ const mockDefaultOptions: OptionGroup[] = [
 ]
 export const mockProductData: Product[] = [
   {
-    productId: 0,
+    productId: '11',
     productName: '아메리카노',
     productIntroduction: '쓰다 😀',
     productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -74,7 +110,7 @@ export const mockProductData: Product[] = [
     optionGroups: mockDefaultOptions,
   },
   {
-    productId: 1,
+    productId: '12',
     productName: '에스프레소',
     productIntroduction: '맛없다 😎',
     productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -83,7 +119,7 @@ export const mockProductData: Product[] = [
     optionGroups: mockDefaultOptions,
   },
   {
-    productId: 2,
+    productId: '13',
     productName: '카페라떼',
     productIntroduction: '맛있다 😋',
     productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -92,7 +128,7 @@ export const mockProductData: Product[] = [
     optionGroups: [],
   },
   {
-    productId: 3,
+    productId: '14',
     productName: '콜드브루',
     productIntroduction: '멋있다 😋',
     productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',
@@ -101,7 +137,7 @@ export const mockProductData: Product[] = [
     optionGroups: [],
   },
   {
-    productId: 4,
+    productId: '15',
     productName: '레쓰비',
     productIntroduction: '으악 😋',
     productInfo: '추운 겨울에는 따뜻한 커피와 티를 마셔야지요.',

@@ -17,7 +17,7 @@ async function validateMiddleware(req: Request, schema: joi.ObjectSchema) {
   const { error, value } = schema.validate(body, options)
 
   if (error) {
-    throw `Validatino error : ${error.details.map((x) => x.message).join(', ')}`
+    throw `Validation error : ${error.details.map((x) => x.message).join(', ')}`
   }
 
   req.json = () => value

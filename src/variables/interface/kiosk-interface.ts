@@ -1,6 +1,8 @@
 import { TOKEN } from '@/variables/enum/web3-enum'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 
+type ID = string
+
 /**
  * Product에서 카테고리 분류
  * */
@@ -12,7 +14,7 @@ export interface Category {
  * Product에 관한 정보
  * */
 export interface Product {
-  productId: number
+  productId: ID
   productName: string
   productIntroduction: string
   productInfo: string
@@ -27,20 +29,20 @@ export type OptionGroup = OptionRadioGroup | OptionCheckboxGroup
  * Product에서 사용하는 옵션 정보
  * */
 export interface OptionRadioGroup {
-  optionGroupId: number
+  optionGroupId: ID
   optionGroupType: OPTION_TYPE.RADIO
   optionGroupName: string
-  defaultOptionId: number
+  defaultOptionId: ID
   options: Option[]
 }
 /**
  * Product에서 사용하는 옵션 정보
  * */
 export interface OptionCheckboxGroup {
-  optionGroupId: number
+  optionGroupId: ID
   optionGroupType: OPTION_TYPE.CHECKBOX
   optionGroupName: string
-  defaultOptionIds: number[]
+  defaultOptionIds: ID[]
   isRequire: boolean
   options: Option[]
 }
@@ -49,7 +51,7 @@ export interface OptionCheckboxGroup {
  * 체크박스 옵션 구성
  * */
 export interface Option {
-  optionId: number
+  optionId: ID
   optionName: string
   optionInfo?: string
   optionPrice: number
@@ -64,15 +66,18 @@ export interface TokenOption {
   tokenRatio: number
 }
 
-//
-// export interface OrderProduct {
-//   productId: number
-//   productAmount: number
-//   options: Option[]
-// }
-//
-// export interface Order {
-//   orderNum: number // 주문번호
-//   orderStatus: string
-//   orderList: OrderProduct[]
-// }
+export interface OrderProduct {
+  productId: ID
+  productQuantity: number
+  optionGroupsInfo: OrderProductOptionGroup[]
+}
+
+export interface OrderProductOptionGroup {
+  optionGroupId: ID
+  optionIds: ID[]
+}
+export interface CartOrderProduct {
+  storeId?: ID
+  blockHeight: number
+  orderProducts: OrderProduct[]
+}
