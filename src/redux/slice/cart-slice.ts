@@ -15,8 +15,11 @@ export const cart = createSlice({
     addCartBasket: (state, { payload }: { payload: OrderProduct }) => {
       state.basket = [...state.basket, payload]
     },
+    clearCartBasket: (state) => {
+      state.basket = []
+    },
   },
 })
 
-export const { addCartBasket } = cart.actions
+export const { addCartBasket, clearCartBasket } = cart.actions
 export default cart.reducer
