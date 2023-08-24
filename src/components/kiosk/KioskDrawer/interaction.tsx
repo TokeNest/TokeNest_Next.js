@@ -32,7 +32,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
   )
 }
 
-export function KioskFooterCardActions({ children }: { children: React.ReactNode }) {
+export function KioskFooterCardActions() {
   const dispatch = useDispatch<AppDispatch>()
   const { drawerState, setDrawerState } = useDrawerContext()
   const isOrder = drawerState.type === DRAWER_TYPE.ORDER
