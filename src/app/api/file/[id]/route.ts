@@ -19,7 +19,7 @@ async function upload(req: Request, { params: { id } }: any) {
   const storeId = (await productRepository.getById(id)).store_id.toString()
 
   // Check if the directory exists, and if not, create it
-  const storePath = `./src/images/${storeId}`
+  const storePath = `./src/public/images/${storeId}`
 
   try {
     await access(storePath)
