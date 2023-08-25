@@ -100,19 +100,12 @@ function productModel() {
       product_status: { type: String, required: true },
       product_intro: { type: String, required: true },
       product_price: { type: Number, required: true },
-      product_category: { type: String, required: true },
       deleted_date: { type: Date, default: null },
       store_id: {
         type: Schema.Types.ObjectId,
         ref: 'Store',
         required: true,
       },
-      option_groups: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Product_Option_Group',
-        },
-      ],
     },
     {
       timestamps: {
@@ -151,12 +144,6 @@ function productOptionGroupModel() {
         ref: 'Product',
         required: true,
       },
-      options: [
-        {
-          type: Schema.Types.ObjectId,
-          ref: 'Product_Option',
-        },
-      ],
     },
     {
       timestamps: {

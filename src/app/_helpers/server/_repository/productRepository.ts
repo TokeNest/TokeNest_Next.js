@@ -4,7 +4,6 @@ const Product = db.Product
 
 export const productRepository = {
   getAll,
-  getAllByStoreId,
   getById,
   create,
   update,
@@ -14,14 +13,6 @@ export const productRepository = {
 
 async function getAll() {
   return await Product.find({ deleted_date: null })
-}
-
-async function getAllByStoreId(id: string) {
-  return await Product.find({ deleted_date: null, store_id: id }).populate({
-    path: 'option_groups',
-    match: { deleted_date: { $eq: null } },
-    populate: { path: 'options', match: { deleted_date: { $eq: null } } },
-  })
 }
 
 async function getById(id: string) {
