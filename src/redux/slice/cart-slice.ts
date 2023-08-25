@@ -13,10 +13,22 @@ export const cart = createSlice({
   initialState,
   reducers: {
     addCartBasket: (state, { payload }: { payload: OrderProduct }) => {
-      state.basket = [...state.basket, payload]
+      const index = state.basket.findIndex(
+        (orderProduct) =>
+          orderProduct.productId === payload.productId &&
+          JSON.stringify(orderProduct.optionGroupsInfo) === JSON.stringify(payload.optionGroupsInfo)
+      )
+      if (index === -1) {
+        state.basket = [...state.basket, payload]
+      } else {
+        state.basket[index].productQuantity += payload.productQuantity
+      }
+    },
+    clearCartBasket: (state) => {
+      state.basket = []
     },
   },
 })
 
-export const { addCartBasket } = cart.actions
+export const { addCartBasket, clearCartBasket } = cart.actions
 export default cart.reducer

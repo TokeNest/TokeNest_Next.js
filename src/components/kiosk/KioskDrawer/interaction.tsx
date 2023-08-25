@@ -4,10 +4,13 @@ import * as React from 'react'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { addCartBasket } from '@/redux/slice/cart-slice'
+import { addCartBasket, clearCartBasket } from '@/redux/slice/cart-slice'
+import Typography from '@mui/material/Typography'
+import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
+import Button from '@mui/material/Button'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
-  const { isShowDrawer } = useDrawerContext()
+  const { drawerState } = useDrawerContext()
   return (
     <Drawer
       anchor="right"
@@ -20,7 +23,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
-      open={isShowDrawer}
+      open={drawerState.isShow}
       hideBackdrop={false}
       keepMounted={false}
     >
@@ -29,26 +32,46 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
   )
 }
 
-export function KioskFooterCardActions({ children }: { children: React.ReactNode }) {
+export function KioskFooterCardActions() {
   const dispatch = useDispatch<AppDispatch>()
-  const { setIsShowDrawer } = useDrawerContext()
+  const { drawerState, setDrawerState } = useDrawerContext()
+  const isOrder = drawerState.type === DRAWER_TYPE.ORDER
   const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
-  const handleAddCartBasket = () => {
-    dispatch(addCartBasket(orderProduct))
-    setIsShowDrawer(false)
+  const handleCartBasket = () => {
+    dispatch(isOrder ? addCartBasket(orderProduct) : clearCartBasket())
+    setDrawerState((state) => ({ isShow: false, type: state.type }))
   }
   return (
-    <CardActions sx={{ height: 1 / 10, alignItems: 'stretch' }} onClick={handleAddCartBasket}>
-      {children}
+    <CardActions sx={{ height: 1 / 10 }} onClick={handleCartBasket}>
+      <Button
+        variant={isOrder ? 'outlined' : 'contained'}
+        size="large"
+        color="primary"
+        sx={{ width: 1, height: 1 }}
+      >
+        {isOrder ? '장바구니 담기' : '결제하기'}
+      </Button>
     </CardActions>
   )
 }
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
-  const { setIsShowDrawer } = useDrawerContext()
+  const { setDrawerState } = useDrawerContext()
   return (
-    <IconButton size="large" onClick={() => setIsShowDrawer(false)}>
+    <IconButton
+      size="large"
+      onClick={() => setDrawerState((state) => ({ isShow: false, type: state.type }))}
+    >
       {children}
     </IconButton>
+  )
+}
+
+export function KioskHeaderTypography() {
+  const { drawerState } = useDrawerContext()
+  return (
+    <Typography variant="h4">
+      {drawerState.type === DRAWER_TYPE.ORDER ? '주문 옵션' : '장바구니'}
+    </Typography>
   )
 }

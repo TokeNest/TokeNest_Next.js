@@ -31,6 +31,7 @@ export default function Web3Provider({ children }: { children: React.ReactNode }
     ) as unknown as FactoryContractContext
     const { data }: { data: MarketInfo[] } = await axiosFetcher('web3/market')
     dispatch(setMarketList(data))
+
     const pairList = data.map(({ market }) => market)
 
     const subscription = await web3.eth.subscribe('newBlockHeaders')

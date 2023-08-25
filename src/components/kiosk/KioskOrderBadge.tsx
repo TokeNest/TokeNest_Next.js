@@ -2,24 +2,22 @@
 import * as React from 'react'
 import Badge from '@mui/material/Badge'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import SaveIcon from '@mui/icons-material/Save'
-import PrintIcon from '@mui/icons-material/Print'
-import ShareIcon from '@mui/icons-material/Share'
-import { SpeedDial, SpeedDialAction } from '@mui/material'
+import { CloseReason, OpenReason, SpeedDial } from '@mui/material'
 import { useAppSelector } from '@/redux/store'
-
-const actions = [
-  { icon: <FileCopyIcon />, name: 'Copy' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
-]
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
+import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 
 export default function KioskOrderBadge() {
+  const { setDrawerState } = useDrawerContext()
   const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
-  const [open, setOpen] = React.useState(false)
-
+  const handleChangeOpen = (
+    _: React.SyntheticEvent<{}, Event>,
+    reason: CloseReason | OpenReason
+  ) => {
+    if (reason === 'toggle') {
+      setDrawerState({ isShow: true, type: DRAWER_TYPE.CART })
+    }
+  }
   return (
     <SpeedDial
       ariaLabel="SpeedDial controlled open example"
@@ -30,18 +28,9 @@ export default function KioskOrderBadge() {
           <ShoppingCartIcon sx={{ fontSize: 36 }} />
         </Badge>
       }
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
-    >
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-          onClick={() => setOpen(false)}
-        />
-      ))}
-    </SpeedDial>
+      onClose={handleChangeOpen}
+      onOpen={handleChangeOpen}
+      open={false}
+    />
   )
 }
