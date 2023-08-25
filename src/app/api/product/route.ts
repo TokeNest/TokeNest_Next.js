@@ -22,5 +22,6 @@ create.schema = joi.object({
   product_status: joi.string().required(),
   product_intro: joi.string().required(),
   product_price: joi.number().required(),
+  product_category: joi.string().required(),
   store_id: joi.string().required(),
 })
