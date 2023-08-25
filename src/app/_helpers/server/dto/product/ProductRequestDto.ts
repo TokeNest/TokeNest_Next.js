@@ -1,4 +1,4 @@
-import { PrdOptGrpRequestDto } from '@/app/_helpers/server/dto/product/request/PrdOptGrpRequestDto'
+import { PrdOptGrpRequestDto } from '@/app/_helpers/server/dto/product/PrdOptGrpRequestDto'
 
 export class ProductRequestDto {
   product_name: string
