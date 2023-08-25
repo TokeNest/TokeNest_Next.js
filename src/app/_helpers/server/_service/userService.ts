@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import { saveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validUserAlreadyExist'
+import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/ValidUserAlreadyExist'
 
 const authenticate = async function ({
   user_wallet_address,
@@ -53,7 +53,10 @@ const join = async function (params: saveUserInfo) {
     user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
   // validate
-  await validUserAlreadyExistAsWalletAddress(user.user_wallet_address)
+  const valUser = await validUserAlreadyExistAsWalletAddress(user.user_wallet_address)
+  if (valUser != true) {
+    return valUser
+  }
 
   return userRepository.save(user)
 }

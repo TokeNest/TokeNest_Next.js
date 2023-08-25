@@ -12,6 +12,7 @@ async function getAll(req: Request) {
 }
 
 async function create(req: Request) {
+  console.log('test')
   const body = await req.json()
   await storeRepository.create(body)
 }

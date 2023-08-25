@@ -9,14 +9,18 @@ mongoose.Promise = global.Promise
 function fileModel() {
   const fileSchema = new Schema(
     {
-      fileName: { type: String, required: true },
-      fileDir: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
+      file_name: { type: String, required: true },
+      file_type: { type: String, required: true },
+      file_capacity: { type: String, require: true },
+      file_path: { type: String, required: true },
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
     },
     {
       timestamps: {
         createdAt: 'created_date',
-        updateAt: 'updated_date',
       },
     }
   )
@@ -113,6 +117,10 @@ function productModel() {
           ref: 'Product_Option_Group',
         },
       ],
+      file: {
+        type: Schema.Types.ObjectId,
+        ref: 'File',
+      },
     },
     {
       timestamps: {

@@ -23,6 +23,11 @@ function apiHandler(handler: any) {
         await jwtMiddleware(req)
         await validateMiddleware(req, handler[method].schema)
         const responseBody = await handler[method](req, ...args)
+
+        // if api response for file download
+        if (responseBody instanceof Response) {
+          return responseBody
+        }
         return NextResponse.json(responseBody || {})
       } catch (err: any) {
         return errorHandler(err)
