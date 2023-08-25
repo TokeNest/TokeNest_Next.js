@@ -12,7 +12,6 @@ const getAddressByUserId = async function (id: string) {
   if (!users) {
     throw new Error('User not Found')
   }
-  console.log(users)
   return users.addresses.map((address: AddressInfo) => {
     return addressMapper(address)
   })
