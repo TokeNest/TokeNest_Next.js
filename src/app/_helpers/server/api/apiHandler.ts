@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { errorHandler } from '@/app/_helpers/server/api/errorHandler'
 import { validateMiddleware } from '@/app/_helpers/server/api/validateMiddleware'
 import { jwtMiddleware } from '@/app/_helpers/server/api/jwtMiddleware'
+import { apiResponses } from '@/utils/server/response/apiResponse'
 
 export { apiHandler }
 
@@ -24,7 +25,7 @@ function apiHandler(handler: any) {
         if (responseBody instanceof Response) {
           return responseBody
         }
-        return NextResponse.json(responseBody || {})
+        return NextResponse.json(apiResponses.apiExecuteSuccessWithBody(responseBody || {}))
       } catch (err: any) {
         return errorHandler({
           success: false,

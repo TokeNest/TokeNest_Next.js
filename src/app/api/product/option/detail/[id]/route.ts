@@ -1,6 +1,7 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { prdOptRepository } from '@/app/_helpers/server/_repository'
 import joi from 'joi'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 module.exports = apiHandler({
   GET: getById,
@@ -8,13 +9,13 @@ module.exports = apiHandler({
   DELETE: _delete,
 })
 
-async function getById(req: Request, { params: { optionId } }: any) {
-  return await prdOptRepository.getById(optionId)
+async function getById(_req: Request, { params }: ParamsInputId) {
+  return await prdOptRepository.getById(params.id)
 }
 
-async function update(req: Request, { params: { optionId } }: any) {
+async function update(req: Request, { params }: ParamsInputId) {
   const body = await req.json()
-  await prdOptRepository.update(optionId, body)
+  await prdOptRepository.update(params.id, body)
 }
 
 update.schema = joi.object({
@@ -23,6 +24,6 @@ update.schema = joi.object({
   productOptionPrice: joi.number().required(),
 })
 
-async function _delete(req: Request, { params: { optionId } }: any) {
-  await prdOptRepository.softDelete(optionId)
+async function _delete(_req: Request, { params }: ParamsInputId) {
+  await prdOptRepository.softDelete(params.id)
 }

@@ -1,6 +1,7 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { prdOptGrpRepository } from '@/app/_helpers/server/_repository'
 import joi from 'joi'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 module.exports = apiHandler({
   GET: getAll,
@@ -8,13 +9,13 @@ module.exports = apiHandler({
   DELETE: _delete,
 })
 
-async function getAll(req: Request, { params: { optionGroupId } }: any) {
-  return await prdOptGrpRepository.getById(optionGroupId)
+async function getAll(_req: Request, { params }: ParamsInputId) {
+  return await prdOptGrpRepository.getById(params.id)
 }
 
-async function update(req: Request, { params: { optionGroupId } }: any) {
+async function update(req: Request, { params }: ParamsInputId) {
   const body = await req.json()
-  await prdOptGrpRepository.update(optionGroupId, body)
+  await prdOptGrpRepository.update(params.id, body)
 }
 
 update.schema = joi.object({
@@ -23,6 +24,6 @@ update.schema = joi.object({
   productOptionGroupIsDuplicate: joi.boolean().required(),
 })
 
-async function _delete(req: Request, { params: { optionGroupId } }: any) {
-  await prdOptGrpRepository.softDelete(optionGroupId)
+async function _delete(req: Request, { params }: ParamsInputId) {
+  await prdOptGrpRepository.softDelete(params.id)
 }

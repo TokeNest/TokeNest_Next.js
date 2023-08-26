@@ -7,7 +7,7 @@ module.exports = apiHandler({
   POST: create,
 })
 
-function getAll(req: Request) {
+function getAll() {
   return productRepository.getAll()
 }
 

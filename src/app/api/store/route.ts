@@ -7,7 +7,7 @@ module.exports = apiHandler({
   POST: create,
 })
 
-async function getAll(req: Request) {
+async function getAll() {
   return storeRepository.getAll()
 }
 

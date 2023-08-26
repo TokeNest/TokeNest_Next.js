@@ -6,27 +6,22 @@ import { validateFile } from '@/utils/server/validate/validateFile'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { join } from 'path'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
-import { apiResponses } from '@/utils/server/response/apiResponse'
 
 const _delete = async function (_req: Request, { params }: ParamsInputId) {
-  try {
-    const file = await fileRepository.getFIleById(params.id)
-    // file delete in storage
-    await unlink(file.file_path)
-    const storePath = join(`${file.file_path}/../../`)
-    const productPath = join(`${file.file_path}/../`)
-    // if folder not have file, then delete folder
-    if (!(await readdir(productPath)).length) {
-      await rmdir(productPath)
-      if (!(await readdir(storePath)).length) {
-        await rmdir(storePath)
-      }
+  const file = await fileRepository.getFIleById(params.id)
+  // file delete in storage
+  await unlink(file.file_path)
+  const storePath = join(`${file.file_path}/../../`)
+  const productPath = join(`${file.file_path}/../`)
+  // if folder not have file, then delete folder
+  if (!(await readdir(productPath)).length) {
+    await rmdir(productPath)
+    if (!(await readdir(storePath)).length) {
+      await rmdir(storePath)
     }
-    await fileRepository.delete(params.id)
-    return apiResponses.apiExecuteSuccessWithId(params.id)
-  } catch (err: any) {
-    return apiResponses.apiExecuteFail(err)
   }
+  await fileRepository.delete(params.id)
+  return params.id
 }
 
 const download = async function (_req: Request, { params }: ParamsInputId) {
