@@ -1,5 +1,6 @@
 import { db } from '@/app/_helpers/server'
 import { prdOptGrpRepository } from '@/app/_helpers/server/_repository/prdOptGrpRepository'
+import { Option } from '@/variables/interface/kiosk-interface'
 
 const ProductOption = db.ProductOption
 
@@ -29,13 +30,14 @@ async function getById(id: string) {
   }
 }
 
-async function create(groupId: string, params: any) {
+async function create(groupId: string, params: Option) {
   const optionGroup = await prdOptGrpRepository.getById(groupId)
   const productOption = new ProductOption({
-    productOptionName: params['optionName'],
-    productOptionIsDefault: params['isDefault'],
-    productOptionPrice: params['optionPrice'],
-    groupId: groupId,
+    productOptionName: params.optionName,
+    productOptionIsDefault: params.isDefault,
+    productOptionInfo: params.optionInfo,
+    productOptionPrice: params.optionPrice,
+    groupId,
   })
   await productOption.save()
   optionGroup.options.push(productOption._id)

@@ -43,7 +43,7 @@ export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketI
     const { optionGroupType, options } = optionGroup
     switch (optionGroupType) {
       case OPTION_TYPE.RADIO: {
-        const option = options.find(({ optionId }) => optionId === optionGroup.defaultOptionId)
+        const option = options.find(({ isDefault }) => isDefault)
         return option
           ? pre + setCalculateOptionPrice(marketList, option.optionPrice, option.tokenOption)
           : pre
@@ -52,7 +52,7 @@ export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketI
         return (
           pre +
           options
-            .filter(({ optionId }) => optionGroup.defaultOptionIds.includes(optionId))
+            .filter(({ isDefault }) => isDefault)
             .reduce(
               (optionTotal, { optionPrice, tokenOption }) =>
                 optionTotal + setCalculateOptionPrice(marketList, optionPrice, tokenOption),

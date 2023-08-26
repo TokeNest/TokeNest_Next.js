@@ -4,9 +4,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
 import { Product } from '@/variables/interface/kiosk-interface'
-import ProductCardActionArea from '@/components/kiosk/ProductCard/interaction/ProductCardActionArea'
-import ProductCardHeader from '@/components/kiosk/ProductCard/interaction/ProductCardHeader'
 import Image from 'next/image'
+import { ProductCardActionArea, ProductCardHeader } from './interaction'
 
 export default function ProductCard({ product }: { product: Product }) {
   return (

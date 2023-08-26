@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as process from 'process'
+import ApiExecuteResult from '@/variables/interface/api/apiResponseInterface'
 
 const baseURL = process.env.apiBaseUrl as string
 const axiosInstance = axios.create({
@@ -10,5 +11,7 @@ export const axiosFetcher = async (url: string) => {
   return data
 }
 
-export const nextFetcher = async (url: RequestInfo | URL, init?: RequestInit | undefined) =>
-  await fetch(`${baseURL}/api/${url}`, init)
+export const nextFetcher = async (
+  url: RequestInfo | URL,
+  init?: RequestInit | undefined
+): Promise<ApiExecuteResult> => await (await fetch(`${baseURL}/api/${url}`, init)).json()

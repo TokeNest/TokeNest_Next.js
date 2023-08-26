@@ -143,8 +143,7 @@ function productOptionGroupModel() {
   const schema = new Schema(
     {
       productOptionGroupName: { type: String, required: true },
-      productOptionGroupIsRequire: { type: Boolean, required: true, default: false },
-      productOptionGroupIsDuplicate: { type: Boolean, required: true, default: false },
+      productOptionGroupType: { type: String, required: true },
       deletedDate: { type: Date, default: null },
       productId: {
         type: Schema.Types.ObjectId,
@@ -183,7 +182,8 @@ function productOptionModel() {
     {
       productOptionName: { type: String, required: true },
       productOptionIsDefault: { type: Boolean, required: true, default: false },
-      productOptionPrice: { type: Number, required: true },
+      productOptionInfo: { type: String },
+      productOptionPrice: { type: Number, required: true, default: 0 },
       deletedDate: { type: Date, default: null },
       groupId: {
         type: Schema.Types.ObjectId,

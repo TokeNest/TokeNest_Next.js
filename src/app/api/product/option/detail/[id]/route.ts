@@ -20,7 +20,7 @@ async function update(req: Request, { params }: ParamsInputId) {
 
 update.schema = joi.object({
   productOptionName: joi.string().required(),
-  productOptionIsDefault: joi.boolean().required(),
+  productIsDefault: joi.boolean().required(),
   productOptionPrice: joi.number().required(),
 })
 

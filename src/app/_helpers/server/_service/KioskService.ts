@@ -19,9 +19,9 @@ async function getProductList(id: string) {
       productPrice: prd.productPrice,
       productImageUrl: '',
       optionGroups: prd.optionGroups.map((optGrp: any) => ({
+        optionGroupId: optGrp._id,
         optionGroupName: optGrp.productOptionGroupName,
-        isRequire: optGrp.productOptionGroupIsRequire,
-        isDuplicate: optGrp.productOptionGroupIsDuplicate,
+        optionGroupType: optGrp.productOptionGroupType,
         options: optGrp.options.map((opt: any) => ({
           optionId: opt._id,
           optionName: opt.productOptionName,

@@ -7,11 +7,11 @@ import ProductContainer from '@/app/kiosk/ProductContainer'
 import { nextFetcher } from '@/utils/component/api-fetcher-util'
 
 const getCategoryList = async (): Promise<Category[]> => {
-  const storeId = '64e97a11e807a956dff77f94'
+  const storeId = '64e9b9d623373bbc4a1ab263'
   const data = await nextFetcher(`kiosk/${storeId}`, {
     cache: 'no-store',
   })
-  return await data.json()
+  return await data.body
 }
 
 export default async function KioskPage() {
