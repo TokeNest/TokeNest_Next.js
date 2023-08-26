@@ -1,7 +1,7 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { prdOptGrpRepository } from '@/app/_helpers/server/_repository'
-import joi from 'joi'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { OptionGroup } from '@/variables/interface/kiosk-interface'
 
 module.exports = apiHandler({
   GET: getAll,
@@ -13,17 +13,17 @@ function getAll(_req: Request, { params }: ParamsInputId) {
 }
 
 async function create(req: Request, { params }: ParamsInputId) {
-  const body = await req.json()
+  const body: OptionGroup = await req.json()
   return await prdOptGrpRepository.create(params.id, body)
 }
 
-create.schema = joi.object({
-  optionGroupName: joi.string().required(),
-  isRequire: joi.boolean(),
-  isDuplicate: joi.boolean(),
-  options: joi.array().items({
-    optionName: joi.string().required(),
-    isDefault: joi.boolean(),
-    optionPrice: joi.number().required(),
-  }),
-})
+// create.schema = joi.object({
+//   optionGroupName: joi.string().required(),
+//   isRequire: joi.boolean(),
+//   isDuplicate: joi.boolean(),
+//   options: joi.array().items({
+//     optionName: joi.string().required(),
+//     isDefault: joi.boolean(),
+//     optionPrice: joi.number().required(),
+//   }),
+// })

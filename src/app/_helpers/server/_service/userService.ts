@@ -1,70 +1,62 @@
-import { userRepository } from '@/app/_helpers/server/_repository'
-import { userInfoMapper } from '@/utils/server/dtoMapping/userMapper'
 import { headers } from 'next/headers'
 import { SaveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { validateUsers } from '@/utils/server/validate/validateUser'
+import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
+import {
+  isExistUser,
+  validUserAlreadyExistAsWalletAddress,
+} from '@/utils/server/validate/validateUser'
 
-const authenticate = async function ({
-  user_wallet_address,
-  user_password,
+const authenticate = async ({
+  userWalletAddress,
+  userPassword,
 }: {
-  user_wallet_address: string
-  user_password: string
-}) {
-  const user = await userRepository.getByAddress(user_wallet_address)
+  userWalletAddress: string
+  userPassword: string
+}) => {
+  const user = await userRepository.getByWalletAddress(userWalletAddress)
   // validate user info
   if (!user) {
-    throw new Error('This User is not exist or already deleted.')
-  } else if (!bcrypt.compareSync(user_password, user.user_password_hash)) {
+    throw 'This User is not exist or already deleted.'
+  } else if (!bcrypt.compareSync(userPassword, user.userPasswordHash)) {
     throw 'Invalid Value: password is incorrect'
   }
   // create jwt token that is valid for7 days
-  const token = jwt.sign({ sub: user._id }, process.env.jwtSecret!, {
+  const token = jwt.sign({ sub: user.id }, process.env.jwtSecret!, {
     expiresIn: '7d',
   })
 
   return { user, token }
 }
 
-const getUsers = async function () {
-  return (await userRepository.getAll()).map((user) => {
-    return userInfoMapper(user)
-  })
-}
+const getUsers = async () => (await userRepository.getAll()).map((user: Omit<any, never>) => user)
 
-const getUserById = async function (id: string) {
-  return userInfoMapper(await userRepository.getById(id))
-}
+const getUserById = async (id: string) => await userRepository.getById(id)
 
-const getCurrentUser = async function () {
+const getCurrentUser = async () => {
   const id = headers().get('user_id')
   if (!id) {
-    throw new Error('user not found')
+    throw 'User Not Found'
   }
-  return userInfoMapper(await userRepository.getById(id))
+  return await userRepository.getById(id)
 }
 
-const join = async function (params: SaveUserInfo) {
+const join = async (params: SaveUserInfo) => {
   // hash password
   const user = params
-  if (params.user_password) {
-    user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
+  if (params.userPassword) {
+    user.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
   }
   // validate
-  const valUser = await validateUsers.validUserAlreadyExistAsWalletAddress(user.userWalletAddress)
-  if (valUser != true) {
-    return valUser
-  }
-
-  return userRepository.save(user)
+  await validUserAlreadyExistAsWalletAddress(params.userWalletAddress)
+  return await userRepository.save(user)
 }
 
 function update(id: string, params: SaveUserInfo) {
   // hash password if it was entered
-  if (params.user_password) {
-    params.user_password_hash = bcrypt.hashSync(params.user_password, 10)
+  if (params.userPassword) {
+    params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
   }
   // copy params properties to find
   return userRepository.update(id, params)
@@ -74,8 +66,11 @@ const softDelete = async function (id: string) {
   return userRepository.softDelete(id)
 }
 
-function _delete(id: string) {
-  return userRepository.delete(id)
+const _delete = async (id: string) => {
+  console.log(id)
+  console.log(await userRepository.getById(id))
+  isExistUser(await userRepository.getById(id))
+  return await userRepository.delete(id)
 }
 
 export const userService = {

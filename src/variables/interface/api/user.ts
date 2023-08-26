@@ -1,14 +1,15 @@
 import { AddressInfo } from '@/variables/interface/api/address'
 
 export interface UserInfo {
-  user_name: string
-  user_password_hash: string
-  user_phone: string
-  user_email: string
+  id: string
+  userName: string
+  userPasswordHash: string
+  userPhone: string
+  userEmail: string
   userWalletAddress: string
   addresses: AddressInfo[]
-  user_account_type: string
+  userAccountType: string
 }
 export interface SaveUserInfo extends UserInfo {
-  user_password: string
+  userPassword: string
 }

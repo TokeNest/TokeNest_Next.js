@@ -1,5 +1,4 @@
 import { db } from '@/app/_helpers/server'
-import { UserInfo } from '@/variables/interface/api/user'
 import { AddressInfo } from '@/variables/interface/api/address'
 
 const Address = db.Address
@@ -14,11 +13,11 @@ const addressFilter = {
 const getById = async (id: string): Promise<AddressInfo> =>
   await Address.findById(id, addressFilter).exec()
 
-const getByUser = async (userInfo: UserInfo): Promise<AddressInfo[]> =>
-  await Address.find({ user: new User({ ...userInfo }) }, addressFilter).exec()
+const getByUser = async (id: string): Promise<AddressInfo[]> =>
+  await Address.find({ user: id }, addressFilter).exec()
 
 const save = async (id: string, addressInfo: AddressInfo): Promise<string> => {
-  const user = await User.findOne({ id: id, deletedDate: null }).exec()
+  const user = await User.findOne({ _id: id, deletedDate: null }).exec()
   const address = new Address({ user, ...addressInfo })
   address.save()
   // setting relationship
@@ -34,8 +33,8 @@ const update = async (id: string, addressInfo: AddressInfo): Promise<string> => 
   return address._id
 }
 
-const _delete = (id: string): string => {
-  Address.findByIdAndRemove(id)
+const _delete = async (id: string): Promise<string> => {
+  await Address.findByIdAndRemove(id).exec()
   return id
 }
 

@@ -7,12 +7,12 @@ const login = async function (req: Request) {
   const { user, token } = await userService.authenticate(await req.json())
   // return jwt token in http only cookie
   cookies().set('authorization', token, { httpOnly: true })
-  return user._id
+  return user.id
 }
 
 login.schema = joi.object({
   userWalletAddress: joi.string().required(),
-  user_password: joi.string().required(),
+  userPassword: joi.string().required(),
 })
 
 module.exports = apiHandler({

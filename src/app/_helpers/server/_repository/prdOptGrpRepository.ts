@@ -1,6 +1,7 @@
 import { db } from '@/app/_helpers/server'
 import { prdOptRepository } from '@/app/_helpers/server/_repository/prdOptRepository'
 import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
+import { OptionGroup } from '@/variables/interface/kiosk-interface'
 
 const ProductOptionGroup = db.ProductOptionGroup
 
@@ -11,21 +12,17 @@ const getAllByProductId = async (id: string) =>
 
 const getById = async (id: string) => await ProductOptionGroup.findById(id)
 
-async function create(productId: string, params: any) {
-  const options: any[] = await params['options']
+async function create(productId: string, params: OptionGroup) {
   const product = await productRepository.getById(productId)
   const optionGroup = await new ProductOptionGroup({
-    productOptionGroupName: params['optionGroupName'],
-    productOptionGroupIsRequire: params['isRequire'],
-    productOptionGroupIsDuplicate: params['isDuplicate'],
-    productId: productId,
+    productId,
+    productOptionGroupType: params.optionGroupType,
+    productOptionGroupName: params.optionGroupName,
   })
   await optionGroup.save()
   product.optionGroups.push(optionGroup._id)
   await product.save()
-  options.forEach((option: any) => {
-    prdOptRepository.create(optionGroup._id, option)
-  })
+  params.options.forEach((option) => prdOptRepository.create(optionGroup._id, option))
 }
 
 async function update(id: string, params: any) {

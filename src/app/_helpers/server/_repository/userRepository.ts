@@ -2,32 +2,48 @@ import { db } from '../db'
 import { UserInfo } from '@/variables/interface/api/user'
 
 const User = db.User
-
-const getAll = async function () {
-  return User.find({ deletedDate: null }).populate('addresses').exec()
+const userFilter = {
+  userName: true,
+  userPasswordHash: true,
+  userPhone: true,
+  userEmail: true,
+  userWalletAddress: true,
+  userAccountType: true,
+}
+const addressFilter = {
+  addressName: true,
+  roadAddress: true,
+  addressDetail: true,
 }
 
-const getById = async function (id: string) {
-  return User.findOne({ id: id, deletedDate: null }).populate('addresses').exec()
-}
+const getAll = async (): Promise<(Omit<any, never> & {})[]> =>
+  await User.find({ deletedDate: null }, userFilter).populate('addresses', addressFilter).exec()
 
-const getByAddress = async function (id: string) {
-  return User.findOne({ userWalletAddress: id, deletedDate: null }).exec()
-}
+const getById = async (id: string): Promise<UserInfo> =>
+  await User.findOne({ _id: id, deletedDate: null }, userFilter)
+    .populate('addresses', addressFilter)
+    .exec()
 
-const save = async function (userInfo: UserInfo): Promise<string> {
-  const user = await new User({ ...userInfo }).save()
+const getByWalletAddress = async (id: string): Promise<UserInfo> =>
+  await User.findOne({ userWalletAddress: id, deletedDate: null }, userFilter)
+    .populate('addresses', addressFilter)
+    .exec()
+
+const save = (userInfo: UserInfo): Promise<string> => {
+  const user = new User({ ...userInfo })
+  user.save()
   return user._id
 }
 
 const update = async function (id: string, userInfo: UserInfo): Promise<string> {
-  const user = await getById(id)
+  const user = await User.findById(id).exec()
   Object.assign(user, userInfo)
-  return (await user.save())._id
+  await user.save()
+  return user._id
 }
 
 const softDelete = async function (id: string): Promise<string> {
-  const user = await getById(id)
+  const user = await User.findById(id).exec()
   user.deletedDate = new Date()
   return (await user.save())._id
 }
@@ -39,7 +55,7 @@ const _delete = async function (id: string): Promise<string> {
 export const userRepository = {
   getAll,
   getById,
-  getByAddress,
+  getByWalletAddress,
   save,
   update,
   delete: _delete,

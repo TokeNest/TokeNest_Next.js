@@ -1,15 +1,16 @@
 import { PrdOptResponseDto } from '@/app/_helpers/server/dto/product/response/PrdOptResponseDto'
+import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 
 export class PrdOptGrpResponseDto {
+  optionGroupId: string
+  optionGroupType: OPTION_TYPE
   optionGroupName: string
-  isRequire: boolean
-  isDuplicate: boolean
   options: PrdOptResponseDto[]
 
   constructor(prdOptGrp: PrdOptGrpResponseDto) {
+    this.optionGroupId = prdOptGrp.optionGroupId
+    this.optionGroupType = prdOptGrp.optionGroupType
     this.optionGroupName = prdOptGrp.optionGroupName
-    this.isRequire = prdOptGrp.isRequire
-    this.isDuplicate = prdOptGrp.isDuplicate
     this.options = prdOptGrp.options
   }
 }

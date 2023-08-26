@@ -1,7 +1,6 @@
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
 import { AddressInfo } from '@/variables/interface/api/address'
 import isExistAddress from '@/utils/server/validate/validateAddress'
-import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
 
 const getAddressById = async (id: string) => {
   const address = await addressRepository.getById(id)
@@ -10,7 +9,7 @@ const getAddressById = async (id: string) => {
 }
 
 const getAddressByUserId = async (id: string) => {
-  const addresses = await addressRepository.getByUser(await userRepository.getById(id))
+  const addresses = await addressRepository.getByUser(id)
 
   return addresses.map((address: AddressInfo) => {
     isExistAddress(address)
