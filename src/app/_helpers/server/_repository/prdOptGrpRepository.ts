@@ -2,7 +2,7 @@ import { db } from '@/app/_helpers/server'
 import { prdOptRepository } from '@/app/_helpers/server/_repository/prdOptRepository'
 import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
 
-const ProductOptionGroup = db.Product_Option_Group
+const ProductOptionGroup = db.ProductOptionGroup
 
 export const prdOptGrpRepository = {
   getAll,
@@ -15,11 +15,11 @@ export const prdOptGrpRepository = {
 }
 
 function getAll() {
-  return ProductOptionGroup.find({ deleted_date: null })
+  return ProductOptionGroup.find({ deletedDate: null })
 }
 
 function getAllByProductId(id: string) {
-  return ProductOptionGroup.find({ deleted_date: null, product_id: id })
+  return ProductOptionGroup.find({ deletedDate: null, productId: id })
 }
 
 async function getById(id: string) {
@@ -34,13 +34,13 @@ async function create(productId: string, params: any) {
   const options: any[] = await params['options']
   const product = await productRepository.getById(productId)
   const optionGroup = await new ProductOptionGroup({
-    product_option_group_name: params['optionGroupName'],
-    product_option_group_is_require: params['isRequire'],
-    product_option_group_is_duplicate: params['isDuplicate'],
-    product_id: productId,
+    productOptionGroupName: params['optionGroupName'],
+    productOptionGroupIsRequire: params['isRequire'],
+    productOptionGroupIsDuplicate: params['isDuplicate'],
+    productId: productId,
   })
   await optionGroup.save()
-  product.option_groups.push(optionGroup._id)
+  product.optionGroups.push(optionGroup._id)
   await product.save()
   options.forEach((option: any) => {
     prdOptRepository.create(optionGroup._id, option)
@@ -64,7 +64,7 @@ async function _softDelete(id: string) {
     throw 'ProductOptionGroup Not Found'
   }
 
-  productOptionGroup.deleted_date = new Date()
+  productOptionGroup.deletedDate = new Date()
 
   await productOptionGroup.save()
 }

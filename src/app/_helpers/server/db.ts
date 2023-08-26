@@ -11,12 +11,12 @@ function fileModel() {
     {
       fileName: { type: String, required: true },
       fileDir: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updateAt: 'updated_date',
+        createdAt: 'createdDate',
+        updateAt: 'updatedDate',
       },
     }
   )
@@ -30,15 +30,15 @@ function addressModel() {
         type: Schema.Types.ObjectId,
         ref: 'User',
       },
-      address_name: { type: String, required: true },
-      road_address: { type: String, required: true },
-      address_detail: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
+      addressName: { type: String, required: true },
+      roadAddress: { type: String, required: true },
+      addressDetail: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
@@ -58,24 +58,24 @@ function addressModel() {
 function userModel() {
   const userSchema = new Schema(
     {
-      user_name: { type: String, required: true },
-      user_password_hash: { type: String, required: true },
-      user_phone: { type: String, required: true },
-      user_email: { type: String, required: true },
-      user_wallet_address: { type: String, unique: true, required: true },
+      userName: { type: String, required: true },
+      userPasswordHash: { type: String, required: true },
+      userPhone: { type: String, required: true },
+      userEmail: { type: String, required: true },
+      userWalletAddress: { type: String, unique: true, required: true },
       addresses: [
         {
           type: Schema.Types.ObjectId,
           ref: 'Address',
         },
       ],
-      user_account_type: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
+      userAccountType: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
@@ -95,36 +95,36 @@ function userModel() {
 function productModel() {
   const schema = new Schema(
     {
-      product_name: { type: String, required: true },
-      product_info: { type: String, required: true },
-      product_status: { type: String, required: true },
-      product_intro: { type: String, required: true },
-      product_price: { type: Number, required: true },
-      product_category: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
-      store_id: {
+      productName: { type: String, required: true },
+      productInfo: { type: String, required: true },
+      productStatus: { type: String, required: true },
+      productIntro: { type: String, required: true },
+      productPrice: { type: Number, required: true },
+      productCategory: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
+      storeId: {
         type: Schema.Types.ObjectId,
         ref: 'Store',
         required: true,
       },
-      option_groups: [
+      optionGroups: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Product_Option_Group',
+          ref: 'ProductOptionGroup',
         },
       ],
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
 
   // schema.set('timestamps', {
-  //   createdAt: 'created_date',
-  //   updatedAt: 'updated_date',
+  //   createdAt: 'createdDate',
+  //   updatedAt: 'updatedDate',
   // })
 
   schema.set('toJSON', {
@@ -142,11 +142,11 @@ function productModel() {
 function productOptionGroupModel() {
   const schema = new Schema(
     {
-      product_option_group_name: { type: String, required: true },
-      product_option_group_is_require: { type: Boolean, required: true, default: false },
-      product_option_group_is_duplicate: { type: Boolean, required: true, default: false },
-      deleted_date: { type: Date, default: null },
-      product_id: {
+      productOptionGroupName: { type: String, required: true },
+      productOptionGroupIsRequire: { type: Boolean, required: true, default: false },
+      productOptionGroupIsDuplicate: { type: Boolean, required: true, default: false },
+      deletedDate: { type: Date, default: null },
+      productId: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
@@ -154,14 +154,14 @@ function productOptionGroupModel() {
       options: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Product_Option',
+          ref: 'ProductOption',
         },
       ],
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
@@ -175,26 +175,26 @@ function productOptionGroupModel() {
     },
   })
 
-  return mongoose.models.Product_Option_Group || mongoose.model('Product_Option_Group', schema)
+  return mongoose.models.ProductOptionGroup || mongoose.model('ProductOptionGroup', schema)
 }
 
 function productOptionModel() {
   const schema = new Schema(
     {
-      product_option_name: { type: String, required: true },
-      product_option_is_default: { type: Boolean, required: true, default: false },
-      product_option_price: { type: Number, required: true },
-      deleted_date: { type: Date, default: null },
-      group_id: {
+      productOptionName: { type: String, required: true },
+      productOptionIsDefault: { type: Boolean, required: true, default: false },
+      productOptionPrice: { type: Number, required: true },
+      deletedDate: { type: Date, default: null },
+      groupId: {
         type: Schema.Types.ObjectId,
-        ref: 'Product_Option_Group',
+        ref: 'ProductOptionGroup',
         required: true,
       },
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
@@ -208,25 +208,25 @@ function productOptionModel() {
     },
   })
 
-  return mongoose.models.Product_Option || mongoose.model('Product_Option', schema)
+  return mongoose.models.ProductOption || mongoose.model('ProductOption', schema)
 }
 
 function storeModel() {
   const schema = new Schema(
     {
-      store_name: { type: String, required: true },
-      store_tel: { type: String, required: true },
-      store_email: { type: String, required: true },
-      store_category: { type: String, required: true },
-      store_off_day: { type: String, required: true, default: '0000000' },
-      store_open_close_time: { type: String, required: true, default: '00:00-23:59' },
-      store_status: { type: String, required: true },
-      deleted_date: { type: Date, default: null },
+      storeName: { type: String, required: true },
+      storeTel: { type: String, required: true },
+      storeEmail: { type: String, required: true },
+      storeCategory: { type: String, required: true },
+      storeOffDay: { type: String, required: true, default: '0000000' },
+      storeOpenCloseTime: { type: String, required: true, default: '00:00-23:59' },
+      storeStatus: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
-        createdAt: 'created_date',
-        updatedAt: 'updated_date',
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
       },
     }
   )
@@ -247,7 +247,7 @@ export const db = {
   Product: productModel(),
   User: userModel(),
   Address: addressModel(),
-  Product_Option_Group: productOptionGroupModel(),
-  Product_Option: productOptionModel(),
+  ProductOptionGroup: productOptionGroupModel(),
+  ProductOption: productOptionModel(),
   Store: storeModel(),
 }

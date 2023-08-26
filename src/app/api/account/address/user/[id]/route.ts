@@ -13,9 +13,9 @@ async function create(req: Request, { params: { id } }: any) {
 }
 
 create.schema = joi.object({
-  address_name: joi.string().required(),
-  road_address: joi.string().required(),
-  address_detail: joi.string().required(),
+  addressName: joi.string().required(),
+  roadAddress: joi.string().required(),
+  addressDetail: joi.string().required(),
 })
 
 async function getByUserId(req: Request, { params: { id } }: any) {

@@ -7,13 +7,13 @@ import jwt from 'jsonwebtoken'
 import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validUserAlreadyExist'
 
 const authenticate = async function ({
-  user_wallet_address,
+  userWalletAddress,
   user_password,
 }: {
-  user_wallet_address: string
+  userWalletAddress: string
   user_password: string
 }) {
-  const user = await userRepository.getByAddress(user_wallet_address)
+  const user = await userRepository.getByAddress(userWalletAddress)
   // validate user info
   if (!user) {
     throw new Error('This User is not exist or already deleted.')
@@ -53,7 +53,7 @@ const join = async function (params: saveUserInfo) {
     user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
   // validate
-  await validUserAlreadyExistAsWalletAddress(user.user_wallet_address)
+  await validUserAlreadyExistAsWalletAddress(user.userWalletAddress)
 
   return userRepository.save(user)
 }

@@ -5,6 +5,6 @@ module.exports = apiHandler({
   GET: getAll,
 })
 
-async function getAll(req: Request, { params: { option_group_id } }: any) {
-  return await prdOptRepository.getAllByGroupId(option_group_id)
+function getAll(req: Request, { params: { optionGroupId } }: any) {
+  return prdOptRepository.getAllByGroupId(optionGroupId)
 }

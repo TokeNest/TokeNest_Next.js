@@ -4,15 +4,15 @@ import { UserInfo } from '@/variables/interface/api/user'
 const User = db.User
 
 const getAll = async function () {
-  return User.find({ deleted_date: null }).populate('addresses').exec()
+  return User.find({ deletedDate: null }).populate('addresses').exec()
 }
 
 const getById = async function (id: string) {
-  return User.findOne({ _id: id, deleted_date: null }).populate('addresses').exec()
+  return User.findOne({ id: id, deletedDate: null }).populate('addresses').exec()
 }
 
 const getByAddress = async function (id: string) {
-  return User.findOne({ user_wallet_address: id, deleted_date: null }).exec()
+  return User.findOne({ userWalletAddress: id, deletedDate: null }).exec()
 }
 
 const save = async function (userInfo: UserInfo): Promise<string> {
@@ -28,7 +28,7 @@ const update = async function (id: string, userInfo: UserInfo): Promise<string> 
 
 const softDelete = async function (id: string): Promise<string> {
   const user = await getById(id)
-  user.deleted_date = new Date()
+  user.deletedDate = new Date()
   return (await user.save())._id
 }
 const _delete = async function (id: string): Promise<string> {

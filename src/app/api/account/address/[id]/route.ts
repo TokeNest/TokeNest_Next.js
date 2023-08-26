@@ -18,9 +18,9 @@ async function update(req: Request, { params: { id } }: any) {
 }
 
 update.schema = joi.object({
-  address_name: joi.string().required(),
-  road_address: joi.string().required(),
-  address_detail: joi.string().required(),
+  addressName: joi.string().required(),
+  roadAddress: joi.string().required(),
+  addressDetail: joi.string().required(),
 })
 
 async function _delete(req: Request, { params: { id } }: any) {

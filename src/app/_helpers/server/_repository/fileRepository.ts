@@ -10,12 +10,12 @@ const save = async function (fileDto: FileInfo) {
 }
 
 const getFIleById = async function (id: string) {
-  return File.findOne({ _id: id, deleted_date: null }).exec()
+  return File.findOne({ id: id, deletedDate: null }).exec()
 }
 
 const softDelete = async function (id: string) {
   const file = await getFIleById(id)
-  file.deleted_date = new Date()
+  file.deletedDate = new Date()
   await file.save()
   return file._id
 }

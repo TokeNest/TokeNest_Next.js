@@ -14,7 +14,7 @@ const getByUser = async function (userInfo: UserInfo) {
 }
 
 const save = async function (id: string, addressInfo: AddressInfo) {
-  const user = await User.findOne({ _id: id, deleted_date: null }).exec()
+  const user = await User.findOne({ id: id, deletedDate: null }).exec()
   const address = new Address({ user, ...addressInfo })
   address.save()
   // setting relationship
