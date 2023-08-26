@@ -2,22 +2,17 @@ import { access, mkdir, readdir, readFile, rmdir, unlink, writeFile } from 'fs/p
 import { fileService } from '@/app/_helpers/server/_service/fileService'
 import { productRepository } from '@/app/_helpers/server/_repository'
 import { fileRepository } from '@/app/_helpers/server/_repository/fileRepository'
-import { validateFile } from '@/utils/server/validate/ValidateFile'
+import { validateFile } from '@/utils/server/validate/validateFile'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { join } from 'path'
-import fileParam from '@/variables/interface/api/getApiParams'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { apiResponses } from '@/utils/server/response/apiResponse'
 
-module.exports = apiHandler({
-  POST: upload,
-  GET: download,
-  DELETE: _delete,
-})
-
-export async function _delete(req: Request, { params }: fileParam) {
+const _delete = async function (_req: Request, { params }: ParamsInputId) {
   try {
     const file = await fileRepository.getFIleById(params.id)
+    // file delete in storage
     await unlink(file.file_path)
-
     const storePath = join(`${file.file_path}/../../`)
     const productPath = join(`${file.file_path}/../`)
     // if folder not have file, then delete folder
@@ -28,21 +23,13 @@ export async function _delete(req: Request, { params }: fileParam) {
       }
     }
     await fileRepository.delete(params.id)
-
-    return {
-      success: true,
-      id: params.id,
-    }
+    return apiResponses.apiExecuteSuccessWithId(params.id)
   } catch (err: any) {
-    return {
-      success: false,
-      message: 'Error: file not found',
-      error: err,
-    }
+    return apiResponses.apiExecuteFail(err)
   }
 }
 
-export async function download(req: Request, { params }: fileParam) {
+const download = async function (_req: Request, { params }: ParamsInputId) {
   const file = await fileRepository.getPathAndName(params.id)
   if (validateFile.validateFilePath(file.file_path) != true) {
     return validateFile.validateFilePath(file.file_path)
@@ -61,7 +48,7 @@ export async function download(req: Request, { params }: fileParam) {
   }
 }
 
-async function upload(req: Request, { params }: fileParam) {
+const upload = async function (req: Request, { params }: ParamsInputId) {
   const data = await req.formData()
   const file: File | null = data.get('file') as unknown as File
 
@@ -111,3 +98,9 @@ async function upload(req: Request, { params }: fileParam) {
     fileId: fileId,
   }
 }
+
+module.exports = apiHandler({
+  POST: upload,
+  GET: download,
+  DELETE: _delete,
+})

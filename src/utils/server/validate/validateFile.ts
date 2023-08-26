@@ -1,4 +1,4 @@
-const validateFileAsCreate = function (file: File) {
+const ValidateFileAsCreate = function (file: File) {
   if (!file) {
     return { success: false, error: 'Error: file is null' }
   } else if (!(file.type === 'image/png' || file.type === 'image/jpeg')) {
@@ -7,7 +7,7 @@ const validateFileAsCreate = function (file: File) {
   return true
 }
 
-const validateFilePath = function (path: String | null) {
+const ValidateFilePath = function (path: String | null) {
   if (!path) {
     return { success: false, error: 'Error: file path is null' }
   }
@@ -15,6 +15,6 @@ const validateFilePath = function (path: String | null) {
 }
 
 export const validateFile = {
-  validateFileAsCreate,
-  validateFilePath,
+  validateFileAsCreate: ValidateFileAsCreate,
+  validateFilePath: ValidateFilePath,
 }

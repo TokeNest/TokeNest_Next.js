@@ -1,20 +1,21 @@
-import joi from 'joi'
-
 import { apiHandler } from '@/app/_helpers/server/api'
 import { addressService } from '@/app/_helpers/server/_service/addressService'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import joi from 'joi'
+import { apiResponses } from '@/utils/server/response/apiResponse'
 
-module.exports = apiHandler({
-  GET: getById,
-  PUT: update,
-  DELETE: _delete,
-})
-
-async function getById(req: Request, { params: { id } }: any) {
-  return addressService.getAddressById(id)
+const getById = async function (_req: Request, { params }: ParamsInputId) {
+  return apiResponses.apiExecuteSuccessWithBody(await addressService.getAddressById(params.id))
 }
 
-async function update(req: Request, { params: { id } }: any) {
-  return addressService.update(id, await req.json())
+const update = async function (req: Request, { params }: ParamsInputId) {
+  return apiResponses.apiExecuteSuccessWithId(
+    await addressService.update(params.id, await req.json())
+  )
+}
+
+const _delete = async function (_req: Request, { params }: ParamsInputId) {
+  return apiResponses.apiExecuteSuccessWithId(await addressService.delete(params.id))
 }
 
 update.schema = joi.object({
@@ -23,6 +24,8 @@ update.schema = joi.object({
   address_detail: joi.string().required(),
 })
 
-async function _delete(req: Request, { params: { id } }: any) {
-  return addressService.delete(id)
-}
+module.exports = apiHandler({
+  GET: getById,
+  PUT: update,
+  DELETE: _delete,
+})

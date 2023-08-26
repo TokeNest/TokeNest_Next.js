@@ -3,11 +3,7 @@ import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { userService } from '@/app/_helpers/server/_service/userService'
 
-module.exports = apiHandler({
-  POST: register,
-})
-
-async function register(req: Request) {
+const register = async function (req: Request) {
   return userService.join(await req.json())
 }
 
@@ -30,4 +26,8 @@ register.schema = joi.object({
     .pattern(/^[a-zA-Z0-9]{42}$/)
     .required(),
   user_account_type: joi.string().required(),
+})
+
+module.exports = apiHandler({
+  POST: register,
 })

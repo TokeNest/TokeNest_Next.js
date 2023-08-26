@@ -9,6 +9,6 @@ export interface UserInfo {
   addresses: AddressInfo[]
   user_account_type: string
 }
-export interface saveUserInfo extends UserInfo {
+export interface SaveUserInfo extends UserInfo {
   user_password: string
 }

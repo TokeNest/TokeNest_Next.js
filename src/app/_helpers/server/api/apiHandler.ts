@@ -4,6 +4,7 @@ import { validateMiddleware } from '@/app/_helpers/server/api/validateMiddleware
 import { jwtMiddleware } from '@/app/_helpers/server/api/jwtMiddleware'
 
 export { apiHandler }
+
 function apiHandler(handler: any) {
   const wrappedHandler: any = {}
   const httpMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
@@ -14,23 +15,22 @@ function apiHandler(handler: any) {
     }
 
     wrappedHandler[method] = async (req: NextRequest, ...args: any) => {
-      // validate of body is json
-      // try {
-      //   const data = await req.json()
-      //   req.json = () => data
-      // } catch {}
       try {
         await jwtMiddleware(req)
         await validateMiddleware(req, handler[method].schema)
         const responseBody = await handler[method](req, ...args)
 
-        // if api response for file download
+        // if api response try file download
         if (responseBody instanceof Response) {
           return responseBody
         }
         return NextResponse.json(responseBody || {})
       } catch (err: any) {
-        return errorHandler(err)
+        return errorHandler({
+          success: false,
+          message: err,
+          body: {},
+        })
       }
     }
   })

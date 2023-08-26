@@ -2,14 +2,14 @@ import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
 import { addressService } from '@/app/_helpers/server/_service/addressService'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
-module.exports = apiHandler({
-  POST: create,
-  GET: getByUserId,
-})
+const create = async function (req: Request, { params }: ParamsInputId) {
+  return addressService.join(params.id, await req.json())
+}
 
-async function create(req: Request, { params: { id } }: any) {
-  return addressService.join(id, await req.json())
+const getByUserId = async function (_req: Request, { params }: ParamsInputId) {
+  return addressService.getAddressByUserId(params.id)
 }
 
 create.schema = joi.object({
@@ -18,6 +18,7 @@ create.schema = joi.object({
   address_detail: joi.string().required(),
 })
 
-async function getByUserId(req: Request, { params: { id } }: any) {
-  return addressService.getAddressByUserId(id)
-}
+module.exports = apiHandler({
+  POST: create,
+  GET: getByUserId,
+})

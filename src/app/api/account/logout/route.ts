@@ -1,11 +1,11 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { cookies } from 'next/headers'
 
-module.exports = apiHandler({
-  POST: logout,
-})
-
-async function logout() {
+const logout = async function () {
   cookies().delete('authorization')
   return true
 }
+
+module.exports = apiHandler({
+  POST: logout,
+})

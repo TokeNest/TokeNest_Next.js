@@ -5,7 +5,7 @@ const File = db.File
 
 const save = async function (fileDto: FileInfo) {
   const file = new File({ ...fileDto })
-  await file.save()
+  file.save()
 
   return file._id
 }

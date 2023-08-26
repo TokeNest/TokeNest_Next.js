@@ -26,7 +26,8 @@ const save = async function (id: string, addressInfo: AddressInfo) {
 const update = async function (id: string, addressInfo: AddressInfo) {
   const address = await getById(id)
   Object.assign(address, addressInfo)
-  return address.save()._id
+  address.save()
+  return address._id
 }
 
 const _delete = async function (id: string) {
