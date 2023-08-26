@@ -14,12 +14,12 @@ export const prdOptGrpRepository = {
   delete: _delete,
 }
 
-async function getAll() {
-  return await ProductOptionGroup.find({ deleted_date: null })
+function getAll() {
+  return ProductOptionGroup.find({ deleted_date: null })
 }
 
-async function getAllByProductId(id: string) {
-  return await ProductOptionGroup.find({ deleted_date: null, product_id: id })
+function getAllByProductId(id: string) {
+  return ProductOptionGroup.find({ deleted_date: null, product_id: id })
 }
 
 async function getById(id: string) {

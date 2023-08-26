@@ -7,8 +7,8 @@ module.exports = apiHandler({
   POST: create,
 })
 
-async function getAll(req: Request, { params: { product_id } }: any) {
-  return await prdOptGrpRepository.getAllByProductId(product_id)
+function getAll(req: Request, { params: { product_id } }: any) {
+  return prdOptGrpRepository.getAllByProductId(product_id)
 }
 
 async function create(req: Request, { params: { product_id } }: any) {

@@ -1,13 +1,22 @@
 import React from 'react'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Unstable_Grid2'
-import { axiosFetcher } from '@/utils/component/api-fetcher-util'
-import { Product } from '@/variables/interface/kiosk-interface'
+import { Category } from '@/variables/interface/kiosk-interface'
 import ProductCard from '@/components/kiosk/ProductCard/ProductCard'
 import ProductContainer from '@/app/kiosk/ProductContainer'
+import { nextFetcher } from '@/utils/component/api-fetcher-util'
+
+const getCategoryList = async (): Promise<Category[]> => {
+  const storeId = '64e8907fc8114c519eecdc50'
+  const data = await nextFetcher(`kiosk/${storeId}`, {
+    cache: 'no-store',
+  })
+  return await data.json()
+}
 
 export default async function KioskPage() {
-  const { data: products }: { data: Product[] } = await axiosFetcher('kiosk')
+  const category = await getCategoryList()
+  const { products } = category[0]
   return (
     <Card sx={{ height: 1, bgcolor: 'primary.light', borderRadius: 2 }}>
       <ProductContainer products={products}>

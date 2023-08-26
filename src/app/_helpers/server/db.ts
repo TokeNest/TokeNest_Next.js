@@ -46,7 +46,7 @@ function addressModel() {
   addressSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -83,7 +83,7 @@ function userModel() {
   userSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -130,7 +130,7 @@ function productModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -169,7 +169,7 @@ function productOptionGroupModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -202,7 +202,7 @@ function productOptionModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -234,7 +234,7 @@ function storeModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },

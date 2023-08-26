@@ -16,8 +16,8 @@ async function getAll() {
   return await Product.find({ deleted_date: null })
 }
 
-async function getAllByStoreId(id: string) {
-  return await Product.find({ deleted_date: null, store_id: id }).populate({
+async function getAllByStoreId(id: string): Promise<Omit<any, never>[]> {
+  return Product.find({ deleted_date: null, store_id: id }).populate({
     path: 'option_groups',
     match: { deleted_date: { $eq: null } },
     populate: { path: 'options', match: { deleted_date: { $eq: null } } },
