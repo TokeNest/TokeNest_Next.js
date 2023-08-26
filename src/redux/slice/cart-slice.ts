@@ -12,6 +12,7 @@ export const cart = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    removeCartBasket: (state, { payload }: { payload: OrderProduct }) => {},
     addCartBasket: (state, { payload }: { payload: OrderProduct }) => {
       const index = state.basket.findIndex(
         (orderProduct) =>

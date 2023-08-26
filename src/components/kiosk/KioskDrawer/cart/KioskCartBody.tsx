@@ -19,6 +19,7 @@ export default function KioskCartBody() {
     optionGroupsInfo,
     product: products.find(({ productId }) => productId === id) as Product,
   }))
+
   return (
     <KioskCartPriceProvider>
       <CardContent
