@@ -3,8 +3,8 @@ import { addressRequestDto } from '@/app/_helpers/server/dto/user/addressRequest
 
 export function addressMapper(address: AddressInfo) {
   return new addressRequestDto({
-    addressName: address.address_name,
-    roadAddress: address.road_address,
-    addressDetail: address.address_detail,
+    addressName: address.addressName,
+    roadAddress: address.roadAddress,
+    addressDetail: address.addressDetail,
   })
 }

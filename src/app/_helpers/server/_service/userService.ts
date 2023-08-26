@@ -53,7 +53,7 @@ const join = async function (params: SaveUserInfo) {
     user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
   // validate
-  const valUser = await validateUsers.validUserAlreadyExistAsWalletAddress(user.user_wallet_address)
+  const valUser = await validateUsers.validUserAlreadyExistAsWalletAddress(user.userWalletAddress)
   if (valUser != true) {
     return valUser
   }

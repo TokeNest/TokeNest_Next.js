@@ -13,34 +13,34 @@ async function getProductList(id: string) {
   list.forEach((prd) => {
     const productDto = new ProductResponseDto({
       productId: prd._id,
-      productName: prd.product_name,
-      productIntro: prd.product_intro,
-      productInfo: prd.product_info,
-      productPrice: prd.product_price,
+      productName: prd.productName,
+      productIntro: prd.productIntro,
+      productInfo: prd.productInfo,
+      productPrice: prd.productPrice,
       productImageUrl: '',
-      optionGroups: prd.option_groups.map((optGrp: any) => ({
-        optionGroupName: optGrp.product_option_group_name,
-        isRequire: optGrp.product_option_group_is_require,
-        isDuplicate: optGrp.product_option_group_is_duplicate,
+      optionGroups: prd.optionGroups.map((optGrp: any) => ({
+        optionGroupName: optGrp.productOptionGroupName,
+        isRequire: optGrp.productOptionGroupIsRequire,
+        isDuplicate: optGrp.productOptionGroupIsDuplicate,
         options: optGrp.options.map((opt: any) => ({
           optionId: opt._id,
-          optionName: opt.product_option_name,
-          isDefault: opt.product_option_is_default,
-          optionPrice: opt.product_option_price,
+          optionName: opt.productOptionName,
+          isDefault: opt.productOptionIsDefault,
+          optionPrice: opt.productOptionPrice,
         })),
       })),
     })
-    if (categories.includes(prd.product_category)) {
+    if (categories.includes(prd.productCategory)) {
       categoryList.forEach((category: CategoryResponseDto) => {
-        if (category.categoryName === prd.product_category) {
+        if (category.categoryName === prd.productCategory) {
           category.products.push(productDto)
         }
       })
     } else {
-      categories.push(prd.product_category)
+      categories.push(prd.productCategory)
       categoryList.push(
         new CategoryResponseDto({
-          categoryName: prd.product_category,
+          categoryName: prd.productCategory,
           products: [productDto],
         })
       )

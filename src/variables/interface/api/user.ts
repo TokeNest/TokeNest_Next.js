@@ -5,7 +5,7 @@ export interface UserInfo {
   user_password_hash: string
   user_phone: string
   user_email: string
-  user_wallet_address: string
+  userWalletAddress: string
   addresses: AddressInfo[]
   user_account_type: string
 }

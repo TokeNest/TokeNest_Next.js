@@ -11,7 +11,7 @@ const login = async function (req: Request) {
 }
 
 login.schema = joi.object({
-  user_wallet_address: joi.string().required(),
+  userWalletAddress: joi.string().required(),
   user_password: joi.string().required(),
 })
 

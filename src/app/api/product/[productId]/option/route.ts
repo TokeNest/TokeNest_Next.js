@@ -7,13 +7,13 @@ module.exports = apiHandler({
   POST: create,
 })
 
-async function getAll(req: Request, { params: { product_id } }: any) {
-  return await prdOptGrpRepository.getAllByProductId(product_id)
+function getAll(req: Request, { params: { productId } }: any) {
+  return prdOptGrpRepository.getAllByProductId(productId)
 }
 
-async function create(req: Request, { params: { product_id } }: any) {
+async function create(req: Request, { params: { productId } }: any) {
   const body = await req.json()
-  return await prdOptGrpRepository.create(product_id, body)
+  return await prdOptGrpRepository.create(productId, body)
 }
 
 create.schema = joi.object({

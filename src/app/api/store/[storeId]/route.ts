@@ -1,22 +1,23 @@
-import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { storeRepository } from '@/app/_helpers/server/_repository'
+import joi from 'joi'
 
 module.exports = apiHandler({
-  GET: getAll,
-  POST: create,
+  GET: getById,
+  PUT: update,
+  DELETE: _delete,
 })
 
-async function getAll(req: Request) {
-  return storeRepository.getAll()
+async function getById(req: Request, { params: { storeId } }: any) {
+  return await storeRepository.getById(storeId)
 }
 
-async function create(req: Request) {
+async function update(req: Request, { params: { storeId } }: any) {
   const body = await req.json()
-  await storeRepository.create(body)
+  await storeRepository.update(storeId, body)
 }
 
-create.schema = joi.object({
+update.schema = joi.object({
   storeName: joi.string().required(),
   storeTel: joi.string().required(),
   storeEmail: joi.string().required(),
@@ -25,3 +26,7 @@ create.schema = joi.object({
   storeOpenCloseTime: joi.string().required(),
   storeStatus: joi.string().required(),
 })
+
+async function _delete(req: Request, { params: { storeId } }: any) {
+  await storeRepository.softDelete(storeId)
+}

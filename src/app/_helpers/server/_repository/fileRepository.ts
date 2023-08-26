@@ -6,23 +6,15 @@ const File = db.File
 const save = async function (fileDto: FileInfo) {
   const file = new File({ ...fileDto })
   file.save()
-
   return file._id
 }
 
 const getFileById = async function (id: string) {
-  return File.findOne({ _id: id, deleted_date: null }).exec()
+  return File.findOne({ _id: id, deleteDate: null }).exec()
 }
 
-// const softDelete = async function (id: string) {
-//   const file = await getFileById(id)
-//   file.deleted_date = new Date()
-//   await file.save()
-//   return file._id
-// }
-
 const _delete = async function (id: string) {
-  await File.findByIdAndRemove(id)
+  File.findByIdAndRemove(id)
   return id
 }
 
@@ -38,6 +30,5 @@ export const fileRepository = {
   save,
   getFIleById: getFileById,
   getPathAndName,
-  // softDelete,
   delete: _delete,
 }

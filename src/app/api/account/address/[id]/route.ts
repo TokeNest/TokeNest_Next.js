@@ -19,9 +19,9 @@ const _delete = async function (_req: Request, { params }: ParamsInputId) {
 }
 
 update.schema = joi.object({
-  address_name: joi.string().required(),
-  road_address: joi.string().required(),
-  address_detail: joi.string().required(),
+  addressName: joi.string().required(),
+  roadAddress: joi.string().required(),
+  addressDetail: joi.string().required(),
 })
 
 module.exports = apiHandler({
