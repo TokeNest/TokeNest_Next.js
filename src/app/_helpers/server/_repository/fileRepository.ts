@@ -3,26 +3,24 @@ import { db } from '@/app/_helpers/server'
 
 const File = db.File
 
-const save = async function (fileDto: FileInfo) {
+const save = (fileDto: FileInfo) => {
   const file = new File({ ...fileDto })
   file.save()
   return file._id
 }
 
-const getFileById = async function (id: string) {
-  return File.findOne({ _id: id, deleteDate: null }).exec()
-}
+const getFileById = async (id: string) => await File.findOne({ _id: id, deleteDate: null }).exec()
 
-const _delete = async function (id: string) {
+const _delete = (id: string) => {
   File.findByIdAndRemove(id)
   return id
 }
 
 const getPathAndName = async function (id: string) {
-  const file = await File.findOne({ _id: id, deleted_date: null }).exec()
+  const file = await File.findOne({ _id: id, deleteDate: null }).exec()
   return {
-    file_name: file.file_name,
-    file_path: file.file_path,
+    fileName: file.fileName,
+    filePath: file.filePath,
   }
 }
 

@@ -1,10 +1,9 @@
-import { AddressInfo } from '@/variables/interface/api/address'
-import { addressRequestDto } from '@/app/_helpers/server/dto/user/addressRequestDto'
-
-export function addressMapper(address: AddressInfo) {
-  return new addressRequestDto({
-    addressName: address.addressName,
-    roadAddress: address.roadAddress,
-    addressDetail: address.addressDetail,
-  })
-}
+// import { AddressInfo } from '@/variables/interface/api/address'
+//
+// const addressMapper = (address: AddressInfo) => ({
+//   addressName: address.addressName,
+//   roadAddress: address.roadAddress,
+//   addressDetail: address.addressDetail,
+// })
+//
+// export default addressMapper

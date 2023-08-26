@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
-function fileModel() {
+const fileModel = () => {
   const fileSchema = new Schema(
     {
       fileName: { type: String, required: true },
@@ -23,7 +23,7 @@ function fileModel() {
   return mongoose.models.File || mongoose.model('File', fileSchema)
 }
 
-function addressModel() {
+const addressModel = () => {
   const addressSchema = new Schema(
     {
       user: {
@@ -55,7 +55,7 @@ function addressModel() {
   return mongoose.models.Address || mongoose.model('Address', addressSchema)
 }
 
-function userModel() {
+const userModel = () => {
   const userSchema = new Schema(
     {
       userName: { type: String, required: true },
@@ -92,7 +92,7 @@ function userModel() {
   return mongoose.models.User || mongoose.model('User', userSchema)
 }
 
-function productModel() {
+const productModel = () => {
   const schema = new Schema(
     {
       productName: { type: String, required: true },
@@ -139,7 +139,7 @@ function productModel() {
   return mongoose.models.Product || mongoose.model('Product', schema)
 }
 
-function productOptionGroupModel() {
+const productOptionGroupModel = () => {
   const schema = new Schema(
     {
       productOptionGroupName: { type: String, required: true },
@@ -178,7 +178,7 @@ function productOptionGroupModel() {
   return mongoose.models.ProductOptionGroup || mongoose.model('ProductOptionGroup', schema)
 }
 
-function productOptionModel() {
+const productOptionModel = () => {
   const schema = new Schema(
     {
       productOptionName: { type: String, required: true },
@@ -211,7 +211,7 @@ function productOptionModel() {
   return mongoose.models.ProductOption || mongoose.model('ProductOption', schema)
 }
 
-function storeModel() {
+const storeModel = () => {
   const schema = new Schema(
     {
       storeName: { type: String, required: true },

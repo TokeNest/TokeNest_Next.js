@@ -1,35 +1,30 @@
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
-import { addressMapper } from '@/utils/server/dtoMapping/addressMapper'
 import { AddressInfo } from '@/variables/interface/api/address'
-import { userRepository } from '@/app/_helpers/server/_repository'
-import ValidateAddressNotExist from '@/utils/server/validate/validateAddress'
+import isExistAddress from '@/utils/server/validate/validateAddress'
+import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
 
-const getAddressById = async function (id: string) {
+const getAddressById = async (id: string) => {
   const address = await addressRepository.getById(id)
-  ValidateAddressNotExist(address)
-  return addressMapper(address)
+  isExistAddress(address)
+  return address
 }
 
-const getAddressByUserId = async function (id: string) {
-  const users = await userRepository.getById(id)
-  if (!users) {
-    throw new Error('User not Found')
-  }
-  return users.addresses.map((address: AddressInfo) => {
-    return addressMapper(address)
+const getAddressByUserId = async (id: string) => {
+  const addresses = await addressRepository.getByUser(await userRepository.getById(id))
+
+  return addresses.map((address: AddressInfo) => {
+    isExistAddress(address)
+    return address
   })
 }
 
-const join = async function (userId: string, params: AddressInfo) {
-  return addressRepository.save(userId, params)
-}
+const join = async (userId: string, params: AddressInfo) =>
+  await addressRepository.save(userId, params)
 
-const update = async function (id: string, params: AddressInfo) {
-  return addressRepository.update(id, params)
-}
+const update = async (id: string, params: AddressInfo) => await addressRepository.update(id, params)
 
-const _delete = async function (id: string) {
-  ValidateAddressNotExist(await addressRepository.getById(id))
+const _delete = async (id: string) => {
+  isExistAddress(await addressRepository.getById(id))
   return addressRepository.delete(id)
 }
 

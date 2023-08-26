@@ -1,19 +1,15 @@
-import { userRepository } from '@/app/_helpers/server/_repository'
+import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
+import { UserInfo } from '@/variables/interface/api/user'
 
-const validUserAlreadyExistAsWalletAddress = async function (user_wallet_address: string) {
+export const validUserAlreadyExistAsWalletAddress = async function (user_wallet_address: string) {
   if (await userRepository.getByAddress(user_wallet_address)) {
     return { success: false, error: 'Error: User Already Exist' }
   }
   return true
 }
 
-const validateUserNotExist = async function (user: object) {
-  if (user === null) {
+export const isExistUser = function (user: UserInfo) {
+  if (!user) {
     throw 'User Not Found'
   }
-}
-
-export const validateUsers = {
-  validUserAlreadyExistAsWalletAddress,
-  validateUserNotExist,
 }

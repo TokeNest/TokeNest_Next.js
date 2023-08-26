@@ -4,31 +4,12 @@ import { productRepository } from '@/app/_helpers/server/_repository/productRepo
 
 const ProductOptionGroup = db.ProductOptionGroup
 
-export const prdOptGrpRepository = {
-  getAll,
-  getAllByProductId,
-  getById,
-  create,
-  update,
-  softDelete: _softDelete,
-  delete: _delete,
-}
+const getAll = async () => await ProductOptionGroup.find({ deletedDate: null }).exec()
 
-function getAll() {
-  return ProductOptionGroup.find({ deletedDate: null })
-}
+const getAllByProductId = async (id: string) =>
+  await ProductOptionGroup.find({ deletedDate: null, productId: id }).exec()
 
-function getAllByProductId(id: string) {
-  return ProductOptionGroup.find({ deletedDate: null, productId: id })
-}
-
-async function getById(id: string) {
-  try {
-    return await ProductOptionGroup.findById(id)
-  } catch {
-    throw 'ProductOptionGroup Not Found'
-  }
-}
+const getById = async (id: string) => await ProductOptionGroup.findById(id)
 
 async function create(productId: string, params: any) {
   const options: any[] = await params['options']
@@ -71,4 +52,14 @@ async function _softDelete(id: string) {
 
 async function _delete(id: string) {
   await ProductOptionGroup.findByIdAndDelete(id)
+}
+
+export const prdOptGrpRepository = {
+  getAll,
+  getAllByProductId,
+  getById,
+  create,
+  update,
+  softDelete: _softDelete,
+  delete: _delete,
 }
