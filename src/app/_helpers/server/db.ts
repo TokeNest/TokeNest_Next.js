@@ -255,7 +255,7 @@ function orderModel() {
       },
       orderDetails: [
         {
-          type: Schema.Type.ObjectId,
+          type: Schema.Types.ObjectId,
           ref: 'OrderOption',
         },
       ],
