@@ -1,3 +1,4 @@
+'use client'
 import { CardContent, List, Paper } from '@mui/material'
 import * as React from 'react'
 import KioskListItem from './KioskListItem'
