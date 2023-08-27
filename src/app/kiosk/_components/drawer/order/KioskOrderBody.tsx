@@ -5,6 +5,7 @@ import OrderOptionGroups from '@/app/kiosk/_components/drawer/order/OrderOptionG
 
 const productInfoHeight = 400
 export default function KioskOrderBody() {
+  console.log('renderOrder')
   return (
     <CardContent sx={{ height: 8 / 10 }}>
       <OrderDetailInfo productInfoHeight={productInfoHeight} />
