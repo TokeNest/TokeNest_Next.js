@@ -1,22 +1,23 @@
 import { db } from '@/app/_helpers/server'
+import { HydratedDocument } from 'mongoose'
+import { ProductInfo } from '@/variables/interface/api/product'
 
 const Product = db.Product
-
-export const productRepository = {
-  getAll,
-  getAllByStoreId,
-  getById,
-  create,
-  update,
-  softDelete: _softDelete,
-  delete: _delete,
+const Store = db.Store
+const productProjection = {
+  productId: true,
+  productName: true,
+  productIntro: true,
+  productInfo: true,
+  productPrice: true,
+  productImageUrl: true,
+  optionGroups: true,
 }
 
-function getAll() {
-  return Product.find({ deletedDate: null })
-}
+const getAll = async (): Promise<Array<HydratedDocument<ProductInfo, {}, {}>>> =>
+  await Product.find({ deletedDate: null }, productProjection).exec()
 
-async function getAllByStoreId(id: string) {
+const getAllByStoreId = async (id: string): Promise<Omit<ProductInfo, never>[]> => {
   return Product.find({ deletedDate: null, storeId: id }).populate({
     path: 'optionGroups',
     match: { deletedDate: { $eq: null } },
@@ -24,41 +25,54 @@ async function getAllByStoreId(id: string) {
   })
 }
 
-async function getById(id: string) {
-  try {
-    return await Product.findById(id)
-  } catch {
-    throw 'Product Not Found'
-  }
+const getStoreIdByProductId = async (id: string) => {
+  return (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
 }
 
-async function create(params: any) {
-  const product = new Product(params)
-  await product.save()
+const getById = async (id: string): Promise<ProductInfo> =>
+  await Product.findOne({ _id: id, deletedDate: null }).exec()
+
+const save = async (id: string, productInfo: ProductInfo): Promise<string> => {
+  console.log(productInfo)
+  return (await new Product({ store: id, ...productInfo }).save())._id
 }
 
-async function update(id: string, params: any) {
-  const product = await Product.findById(id)
-  if (!product) {
-    throw 'Product Not Found'
-  }
+/*
+const save = async (id: string, addressInfo: AddressInfo): Promise<string> => {
+  const user = await User.findOne({ _id: id, deletedDate: null }).exec()
+  const address = new Address({ user, ...addressInfo })
+  await address.save()
+  // setting relationship
+  user.addresses.push(address)
+  await user.save()
+  return address._id
+}
+ */
 
-  Object.assign(product, params)
-
-  await product.save()
+const update = async (id: string, productInfo: ProductInfo): Promise<string> => {
+  const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
+  Object.assign(product, productInfo)
+  return (await product.save())._id
 }
 
-async function _softDelete(id: string) {
-  const product = await Product.findById(id)
-  if (!product) {
-    throw 'Product Not Found'
-  }
-
+const softDelete = async (id: string) => {
+  const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
   product.deletedDate = new Date()
-
-  await product.save()
+  return (await product.save())._id
 }
 
-async function _delete(id: string) {
+const _delete = async (id: string) => {
   await Product.findByIdAndDelete(id)
+  return id
+}
+
+export const productRepository = {
+  getAll,
+  getAllByStoreId,
+  getStoreIdByProductId,
+  getById,
+  save,
+  update,
+  softDelete: softDelete,
+  delete: _delete,
 }

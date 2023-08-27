@@ -9,6 +9,8 @@ export interface UserInfo {
   userWalletAddress: string
   addresses: AddressInfo[]
   userAccountType: string
+
+  save(): any
 }
 export interface SaveUserInfo extends UserInfo {
   userPassword: string

@@ -1,19 +1,19 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { productRepository } from '@/app/_helpers/server/_repository'
 import joi from 'joi'
+import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 module.exports = apiHandler({
   GET: getAll,
   POST: create,
 })
-
 function getAll() {
   return productRepository.getAll()
 }
 
-async function create(req: Request) {
+async function create(req: Request, { params }: ParamsInputId) {
   const body = await req.json()
-  await productRepository.create(body)
+  await productRepository.save(params.id, body)
 }
 
 create.schema = joi.object({
@@ -23,5 +23,4 @@ create.schema = joi.object({
   productIntro: joi.string().required(),
   productPrice: joi.number().required(),
   productCategory: joi.string().required(),
-  storeId: joi.string().required(),
 })

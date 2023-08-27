@@ -5,11 +5,11 @@ import { addressService } from '@/app/_helpers/server/_service/addressService'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 const create = async function (req: Request, { params }: ParamsInputId) {
-  return addressService.join(params.id, await req.json())
+  return addressService.createAddress(params.id, await req.json())
 }
 
 const getByUserId = async function (_req: Request, { params }: ParamsInputId) {
-  return addressService.getAddressByUserId(params.id)
+  return addressService.getAddresses(params.id)
 }
 
 create.schema = joi.object({

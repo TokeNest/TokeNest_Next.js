@@ -4,15 +4,15 @@ import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 import joi from 'joi'
 
 const getById = async function (_req: Request, { params }: ParamsInputId) {
-  return await addressService.getAddressById(params.id)
+  return await addressService.getAddress(params.id)
 }
 
 const update = async function (req: Request, { params }: ParamsInputId) {
-  return await addressService.update(params.id, await req.json())
+  return await addressService.updateAddress(params.id, await req.json())
 }
 
 const _delete = async function (_req: Request, { params }: ParamsInputId) {
-  return await addressService.delete(params.id)
+  return await addressService.deleteAddress(params.id)
 }
 
 update.schema = joi.object({

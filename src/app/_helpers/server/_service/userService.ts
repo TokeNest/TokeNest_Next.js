@@ -32,7 +32,10 @@ const authenticate = async ({
 
 const getUsers = async () => (await userRepository.getAll()).map((user: Omit<any, never>) => user)
 
-const getUserById = async (id: string) => await userRepository.getById(id)
+const getUserById = async (id: string) => {
+  // isExistUser(id)
+  return await userRepository.getById(id)
+}
 
 const getCurrentUser = async () => {
   const id = headers().get('user_id')
@@ -48,12 +51,13 @@ const join = async (params: SaveUserInfo) => {
   if (params.userPassword) {
     user.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
   }
+
   // validate
   await validUserAlreadyExistAsWalletAddress(params.userWalletAddress)
   return await userRepository.save(user)
 }
 
-function update(id: string, params: SaveUserInfo) {
+const update = (id: string, params: SaveUserInfo) => {
   // hash password if it was entered
   if (params.userPassword) {
     params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
@@ -62,13 +66,11 @@ function update(id: string, params: SaveUserInfo) {
   return userRepository.update(id, params)
 }
 
-const softDelete = async function (id: string) {
+const softDelete = async (id: string) => {
   return userRepository.softDelete(id)
 }
 
 const _delete = async (id: string) => {
-  console.log(id)
-  console.log(await userRepository.getById(id))
   isExistUser(await userRepository.getById(id))
   return await userRepository.delete(id)
 }

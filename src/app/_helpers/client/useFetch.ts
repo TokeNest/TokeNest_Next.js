@@ -8,7 +8,7 @@ function useFetch() {
     get: request('GET'),
     post: request('POST'),
     put: request('PUT'),
-    delete: request('DELETE'),
+    deleteAddress: request('DELETE'),
   }
 
   function request(method: string) {

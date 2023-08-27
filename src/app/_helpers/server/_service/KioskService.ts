@@ -1,6 +1,6 @@
-import { productRepository } from '@/app/_helpers/server/_repository'
 import { ProductResponseDto } from '@/app/_helpers/server/dto/product/response/ProductResponseDto'
 import { CategoryResponseDto } from '@/app/_helpers/server/dto/product/response/CategoryResponseDto'
+import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
 
 export const kioskService = {
   getProductList,
@@ -10,7 +10,7 @@ async function getProductList(id: string) {
   const list = await productRepository.getAllByStoreId(id)
   const categoryList: CategoryResponseDto[] = []
   const categories: string[] = []
-  list.forEach((prd) => {
+  list.forEach((prd: any) => {
     const productDto = new ProductResponseDto({
       productId: prd._id,
       productName: prd.productName,

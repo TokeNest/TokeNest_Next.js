@@ -1,9 +1,9 @@
-import { ProductRequestDto } from '@/app/_helpers/server/dto/product/request/ProductRequestDto'
+import { ProductInfo } from '@/variables/interface/api/product'
 
 export interface FileInfo {
-  file_name: string
-  file_type: string
-  file_capacity: string
-  file_path: string
-  product: ProductRequestDto
+  fileName: string
+  fileType: string
+  fileCapacity: string
+  filePath: string
+  product: ProductInfo
 }

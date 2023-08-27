@@ -10,13 +10,13 @@ const fileModel = () => {
   const fileSchema = new Schema(
     {
       fileName: { type: String, required: true },
-      fileDir: { type: String, required: true },
-      deletedDate: { type: Date, default: null },
+      fileType: { type: String, required: true },
+      fileCapacity: { type: String, require: true },
+      filePath: { type: String, required: true },
     },
     {
       timestamps: {
-        createdAt: 'createdDate',
-        updateAt: 'updatedDate',
+        createdAt: 'created_date',
       },
     }
   )
@@ -102,7 +102,7 @@ const productModel = () => {
       productPrice: { type: Number, required: true },
       productCategory: { type: String, required: true },
       deletedDate: { type: Date, default: null },
-      storeId: {
+      store: {
         type: Schema.Types.ObjectId,
         ref: 'Store',
         required: true,
@@ -113,6 +113,11 @@ const productModel = () => {
           ref: 'ProductOptionGroup',
         },
       ],
+      file: {
+        type: Schema.Types.ObjectId,
+        ref: 'File',
+        default: null,
+      },
     },
     {
       timestamps: {
