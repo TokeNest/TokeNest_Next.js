@@ -242,6 +242,83 @@ function storeModel() {
   return mongoose.models.Store || mongoose.model('Store', schema)
 }
 
+function orderModel() {
+  const schema = new Schema(
+    {
+      orderNum: { type: Number, required: true },
+      orderStatus: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
+      storeId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Store',
+        required: true,
+      },
+      orderDetails: [
+        {
+          type: Schema.Type.ObjectId,
+          ref: 'OrderOption',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.Order || mongoose.model('Order', schema)
+}
+
+function orderOptionModel() {
+  const schema = new Schema(
+    {
+      orderAmount: { type: Number, required: true },
+      optionId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+        required: true,
+      },
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
+      productOptions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Product_Option',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.OrderOption || mongoose.model('OrderOption', schema)
+}
+
 export const db = {
   File: fileModel(),
   Product: productModel(),
@@ -250,4 +327,6 @@ export const db = {
   Product_Option_Group: productOptionGroupModel(),
   Product_Option: productOptionModel(),
   Store: storeModel(),
+  Order: orderModel(),
+  OrderOption: orderOptionModel(),
 }
