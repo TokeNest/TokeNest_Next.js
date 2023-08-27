@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
 import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
+import { usePathname, useRouter } from 'next/navigation'
 
 export function ProductCardActionArea({
   children,
@@ -20,12 +21,14 @@ export function ProductCardActionArea({
   children: React.ReactNode
   product: Product
 }) {
+  const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
-  const { setDrawerState, setProduct } = useDrawerContext()
+  const { setProduct } = useDrawerContext()
   const clickEvent = () => {
     setProduct(product)
-    setDrawerState({ isShow: true, type: DRAWER_TYPE.ORDER })
     dispatch(setOrderProduct(convertOrderProduct(product)))
+    router.push(`${pathname}?drawer=${DRAWER_TYPE.ORDER}`)
   }
   return (
     <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
