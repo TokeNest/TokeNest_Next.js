@@ -2,10 +2,10 @@ import React from 'react'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Unstable_Grid2'
 import { Category } from '@/variables/interface/kiosk-interface'
-import ProductCard from '@/components/kiosk/ProductCard/ProductCard'
+import ProductCard from '@/app/kiosk/_components/productCard/ProductCard'
 import ProductContainer from '@/app/kiosk/ProductContainer'
 import { nextFetcher } from '@/utils/component/api-fetcher-util'
-import KioskDrawer from '@/components/kiosk/KioskDrawer/KioskDrawer'
+import KioskDrawer from '@/app/kiosk/_components/drawer/KioskDrawer'
 
 const getCategoryList = async (): Promise<Category[]> => {
   const storeId = '64e9b9d623373bbc4a1ab263'

@@ -1,11 +1,11 @@
 import { Card } from '@mui/material'
-import KioskHeader from '@/components/kiosk/KioskDrawer/KioskHeader'
-import KioskFooter from '@/components/kiosk/KioskDrawer/KioskFooter'
+import KioskHeader from '@/app/kiosk/_components/drawer/KioskHeader'
+import KioskFooter from '@/app/kiosk/_components/drawer/KioskFooter'
 import * as React from 'react'
-import { KioskDrawerManager } from '@/components/kiosk/KioskDrawer/interaction'
+import { KioskDrawerManager } from '@/app/kiosk/_components/drawer/interaction'
 import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
-import KioskOrderBody from '@/components/kiosk/KioskDrawer/order/KioskOrderBody'
-import KioskCartBody from '@/components/kiosk/KioskDrawer/cart/KioskCartBody'
+import KioskOrderBody from '@/app/kiosk/_components/drawer/order/KioskOrderBody'
+import KioskCartBody from '@/app/kiosk/_components/drawer/cart/KioskCartBody'
 
 export default function KioskDrawer({ drawerType }: { drawerType: string | undefined }) {
   return (

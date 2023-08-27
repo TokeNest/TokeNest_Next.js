@@ -3,7 +3,7 @@ import * as React from 'react'
 import {
   KioskHeaderBackButton,
   KioskHeaderTypography,
-} from '@/components/kiosk/KioskDrawer/interaction'
+} from '@/app/kiosk/_components/drawer/interaction'
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded'
 
 export default function KioskHeader() {

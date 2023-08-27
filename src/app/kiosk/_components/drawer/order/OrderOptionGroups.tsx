@@ -6,7 +6,7 @@ import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
 import {
   CheckboxOptionGroup,
   RadioOptionGroup,
-} from '@/components/kiosk/KioskDrawer/order/OptionGroup'
+} from '@/app/kiosk/_components/drawer/order/OptionGroup'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { Product } from '@/variables/interface/kiosk-interface'
 

@@ -1,7 +1,7 @@
 import { CardContent, Paper } from '@mui/material'
 import * as React from 'react'
-import OrderDetailInfo from '@/components/kiosk/KioskDrawer/order/OrderDetailInfo'
-import OrderOptionGroups from '@/components/kiosk/KioskDrawer/order/OrderOptionGroups'
+import OrderDetailInfo from '@/app/kiosk/_components/drawer/order/OrderDetailInfo'
+import OrderOptionGroups from '@/app/kiosk/_components/drawer/order/OrderOptionGroups'
 
 const productInfoHeight = 400
 export default function KioskOrderBody() {
