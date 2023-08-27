@@ -1,5 +1,13 @@
 import * as React from 'react'
-import { Avatar, Divider, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
+import {
+  Avatar,
+  ButtonGroup,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+} from '@mui/material'
 import ImageIcon from '@mui/icons-material/Image'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -8,6 +16,7 @@ import {
   ListItemCalculatePrice,
   ListItemDetailInfo,
   OpenDetailInfoBtn,
+  QuantityButtonGroup,
 } from '@/components/kiosk/KioskDrawer/cart/interaction'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import {
@@ -70,7 +79,9 @@ export default function KioskListItem({
         />
       </ListItem>
       <ListItemDetailInfo>
-        <List sx={{ pl: 4, '& .MuiTypography-body1': { display: 'flex' } }}>
+        <List
+          sx={{ pl: 4, flexGrow: 1, minHeight: 240, '& .MuiTypography-body1': { display: 'flex' } }}
+        >
           {selectGroupOptions.map(({ optionGroupName, options: { optionId, optionName } }) => {
             return (
               <ListItem key={optionId}>
@@ -95,6 +106,9 @@ export default function KioskListItem({
           })}
           <Divider />
         </List>
+        <ButtonGroup orientation="vertical" variant="text" size="large" sx={{ height: 1, px: 2 }}>
+          <QuantityButtonGroup />
+        </ButtonGroup>
       </ListItemDetailInfo>
     </>
   )

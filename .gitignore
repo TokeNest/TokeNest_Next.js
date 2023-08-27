@@ -8,6 +8,7 @@
 # database
 /mongodb
 /src/public/images/*
+!/src/public/images/cuteMockCat.png
 
 .idea
 # testing

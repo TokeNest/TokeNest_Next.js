@@ -1,3 +1,4 @@
+'use client'
 import { CardContent, List, Paper } from '@mui/material'
 import * as React from 'react'
 import KioskListItem from './KioskListItem'
@@ -19,6 +20,7 @@ export default function KioskCartBody() {
     optionGroupsInfo,
     product: products.find(({ productId }) => productId === id) as Product,
   }))
+
   return (
     <KioskCartPriceProvider>
       <CardContent

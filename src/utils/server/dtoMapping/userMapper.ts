@@ -7,11 +7,11 @@ export function userInfoMapper(user: Omit<any, never> & {}) {
     userPasswordHash: user.user_password_hash,
     userPhone: user.user_phone,
     userEmail: user.user_email,
-    userWalletAddress: user.user_wallet_address,
+    userWalletAddress: user.userWalletAddress,
     addresses: user.addresses.map((address: AddressInfo) => ({
-      addressName: address.address_name,
-      roadAddress: address.road_address,
-      addressDetail: address.address_detail,
+      addressName: address.addressName,
+      roadAddress: address.roadAddress,
+      addressDetail: address.addressDetail,
     })),
     userAccountType: user.user_account_type,
   })

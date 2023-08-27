@@ -3,6 +3,7 @@ import { userRepository } from '@/app/_helpers/server/_repository'
 import { cookies } from 'next/headers'
 import joi from 'joi'
 import { userService } from '@/app/_helpers/server/_service/userService'
+import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 module.exports = apiHandler({
   GET: getById,
@@ -10,12 +11,12 @@ module.exports = apiHandler({
   DELETE: _delete,
 })
 
-async function getById(req: Request, { params: { id } }: any) {
-  return await userService.getUserById(id)
+async function getById(_req: Request, { params }: ParamsInputId) {
+  return await userService.getUserById(params.id)
 }
 
-async function updateUser(req: Request, { params: { id } }: any) {
-  return await userService.update(id, await req.json())
+async function updateUser(req: Request, { params }: ParamsInputId) {
+  return await userService.update(params.id, await req.json())
 }
 
 updateUser.schema = joi.object({
@@ -34,15 +35,15 @@ updateUser.schema = joi.object({
   user_account_type: joi.string().required(),
 })
 
-async function _delete(req: Request, { params: { id } }: any) {
+async function _delete(req: Request, { params }: ParamsInputId) {
   // auto logout and soft delete if deleted self
-  if (id === req.headers.get('user_id')) {
+  if (params.id === req.headers.get('user_id')) {
     cookies().delete('authorization')
-    await userService.softDelete(id)
+    await userService.softDelete(params.id)
     return { deleteSelf: true }
   }
 
   // hard delete if manager try deleted
-  await userRepository.delete(id)
+  await userRepository.delete(params.id)
   return { manager: true }
 }

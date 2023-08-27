@@ -1,5 +1,5 @@
 'use client'
-import { OptionCheckboxGroup, OptionRadioGroup } from '@/variables/interface/kiosk-interface'
+import { OptionGroup } from '@/variables/interface/kiosk-interface'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import * as React from 'react'
 import { useCallback, useState } from 'react'
@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux'
 import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
 
 export function RadioOptionGroup({
-  optionGroup: { options, defaultOptionId, optionGroupId },
+  optionGroup: { options, optionGroupId },
 }: {
-  optionGroup: OptionRadioGroup
+  optionGroup: OptionGroup
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const dispatch = useDispatch<AppDispatch>()
-  const [tabValue, setTabValue] = useState(defaultOptionId)
+  const [tabValue, setTabValue] = useState(options.find(({ isDefault }) => isDefault)?.optionId)
   const handleChange = useCallback(
     (_: React.SyntheticEvent, id: string) => {
       dispatch(setOrderProductOptionIds({ optionGroupId, optionIds: [id] }))
@@ -32,17 +32,12 @@ export function RadioOptionGroup({
   )
 }
 
-export function CheckboxOptionGroup({
-  optionGroup: { options, defaultOptionIds, optionGroupId },
-}: {
-  optionGroup: OptionCheckboxGroup
-}) {
+export function CheckboxOptionGroup({ optionGroup: { options } }: { optionGroup: OptionGroup }) {
   return (
     <div>
       {options.map((res, i) => (
         <div key={i}>{res.optionId}</div>
       ))}
-      {defaultOptionIds}
     </div>
   )
 }

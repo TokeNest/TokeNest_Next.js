@@ -2,9 +2,12 @@ import { addressRepository } from '@/app/_helpers/server/_repository/addressResp
 import { addressMapper } from '@/utils/server/dtoMapping/addressMapper'
 import { AddressInfo } from '@/variables/interface/api/address'
 import { userRepository } from '@/app/_helpers/server/_repository'
+import ValidateAddressNotExist from '@/utils/server/validate/validateAddress'
 
 const getAddressById = async function (id: string) {
-  return addressMapper(await addressRepository.getById(id))
+  const address = await addressRepository.getById(id)
+  ValidateAddressNotExist(address)
+  return addressMapper(address)
 }
 
 const getAddressByUserId = async function (id: string) {
@@ -12,7 +15,6 @@ const getAddressByUserId = async function (id: string) {
   if (!users) {
     throw new Error('User not Found')
   }
-  console.log(users)
   return users.addresses.map((address: AddressInfo) => {
     return addressMapper(address)
   })
@@ -26,7 +28,8 @@ const update = async function (id: string, params: AddressInfo) {
   return addressRepository.update(id, params)
 }
 
-function _delete(id: string) {
+const _delete = async function (id: string) {
+  ValidateAddressNotExist(await addressRepository.getById(id))
   return addressRepository.delete(id)
 }
 

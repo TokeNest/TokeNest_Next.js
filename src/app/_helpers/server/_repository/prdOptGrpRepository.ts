@@ -1,9 +1,13 @@
 import { db } from '@/app/_helpers/server'
+import { prdOptRepository } from '@/app/_helpers/server/_repository/prdOptRepository'
+import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
+import { OptionGroup } from '@/variables/interface/kiosk-interface'
 
-const ProductOptionGroup = db.Product_Option_Group
+const ProductOptionGroup = db.ProductOptionGroup
 
 export const prdOptGrpRepository = {
   getAll,
+  getAllByProductId,
   getById,
   create,
   update,
@@ -11,8 +15,12 @@ export const prdOptGrpRepository = {
   delete: _delete,
 }
 
-async function getAll() {
-  return await ProductOptionGroup.find({ deleted_date: null })
+function getAll() {
+  return ProductOptionGroup.find({ deletedDate: null })
+}
+
+function getAllByProductId(id: string) {
+  return ProductOptionGroup.find({ deletedDate: null, productId: id })
 }
 
 async function getById(id: string) {
@@ -23,31 +31,39 @@ async function getById(id: string) {
   }
 }
 
-async function create(params: any) {
-  const product = new ProductOptionGroup(params)
+async function create(productId: string, params: OptionGroup) {
+  const product = await productRepository.getById(productId)
+  const optionGroup = await new ProductOptionGroup({
+    productId,
+    productOptionGroupType: params.optionGroupType,
+    productOptionGroupName: params.optionGroupName,
+  })
+  await optionGroup.save()
+  product.optionGroups.push(optionGroup._id)
   await product.save()
+  params.options.forEach((option) => prdOptRepository.create(optionGroup._id, option))
 }
 
 async function update(id: string, params: any) {
-  const product = await ProductOptionGroup.findById(id)
-  if (!product) {
-    throw 'Product Not Found'
+  const productOptionGroup = await ProductOptionGroup.findById(id)
+  if (!productOptionGroup) {
+    throw 'ProductOptionGroup Not Found'
   }
 
-  Object.assign(product, params)
+  Object.assign(productOptionGroup, params)
 
-  await product.save()
+  await productOptionGroup.save()
 }
 
 async function _softDelete(id: string) {
-  const product = await ProductOptionGroup.findById(id)
-  if (!product) {
-    throw 'Product Not Found'
+  const productOptionGroup = await ProductOptionGroup.findById(id)
+  if (!productOptionGroup) {
+    throw 'ProductOptionGroup Not Found'
   }
 
-  product.deleted_date = new Date()
+  productOptionGroup.deletedDate = new Date()
 
-  await product.save()
+  await productOptionGroup.save()
 }
 
 async function _delete(id: string) {

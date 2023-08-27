@@ -12,7 +12,7 @@ export const storeRepository = {
 }
 
 function getAll() {
-  return Store.find({ deleted_date: null })
+  return Store.find({ deletedDate: null })
 }
 
 async function getById(id: string) {
@@ -45,7 +45,7 @@ async function _softDelete(id: string) {
     throw 'Store Not Found'
   }
 
-  store.deleted_date = new Date()
+  store.deletedDate = new Date()
 
   await store.save()
 }

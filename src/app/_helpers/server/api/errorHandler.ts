@@ -1,20 +1,23 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import ApiExecuteResult from '@/variables/interface/api/apiResponseInterface'
 
 export { errorHandler }
 
-function errorHandler(err: Error | string) {
-  if (typeof err === 'string') {
-    const is404 = err.toLowerCase().endsWith('not found')
-    const status = is404 ? 404 : 400
-    return NextResponse.json({ message: err }, { status })
+function errorHandler(err: ApiExecuteResult) {
+  if (typeof err.message === 'string') {
+    const status = err.message.toLowerCase().includes('not found') ? 404 : 400
+    return NextResponse.json(err, { status })
   }
 
-  if (err.name === 'JsonWebTokenError') {
+  if (err.message.name === 'JsonWebTokenError') {
     cookies().delete('authorization')
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ success: err.success, message: 'Unauthorized' }, { status: 401 })
   }
 
-  console.error(err)
-  return NextResponse.json({ message: err.message }, { status: 500 })
+  // console.error(err)
+  return NextResponse.json(
+    { success: err.success, message: err.message.message, body: err.body },
+    { status: 500 }
+  )
 }

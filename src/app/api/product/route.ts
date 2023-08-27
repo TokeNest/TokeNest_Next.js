@@ -7,8 +7,8 @@ module.exports = apiHandler({
   POST: create,
 })
 
-async function getAll(req: Request) {
-  return await productRepository.getAll()
+function getAll() {
+  return productRepository.getAll()
 }
 
 async function create(req: Request) {
@@ -17,10 +17,11 @@ async function create(req: Request) {
 }
 
 create.schema = joi.object({
-  product_name: joi.string().required(),
-  product_info: joi.string().required(),
-  product_status: joi.string().required(),
-  product_intro: joi.string().required(),
-  product_price: joi.number().required(),
-  store_id: joi.string().required(),
+  productName: joi.string().required(),
+  productInfo: joi.string().required(),
+  productStatus: joi.string().required(),
+  productIntro: joi.string().required(),
+  productPrice: joi.number().required(),
+  productCategory: joi.string().required(),
+  storeId: joi.string().required(),
 })

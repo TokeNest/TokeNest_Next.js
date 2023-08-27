@@ -5,10 +5,10 @@ export interface UserInfo {
   user_password_hash: string
   user_phone: string
   user_email: string
-  user_wallet_address: string
+  userWalletAddress: string
   addresses: AddressInfo[]
   user_account_type: string
 }
-export interface saveUserInfo extends UserInfo {
+export interface SaveUserInfo extends UserInfo {
   user_password: string
 }

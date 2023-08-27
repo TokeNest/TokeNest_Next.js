@@ -4,6 +4,7 @@ const Product = db.Product
 
 export const productRepository = {
   getAll,
+  getAllByStoreId,
   getById,
   create,
   update,
@@ -11,8 +12,16 @@ export const productRepository = {
   delete: _delete,
 }
 
-async function getAll() {
-  return await Product.find({ deleted_date: null })
+function getAll() {
+  return Product.find({ deletedDate: null })
+}
+
+async function getAllByStoreId(id: string) {
+  return Product.find({ deletedDate: null, storeId: id }).populate({
+    path: 'optionGroups',
+    match: { deletedDate: { $eq: null } },
+    populate: { path: 'options', match: { deletedDate: { $eq: null } } },
+  })
 }
 
 async function getById(id: string) {
@@ -45,7 +54,7 @@ async function _softDelete(id: string) {
     throw 'Product Not Found'
   }
 
-  product.deleted_date = new Date()
+  product.deletedDate = new Date()
 
   await product.save()
 }

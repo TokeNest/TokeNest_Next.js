@@ -1,10 +1,10 @@
 import { userRepository } from '@/app/_helpers/server/_repository'
 import { userInfoMapper } from '@/utils/server/dtoMapping/userMapper'
 import { headers } from 'next/headers'
-import { saveUserInfo } from '@/variables/interface/api/user'
+import { SaveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validUserAlreadyExist'
+import { validateUsers } from '@/utils/server/validate/validateUser'
 
 const authenticate = async function ({
   user_wallet_address,
@@ -46,19 +46,22 @@ const getCurrentUser = async function () {
   return userInfoMapper(await userRepository.getById(id))
 }
 
-const join = async function (params: saveUserInfo) {
+const join = async function (params: SaveUserInfo) {
   // hash password
   const user = params
   if (params.user_password) {
     user.user_password_hash = bcrypt.hashSync(params.user_password, 10)
   }
   // validate
-  await validUserAlreadyExistAsWalletAddress(user.user_wallet_address)
+  const valUser = await validateUsers.validUserAlreadyExistAsWalletAddress(user.userWalletAddress)
+  if (valUser != true) {
+    return valUser
+  }
 
   return userRepository.save(user)
 }
 
-function update(id: string, params: saveUserInfo) {
+function update(id: string, params: SaveUserInfo) {
   // hash password if it was entered
   if (params.user_password) {
     params.user_password_hash = bcrypt.hashSync(params.user_password, 10)
