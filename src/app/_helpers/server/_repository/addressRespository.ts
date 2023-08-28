@@ -1,14 +1,9 @@
 import { db } from '@/app/_helpers/server'
 import { AddressInfo, DeleteAddressInfo } from '@/variables/interface/api/address'
 import { UserInfo } from '@/variables/interface/api/user'
+import { addressProjection } from '@/variables/enum/projection-enum'
 
 const Address = db.Address
-
-const addressProjection = {
-  addressName: true,
-  roadAddress: true,
-  addressDetail: true,
-}
 
 const getById = async (id: string): Promise<AddressInfo> =>
   await Address.findOne({ _id: id, deletedDate: null }, addressProjection).exec()

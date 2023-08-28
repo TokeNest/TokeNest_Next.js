@@ -1,21 +1,15 @@
 import { DeleteFileInfo, FileInfo } from '@/variables/interface/api/file'
 import { db } from '@/app/_helpers/server'
 import { ProductInfo } from '@/variables/interface/api/product'
+import { fileProjection } from '@/variables/enum/projection-enum'
 
 const File = db.File
-const fileProjection = {
-  fileName: true,
-  fileType: true,
-  fileCapacity: true,
-  filePath: true,
-  product: true,
-}
 
 const save = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> => {
-  const fileId = (await new File({ ...fileInfo }).save())._id
-  product.file = fileId
+  const file = await new File({ ...fileInfo }).save()
+  product.file = file
   product.save()
-  return fileId
+  return file._id
 }
 
 const getById = async (id: string): Promise<FileInfo> =>

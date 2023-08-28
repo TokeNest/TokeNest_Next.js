@@ -108,7 +108,7 @@ const productModel = () => {
         ref: 'Store',
         required: true,
       },
-      optionGroups: [
+      productOptionGroups: [
         {
           type: Schema.Types.ObjectId,
           ref: 'ProductOptionGroup',
@@ -151,12 +151,12 @@ const productOptionGroupModel = () => {
       productOptionGroupName: { type: String, required: true },
       productOptionGroupType: { type: String, required: true },
       deletedDate: { type: Date, default: null },
-      productId: {
+      product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
       },
-      options: [
+      productOptions: [
         {
           type: Schema.Types.ObjectId,
           ref: 'ProductOption',
@@ -188,14 +188,13 @@ const productOptionModel = () => {
     {
       productOptionName: { type: String, required: true },
       productOptionIsDefault: { type: Boolean, required: true, default: false },
-      productOptionInfo: { type: String },
       productOptionPrice: { type: Number, required: true, default: 0 },
       deletedDate: { type: Date, default: null },
-      groupId: {
-        type: Schema.Types.ObjectId,
-        ref: 'ProductOptionGroup',
-        required: true,
-      },
+      // productOptionGroup: {
+      //   type: Schema.Types.ObjectId,
+      //   ref: 'ProductOptionGroup',
+      //   required: true,
+      // },
     },
     {
       timestamps: {

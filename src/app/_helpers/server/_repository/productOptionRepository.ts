@@ -1,10 +1,10 @@
 import { db } from '@/app/_helpers/server'
-import { prdOptGrpRepository } from '@/app/_helpers/server/_repository/prdOptGrpRepository'
-import { Option } from '@/variables/interface/kiosk-interface'
+import { ProductOptionInfo } from '@/variables/interface/api/productOption'
+import { ProductOptionGroupInfo } from '@/variables/interface/api/productOptionGroup'
 
 const ProductOption = db.ProductOption
 
-export const prdOptRepository = {
+export const productOptionRepository = {
   getAll,
   getAllByGroupId,
   getById,
@@ -30,18 +30,15 @@ async function getById(id: string) {
   }
 }
 
-async function create(groupId: string, params: Option) {
-  const optionGroup = await prdOptGrpRepository.getById(groupId)
-  const productOption = new ProductOption({
-    productOptionName: params.optionName,
-    productOptionIsDefault: params.isDefault,
-    productOptionInfo: params.optionInfo,
-    productOptionPrice: params.optionPrice,
-    groupId,
-  })
+async function create(
+  productOptionGroupInfo: ProductOptionGroupInfo,
+  productOptionInfo: ProductOptionInfo
+) {
+  const productOption: ProductOptionInfo = new ProductOption(productOptionInfo)
   await productOption.save()
-  optionGroup.options.push(productOption._id)
-  await optionGroup.save()
+
+  productOptionGroupInfo.productOptions.push(productOption)
+  await productOptionGroupInfo.save()
 }
 
 async function update(id: string, params: any) {

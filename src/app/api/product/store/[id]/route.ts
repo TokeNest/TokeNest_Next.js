@@ -12,8 +12,7 @@ function getAll() {
 }
 
 async function create(req: Request, { params }: ParamsInputId) {
-  const body = await req.json()
-  await productRepository.save(params.id, body)
+  return await productRepository.save(params.id, await req.json())
 }
 
 create.schema = joi.object({

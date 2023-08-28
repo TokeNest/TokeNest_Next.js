@@ -25,7 +25,7 @@ async function getById(id: string) {
 
 async function create(params: any) {
   const store = new Store(params)
-  await store.save()
+  return (await store.save())._id
 }
 
 async function update(id: string, params: any) {

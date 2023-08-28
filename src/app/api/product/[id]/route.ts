@@ -29,5 +29,5 @@ update.schema = joi.object({
 })
 
 async function _delete(_req: Request, { params }: ParamsInputId) {
-  await productService.softDeleteProduct(params.id)
+  return await productService.softDeleteProduct(params.id)
 }

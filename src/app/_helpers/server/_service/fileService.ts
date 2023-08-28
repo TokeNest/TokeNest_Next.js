@@ -1,4 +1,4 @@
-import { ValidateFile } from '@/utils/server/validate/validateFile'
+import { isExistFile, ValidateFile } from '@/utils/server/validate/validateFile'
 import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
@@ -24,7 +24,13 @@ const saveFile = async (data: FormData, id: string) => {
       throw 'Error with checking directory'
     }
   }
+
+  if ((await readdir(`${storePath}/${id}`)).length) {
+    throw 'File Already Exist'
+  }
+
   const path = `${storePath}/${id}/${file.name}`
+
   try {
     await writeFile(path, Buffer.from(await file.arrayBuffer()))
   } catch (err) {
@@ -59,7 +65,9 @@ const downloadFile = async (id: string) => {
 }
 
 const softDeleteFile = async (id: string) => {
-  const filePath = (await fileRepository.getById(id)).filePath
+  const file = await fileRepository.getById(id)
+  isExistFile(file)
+  const filePath = file.filePath
 
   // create archive path
   const archivePath = filePath

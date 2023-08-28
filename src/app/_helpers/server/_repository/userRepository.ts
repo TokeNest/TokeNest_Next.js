@@ -1,21 +1,9 @@
 import { db } from '../db'
 import { DeleteUserInfo, UserInfo, UserInfoWithId } from '@/variables/interface/api/user'
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
+import { addressProjection, userProjection } from '@/variables/enum/projection-enum'
 
 const User = db.User
-const userProjection = {
-  userName: true,
-  userPasswordHash: true,
-  userPhone: true,
-  userEmail: true,
-  userWalletAddress: true,
-  userAccountType: true,
-}
-const addressProjection = {
-  addressName: true,
-  roadAddress: true,
-  addressDetail: true,
-}
 
 const getAll = async (): Promise<(Omit<UserInfo, never> & {})[]> =>
   await User.find({ deletedDate: null }, userProjection)

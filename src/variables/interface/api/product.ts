@@ -1,5 +1,5 @@
-import { PrdOptGrpResponseDto } from '@/app/_helpers/server/dto/product/response/PrdOptGrpResponseDto'
 import { FileInfoWithId } from '@/variables/interface/api/file'
+import { ProductOptionGroupInfo } from '@/variables/interface/api/productOptionGroup'
 
 export interface ProductInfo {
   productName: string
@@ -7,7 +7,7 @@ export interface ProductInfo {
   productInfo: string
   productPrice: number
   file: FileInfoWithId
-  optionGroups: PrdOptGrpResponseDto[]
+  productOptionGroups: ProductOptionGroupInfo[]
 
   save(): any
 }

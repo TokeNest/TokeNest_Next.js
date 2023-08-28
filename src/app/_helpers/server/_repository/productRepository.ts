@@ -1,20 +1,33 @@
 import { db } from '@/app/_helpers/server'
-import { HydratedDocument } from 'mongoose'
 import { ProductInfo } from '@/variables/interface/api/product'
+import {
+  fileProjection,
+  productOptionGroupsProjection,
+  productOptionsProjection,
+  productProjection,
+} from '@/variables/enum/projection-enum'
 
 // TODO Product code refactoring
 const Product = db.Product
-const productProjection = {
-  productName: true,
-  productIntro: true,
-  productInfo: true,
-  productPrice: true,
-  productImageUrl: true,
-  optionGroups: true,
-}
 
-const getAll = async (): Promise<Array<HydratedDocument<ProductInfo, {}, {}>>> =>
-  await Product.find({ deletedDate: null }, productProjection).exec()
+const getAll = async () => {
+  return await Product.find({ deletedDate: null }, productProjection)
+    .populate({
+      path: 'productOptionGroups',
+      populate: {
+        path: 'productOptions',
+        match: { deletedDate: { $eq: null } },
+        select: productOptionsProjection,
+      },
+      select: productOptionGroupsProjection,
+    })
+    .populate({
+      path: 'file',
+      match: { deletedDate: { $eq: null } },
+      select: fileProjection,
+    })
+    .exec()
+}
 
 const getAllByStoreId = async (id: string): Promise<Omit<ProductInfo, never>[]> => {
   return Product.find({ deletedDate: null, storeId: id }).populate({
