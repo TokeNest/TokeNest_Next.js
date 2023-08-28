@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { UserInfo } from '@/variables/interface/api/user'
+import { DeleteUserInfo, UserInfo } from '@/variables/interface/api/user'
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
 
 const User = db.User
@@ -43,15 +43,16 @@ const update = async (id: string, userInfo: UserInfo): Promise<string> => {
 }
 
 const softDelete = async (id: string): Promise<string> => {
-  const user = await User.findOne({ _id: id, deletedDate: null }).exec()
+  const user: DeleteUserInfo = await User.findOne({ _id: id, deletedDate: null }).exec()
   user.deletedDate = new Date()
+  await addressRepository.deleteByUserId(id)
   return (await user.save())._id
 }
-const _delete = async (id: string): Promise<string> => {
-  await addressRepository.deleteByUserId(id)
-  await User.findByIdAndRemove(id)
-  return id
-}
+// const _delete = async (id: string): Promise<string> => {
+//   await addressRepository.deleteByUserId(id)
+//   await User.findByIdAndRemove(id)
+//   return id
+// }
 
 export const userRepository = {
   getAll,
@@ -59,6 +60,6 @@ export const userRepository = {
   getByWalletAddress,
   save,
   update,
-  delete: _delete,
+  // delete: _delete,
   softDelete,
 }

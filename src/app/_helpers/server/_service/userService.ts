@@ -3,10 +3,7 @@ import { SaveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
-import {
-  isExistUser,
-  validUserAlreadyExistAsWalletAddress,
-} from '@/utils/server/validate/validateUser'
+import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validateUser'
 
 const authenticate = async ({
   userWalletAddress,
@@ -70,10 +67,10 @@ const softDelete = async (id: string) => {
   return userRepository.softDelete(id)
 }
 
-const _delete = async (id: string) => {
-  isExistUser(await userRepository.getById(id))
-  return await userRepository.delete(id)
-}
+// const _delete = async (id: string) => {
+//   isExistUser(await userRepository.getById(id))
+//   return await userRepository.delete(id)
+// }
 
 export const userService = {
   authenticate,
@@ -83,5 +80,5 @@ export const userService = {
   join,
   update,
   softDelete,
-  _delete,
+  // _delete,
 }

@@ -1,4 +1,4 @@
-import { FileInfo } from '@/variables/interface/api/file'
+import { DeleteFileInfo, FileInfo } from '@/variables/interface/api/file'
 import { db } from '@/app/_helpers/server'
 import { ProductInfo } from '@/variables/interface/api/product'
 
@@ -24,6 +24,13 @@ const getById = async (id: string): Promise<FileInfo> =>
 const getByProductId = async (id: string) =>
   await File.findOne({ product: id, deletedDate: null }, fileProjection).exec()
 
+const softDelete = async (id: string, path: string): Promise<string> => {
+  const file: DeleteFileInfo = await File.findOne({ _id: id, deletedDate: null }).exec()
+  file.filePath = path
+  file.deletedDate = new Date()
+  return (await file.save())._id
+}
+
 const _delete = async (id: string) => {
   await File.findByIdAndRemove(id)
   return id
@@ -33,5 +40,6 @@ export const fileRepository = {
   save,
   getById,
   getByProductId,
+  softDelete,
   delete: _delete,
 }

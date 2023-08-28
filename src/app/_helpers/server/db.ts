@@ -13,6 +13,7 @@ const fileModel = () => {
       fileType: { type: String, required: true },
       fileCapacity: { type: String, require: true },
       filePath: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {

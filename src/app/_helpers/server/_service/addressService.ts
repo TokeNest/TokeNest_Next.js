@@ -24,15 +24,21 @@ const createAddress = async (userId: string, params: AddressInfo) =>
 const updateAddress = async (id: string, params: AddressInfo) =>
   await addressRepository.update(id, params)
 
-const deleteAddress = async (id: string) => {
+const softDeleteAddress = async (id: string) => {
   isExistAddress(await addressRepository.getById(id))
-  return addressRepository.delete(id)
+  return addressRepository.softDelete(id)
 }
+
+// const deleteAddress = async (id: string) => {
+//   isExistAddress(await addressRepository.getById(id))
+//   return addressRepository.delete(id)
+// }
 
 export const addressService = {
   getAddress,
   getAddresses,
   createAddress,
   updateAddress,
-  deleteAddress,
+  softDeleteAddress,
+  // deleteAddress,
 }

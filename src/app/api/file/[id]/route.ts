@@ -3,7 +3,7 @@ import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 import { fileService } from '@/app/_helpers/server/_service/fileService'
 
 const _delete = async function (_req: Request, { params }: ParamsInputId) {
-  return await fileService.deleteFile(params.id)
+  return await fileService.softDeleteFile(params.id)
 }
 
 const download = async function (_req: Request, { params }: ParamsInputId) {

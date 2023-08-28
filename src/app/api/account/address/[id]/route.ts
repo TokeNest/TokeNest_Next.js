@@ -12,7 +12,7 @@ const update = async function (req: Request, { params }: ParamsInputId) {
 }
 
 const _delete = async function (_req: Request, { params }: ParamsInputId) {
-  return await addressService.deleteAddress(params.id)
+  return await addressService.softDeleteAddress(params.id)
 }
 
 update.schema = joi.object({

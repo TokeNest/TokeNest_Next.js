@@ -35,8 +35,10 @@ async function _delete(req: Request, { params }: ParamsInputId) {
     return await userService.softDelete(params.id)
   }
 
+  throw 'Not match login User and params'
+
   // hard delete if manager try deleted
-  return await userService._delete(params.id)
+  // return await userService._delete(params.id)
 }
 
 module.exports = apiHandler({

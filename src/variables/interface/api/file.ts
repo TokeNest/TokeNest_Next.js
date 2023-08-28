@@ -7,3 +7,8 @@ export interface FileInfo {
   filePath: string
   product: ProductInfo
 }
+
+export interface DeleteFileInfo extends FileInfo {
+  deletedDate: Date
+  save(): any
+}

@@ -32,10 +32,8 @@ const getStoreIdByProductId = async (id: string) => {
 const getById = async (id: string): Promise<ProductInfo> =>
   await Product.findOne({ _id: id, deletedDate: null }).exec()
 
-const save = async (id: string, productInfo: ProductInfo): Promise<string> => {
-  console.log(productInfo)
-  return (await new Product({ store: id, ...productInfo }).save())._id
-}
+const save = async (id: string, productInfo: ProductInfo): Promise<string> =>
+  (await new Product({ store: id, ...productInfo }).save())._id
 
 /*
 const save = async (id: string, addressInfo: AddressInfo): Promise<string> => {
