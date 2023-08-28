@@ -1,7 +1,8 @@
 import { db } from '@/app/_helpers/server'
 import { prdOptGrpRepository } from '@/app/_helpers/server/_repository/prdOptGrpRepository'
+import { Option } from '@/variables/interface/kiosk-interface'
 
-const ProductOption = db.Product_Option
+const ProductOption = db.ProductOption
 
 export const prdOptRepository = {
   getAll,
@@ -13,12 +14,12 @@ export const prdOptRepository = {
   delete: _delete,
 }
 
-async function getAll() {
-  return await ProductOption.find({ deleted_date: null })
+function getAll() {
+  return ProductOption.find({ deletedDate: null })
 }
 
-async function getAllByGroupId(id: string) {
-  return await ProductOption.find({ deleted_date: null, group_id: id })
+function getAllByGroupId(id: string) {
+  return ProductOption.find({ deletedDate: null, groupId: id })
 }
 
 async function getById(id: string) {
@@ -29,13 +30,14 @@ async function getById(id: string) {
   }
 }
 
-async function create(groupId: string, params: any) {
+async function create(groupId: string, params: Option) {
   const optionGroup = await prdOptGrpRepository.getById(groupId)
   const productOption = new ProductOption({
-    product_option_name: params['optionName'],
-    product_option_is_default: params['isDefault'],
-    product_option_price: params['optionPrice'],
-    group_id: groupId,
+    productOptionName: params.optionName,
+    productOptionIsDefault: params.isDefault,
+    productOptionInfo: params.optionInfo,
+    productOptionPrice: params.optionPrice,
+    groupId,
   })
   await productOption.save()
   optionGroup.options.push(productOption._id)
@@ -59,7 +61,7 @@ async function _softDelete(id: string) {
     throw 'ProductOption Not Found'
   }
 
-  productOption.deleted_date = new Date()
+  productOption.deletedDate = new Date()
 
   await productOption.save()
 }

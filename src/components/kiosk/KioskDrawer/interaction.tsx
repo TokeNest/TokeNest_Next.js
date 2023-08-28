@@ -1,16 +1,17 @@
 'use client'
 import { CardActions, Drawer, IconButton } from '@mui/material'
 import * as React from 'react'
-import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { addCartBasket, clearCartBasket } from '@/redux/slice/cart-slice'
 import Typography from '@mui/material/Typography'
 import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 import Button from '@mui/material/Button'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
-  const { drawerState } = useDrawerContext()
+  const searchParams = useSearchParams()
+  const isShowDrawer = searchParams.get('drawer') !== null
   return (
     <Drawer
       anchor="right"
@@ -23,7 +24,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
-      open={drawerState.isShow}
+      open={isShowDrawer}
       hideBackdrop={false}
       keepMounted={false}
     >
@@ -33,13 +34,15 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 }
 
 export function KioskFooterCardActions() {
+  const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
-  const { drawerState, setDrawerState } = useDrawerContext()
-  const isOrder = drawerState.type === DRAWER_TYPE.ORDER
+  const searchParams = useSearchParams()
+  const isOrder = searchParams.get('drawer') === DRAWER_TYPE.ORDER
   const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const handleCartBasket = () => {
     dispatch(isOrder ? addCartBasket(orderProduct) : clearCartBasket())
-    setDrawerState((state) => ({ isShow: false, type: state.type }))
+    router.push(pathname)
   }
   return (
     <CardActions sx={{ height: 1 / 10 }} onClick={handleCartBasket}>
@@ -56,22 +59,20 @@ export function KioskFooterCardActions() {
 }
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
-  const { setDrawerState } = useDrawerContext()
+  const router = useRouter()
+  const pathname = usePathname()
   return (
-    <IconButton
-      size="large"
-      onClick={() => setDrawerState((state) => ({ isShow: false, type: state.type }))}
-    >
+    <IconButton size="large" onClick={() => router.push(pathname)}>
       {children}
     </IconButton>
   )
 }
 
 export function KioskHeaderTypography() {
-  const { drawerState } = useDrawerContext()
+  const searchParams = useSearchParams()
   return (
     <Typography variant="h4">
-      {drawerState.type === DRAWER_TYPE.ORDER ? '주문 옵션' : '장바구니'}
+      {searchParams.get('drawer') === DRAWER_TYPE.ORDER ? '주문 옵션' : '장바구니'}
     </Typography>
   )
 }

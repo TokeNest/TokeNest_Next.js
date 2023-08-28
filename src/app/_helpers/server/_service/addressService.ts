@@ -1,39 +1,38 @@
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
-import { addressMapper } from '@/utils/server/dtoMapping/addressMapper'
 import { AddressInfo } from '@/variables/interface/api/address'
-import { userRepository } from '@/app/_helpers/server/_repository'
+import isExistAddress from '@/utils/server/validate/validateAddress'
+import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
 
-const getAddressById = async function (id: string) {
-  return addressMapper(await addressRepository.getById(id))
+const getAddress = async (id: string) => {
+  const address = await addressRepository.getById(id)
+  isExistAddress(address)
+  return address
 }
 
-const getAddressByUserId = async function (id: string) {
-  const users = await userRepository.getById(id)
-  if (!users) {
-    throw new Error('User not Found')
-  }
-  console.log(users)
-  return users.addresses.map((address: AddressInfo) => {
-    return addressMapper(address)
+const getAddresses = async (id: string) => {
+  const addresses = await addressRepository.getByUserId(id)
+
+  return addresses.map((address: AddressInfo) => {
+    isExistAddress(address)
+    return address
   })
 }
 
-const join = async function (userId: string, params: AddressInfo) {
-  return addressRepository.save(userId, params)
-}
+const createAddress = async (userId: string, params: AddressInfo) =>
+  await addressRepository.save(userId, params, await userRepository.getById(userId))
 
-const update = async function (id: string, params: AddressInfo) {
-  return addressRepository.update(id, params)
-}
+const updateAddress = async (id: string, params: AddressInfo) =>
+  await addressRepository.update(id, params)
 
-function _delete(id: string) {
+const deleteAddress = async (id: string) => {
+  isExistAddress(await addressRepository.getById(id))
   return addressRepository.delete(id)
 }
 
 export const addressService = {
-  getAddressById,
-  getAddressByUserId,
-  join,
-  update,
-  delete: _delete,
+  getAddress,
+  getAddresses,
+  createAddress,
+  updateAddress,
+  deleteAddress,
 }

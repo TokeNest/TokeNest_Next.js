@@ -1,13 +1,13 @@
 import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
-import { storeRepository } from '@/app/_helpers/server/_repository'
+import { storeRepository } from '@/app/_helpers/server/_repository/storeRepository'
 
 module.exports = apiHandler({
   GET: getAll,
   POST: create,
 })
 
-async function getAll(req: Request) {
+async function getAll() {
   return storeRepository.getAll()
 }
 
@@ -17,11 +17,11 @@ async function create(req: Request) {
 }
 
 create.schema = joi.object({
-  store_name: joi.string().required(),
-  store_tel: joi.string().required(),
-  store_email: joi.string().required(),
-  store_category: joi.string().required(),
-  store_off_day: joi.string().required(),
-  store_open_close_time: joi.string().required(),
-  store_status: joi.string().required(),
+  storeName: joi.string().required(),
+  storeTel: joi.string().required(),
+  storeEmail: joi.string().required(),
+  storeCategory: joi.string().required(),
+  storeOffDay: joi.string().required(),
+  storeOpenCloseTime: joi.string().required(),
+  storeStatus: joi.string().required(),
 })

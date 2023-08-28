@@ -23,27 +23,10 @@ export interface Product {
   optionGroups: OptionGroup[]
 }
 
-export type OptionGroup = OptionRadioGroup | OptionCheckboxGroup
-
-/**
- * Product에서 사용하는 옵션 정보
- * */
-export interface OptionRadioGroup {
+export interface OptionGroup {
   optionGroupId: ID
-  optionGroupType: OPTION_TYPE.RADIO
+  optionGroupType: OPTION_TYPE
   optionGroupName: string
-  defaultOptionId: ID
-  options: Option[]
-}
-/**
- * Product에서 사용하는 옵션 정보
- * */
-export interface OptionCheckboxGroup {
-  optionGroupId: ID
-  optionGroupType: OPTION_TYPE.CHECKBOX
-  optionGroupName: string
-  defaultOptionIds: ID[]
-  isRequire: boolean
   options: Option[]
 }
 
@@ -52,6 +35,7 @@ export interface OptionCheckboxGroup {
  * */
 export interface Option {
   optionId: ID
+  isDefault: boolean
   optionName: string
   optionInfo?: string
   optionPrice: number

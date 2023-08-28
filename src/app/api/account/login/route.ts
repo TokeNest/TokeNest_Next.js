@@ -3,21 +3,18 @@ import { cookies } from 'next/headers'
 import joi from 'joi'
 import { userService } from '@/app/_helpers/server/_service/userService'
 
-module.exports = apiHandler({
-  POST: login,
-})
-
-async function login(req: Request) {
-  const body = await req.json()
-  const { user, token } = await userService.authenticate(body)
-
+const login = async function (req: Request) {
+  const { user, token } = await userService.authenticate(await req.json())
   // return jwt token in http only cookie
   cookies().set('authorization', token, { httpOnly: true })
-
-  return user._id
+  return user.id
 }
 
 login.schema = joi.object({
-  user_wallet_address: joi.string().required(),
-  user_password: joi.string().required(),
+  userWalletAddress: joi.string().required(),
+  userPassword: joi.string().required(),
+})
+
+module.exports = apiHandler({
+  POST: login,
 })

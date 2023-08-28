@@ -1,31 +1,37 @@
 import { FileInfo } from '@/variables/interface/api/file'
 import { db } from '@/app/_helpers/server'
+import { ProductInfo } from '@/variables/interface/api/product'
 
 const File = db.File
-
-const save = async function (fileDto: FileInfo) {
-  const file = new File({ ...fileDto })
-  await file.save()
-  return file._id
+const fileProjection = {
+  fileName: true,
+  fileType: true,
+  fileCapacity: true,
+  filePath: true,
+  product: true,
 }
 
-const getFIleById = async function (id: string) {
-  return File.findOne({ _id: id, deleted_date: null }).exec()
+const save = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> => {
+  const fileId = (await new File({ ...fileInfo }).save())._id
+  product.file = fileId
+  product.save()
+  return fileId
 }
 
-const softDelete = async function (id: string) {
-  const file = await getFIleById(id)
-  file.deleted_date = new Date()
-  await file.save()
-  return file._id
-}
+const getById = async (id: string): Promise<FileInfo> =>
+  await File.findOne({ _id: id, deletedDate: null }, fileProjection).exec()
 
-const _delete = async function (id: string) {
-  File.findByIdAndRemove(id)
+const getByProductId = async (id: string) =>
+  await File.findOne({ product: id, deletedDate: null }, fileProjection).exec()
+
+const _delete = async (id: string) => {
+  await File.findByIdAndRemove(id)
   return id
 }
 
 export const fileRepository = {
   save,
-  getFIleById,
+  getById,
+  getByProductId,
+  delete: _delete,
 }
