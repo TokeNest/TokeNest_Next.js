@@ -1,8 +1,8 @@
 import { isExistFile, ValidateFile } from '@/utils/server/validate/validateFile'
 import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
-import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
-import { fileRepository } from '@/app/_helpers/server/_repository/fileRepository'
+import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
+import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
 import { FileInfo } from '@/variables/interface/api/file'
 
 const saveFile = async (data: FormData, id: string) => {

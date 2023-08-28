@@ -2,7 +2,7 @@ import { headers } from 'next/headers'
 import { SaveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
+import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validateUser'
 
 const authenticate = async ({

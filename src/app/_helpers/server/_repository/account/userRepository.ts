@@ -1,6 +1,6 @@
-import { db } from '../db'
+import { db } from '../../db'
 import { DeleteUserInfo, UserInfo, UserInfoWithId } from '@/variables/interface/api/user'
-import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
+import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
 import { addressProjection, userProjection } from '@/variables/enum/projection-enum'
 
 const User = db.User

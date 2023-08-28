@@ -1,7 +1,7 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userService } from '@/app/_helpers/server/_service/userService'
+import { userService } from '@/app/_helpers/server/_service/account/userService'
 
 const register = async function (req: Request) {
   return userService.join(await req.json())

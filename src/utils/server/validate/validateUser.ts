@@ -1,4 +1,4 @@
-import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
+import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 import { UserInfo } from '@/variables/interface/api/user'
 
 export const validUserAlreadyExistAsWalletAddress = async (userWalletAddress: string) => {

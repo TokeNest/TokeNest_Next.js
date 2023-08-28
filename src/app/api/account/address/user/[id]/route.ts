@@ -1,7 +1,7 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { addressService } from '@/app/_helpers/server/_service/addressService'
+import { addressService } from '@/app/_helpers/server/_service/account/addressService'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 const create = async function (req: Request, { params }: ParamsInputId) {

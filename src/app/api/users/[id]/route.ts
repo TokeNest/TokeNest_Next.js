@@ -1,7 +1,7 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { cookies } from 'next/headers'
 import joi from 'joi'
-import { userService } from '@/app/_helpers/server/_service/userService'
+import { userService } from '@/app/_helpers/server/_service/account/userService'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 async function getById(_req: Request, { params }: ParamsInputId) {

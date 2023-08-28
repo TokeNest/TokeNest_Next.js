@@ -1,7 +1,7 @@
-import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
+import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import isExistProduct from '@/utils/server/validate/validateProduct'
-import { fileService } from '@/app/_helpers/server/_service/fileService'
-import { fileRepository } from '@/app/_helpers/server/_repository/fileRepository'
+import { fileService } from '@/app/_helpers/server/_service/account/fileService'
+import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
 
 const getProducts = async () => {
   return await productRepository.getAll()

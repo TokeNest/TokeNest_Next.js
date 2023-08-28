@@ -1,7 +1,7 @@
-import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
+import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
 import { AddressInfo } from '@/variables/interface/api/address'
 import isExistAddress from '@/utils/server/validate/validateAddress'
-import { userRepository } from '@/app/_helpers/server/_repository/userRepository'
+import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 
 const getAddress = async (id: string) => {
   const address = await addressRepository.getById(id)

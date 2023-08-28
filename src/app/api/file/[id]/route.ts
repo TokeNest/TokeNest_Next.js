@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
-import { fileService } from '@/app/_helpers/server/_service/fileService'
+import { fileService } from '@/app/_helpers/server/_service/account/fileService'
 
 const _delete = async function (_req: Request, { params }: ParamsInputId) {
   return await fileService.softDeleteFile(params.id)

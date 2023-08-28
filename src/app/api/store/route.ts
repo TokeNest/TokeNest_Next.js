@@ -1,6 +1,6 @@
 import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
-import { storeRepository } from '@/app/_helpers/server/_repository/storeRepository'
+import { storeRepository } from '@/app/_helpers/server/_repository/store/storeRepository'
 
 module.exports = apiHandler({
   GET: getAll,
