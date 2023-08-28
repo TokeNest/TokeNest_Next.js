@@ -1,4 +1,4 @@
-import { FileInfoWithId } from '@/variables/interface/api/file'
+import { FileInfo } from '@/variables/interface/api/file'
 import { ProductOptionGroupInfo } from '@/variables/interface/api/productOptionGroup'
 
 export interface ProductInfo {
@@ -6,7 +6,7 @@ export interface ProductInfo {
   productIntro: string
   productInfo: string
   productPrice: number
-  file: FileInfoWithId
+  file: FileInfo
   productOptionGroups: ProductOptionGroupInfo[]
 
   save(): any

@@ -1,7 +1,9 @@
-export interface ProductOptionInfo {
+export interface ProductOption {
   productOptionName: string
-  productOptionIsDefault: boolean
   productOptionPrice: number
+}
 
+export interface ProductOptionInfo extends ProductOption {
+  productOptionIsDefault: boolean
   save(): any
 }

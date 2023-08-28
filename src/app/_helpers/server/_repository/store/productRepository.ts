@@ -37,6 +37,9 @@ const getAllByStoreId = async (id: string): Promise<Omit<ProductInfo, never>[]> 
   })
 }
 
+const getFileIdByProductId = async (id: string): Promise<string> =>
+  (await Product.findOne({ _id: id, deletedDate: null }).exec()).file._id
+
 const getStoreIdByProductId = async (id: string) => {
   return (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
 }
@@ -66,6 +69,7 @@ const softDelete = async (id: string): Promise<string> => {
 
 export const productRepository = {
   getAll,
+  getFileIdByProductId,
   getAllByStoreId,
   getStoreIdByProductId,
   getById,

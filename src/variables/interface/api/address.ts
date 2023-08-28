@@ -6,6 +6,6 @@ export interface AddressInfo {
   save(): any
 }
 
-export interface DeleteAddressInfo extends AddressInfo {
+export interface AddressInfoDelete extends AddressInfo {
   deletedDate: Date
 }

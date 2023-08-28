@@ -1,4 +1,4 @@
-import { AddressInfo, DeleteAddressInfo } from '@/variables/interface/api/address'
+import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/address'
 
 export interface UserInfo {
   userName: string
@@ -17,7 +17,7 @@ export interface SaveUserInfo extends UserInfo {
 
 export interface DeleteUserInfo extends UserInfo {
   deletedDate: Date
-  addresses: DeleteAddressInfo[]
+  addresses: AddressInfoDelete[]
 }
 
 export interface UserInfoWithId extends UserInfo {

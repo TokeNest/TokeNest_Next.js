@@ -8,11 +8,7 @@ export interface FileInfo {
   product: ProductInfo
 }
 
-export interface DeleteFileInfo extends FileInfo {
+export interface FileInfoDelete extends FileInfo {
   deletedDate: Date
   save(): any
-}
-
-export interface FileInfoWithId extends FileInfo {
-  _id: string
 }

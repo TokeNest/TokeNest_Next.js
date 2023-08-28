@@ -39,3 +39,20 @@ export const productOptionsProjection = {
   productOptionIsDefault: true,
   productOptionPrice: true,
 }
+
+export const orderProjection = {
+  orderNum: true,
+  orderStatus: true,
+  OrderOptions: true,
+}
+
+export const orderOptionProjection = {
+  orderAmount: true,
+  product: true,
+  productOptionPrice: true,
+}
+
+export const productOptionProjection = {
+  productOptionName: true,
+  productOptionPrice: true,
+}

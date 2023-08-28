@@ -247,6 +247,78 @@ const storeModel = () => {
   return mongoose.models.Store || mongoose.model('Store', schema)
 }
 
+function orderModel() {
+  const schema = new Schema(
+    {
+      orderNum: { type: Number, required: true },
+      orderStatus: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
+      store: {
+        type: Schema.Types.ObjectId,
+        ref: 'Store',
+        required: true,
+      },
+      orderOptions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'OrderOption',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.Order || mongoose.model('Order', schema)
+}
+
+function orderOptionModel() {
+  const schema = new Schema(
+    {
+      orderAmount: { type: Number, required: true },
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
+      productOptions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'ProductOption',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.OrderOption || mongoose.model('OrderOption', schema)
+}
+
 export const db = {
   File: fileModel(),
   Product: productModel(),
@@ -255,4 +327,6 @@ export const db = {
   ProductOptionGroup: productOptionGroupModel(),
   ProductOption: productOptionModel(),
   Store: storeModel(),
+  Order: orderModel(),
+  OrderOption: orderOptionModel(),
 }

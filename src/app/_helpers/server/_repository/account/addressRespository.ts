@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { AddressInfo, DeleteAddressInfo } from '@/variables/interface/api/address'
+import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/address'
 import { UserInfo } from '@/variables/interface/api/user'
 import { addressProjection } from '@/variables/enum/projection-enum'
 
@@ -27,7 +27,7 @@ const update = async (id: string, addressInfo: AddressInfo): Promise<string> => 
 }
 
 const deleteByUserId = async (id: string): Promise<Promise<string>[]> => {
-  const addresses: DeleteAddressInfo[] = await Address.find({
+  const addresses: AddressInfoDelete[] = await Address.find({
     user: id,
     deletedDate: null,
   }).exec()
@@ -38,7 +38,7 @@ const deleteByUserId = async (id: string): Promise<Promise<string>[]> => {
 }
 
 const softDelete = async (id: string): Promise<string> => {
-  const address: DeleteAddressInfo = await Address.findOne({
+  const address: AddressInfoDelete = await Address.findOne({
     _id: id,
     deletedDate: null,
   }).exec()
