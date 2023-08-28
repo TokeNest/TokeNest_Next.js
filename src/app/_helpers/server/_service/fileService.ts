@@ -1,5 +1,5 @@
 import { ValidateFile } from '@/utils/server/validate/validateFile'
-import { access, mkdir, readdir, readFile, rename, rmdir, unlink, writeFile } from 'fs/promises'
+import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/productRepository'
 import { fileRepository } from '@/app/_helpers/server/_repository/fileRepository'
@@ -24,14 +24,13 @@ const saveFile = async (data: FormData, id: string) => {
       throw 'Error with checking directory'
     }
   }
-
   const path = `${storePath}/${id}/${file.name}`
-
   try {
     await writeFile(path, Buffer.from(await file.arrayBuffer()))
   } catch (err) {
     throw 'Error with create file'
   }
+
   // save in db
   const fileData: FileInfo = {
     fileName: file.name,
@@ -80,13 +79,13 @@ const softDeleteFile = async (id: string) => {
   return await fileRepository.softDelete(id, archivePath)
 }
 
-const deleteFile = async (id: string) => {
-  const filePath = (await fileRepository.getById(id)).filePath
-  // file delete in storage
-  await unlink(filePath)
-  await deleteDirectory(filePath)
-  return await fileRepository.delete(id)
-}
+// const deleteFile = async (id: string) => {
+//   const filePath = (await fileRepository.getById(id)).filePath
+//   // file delete in storage
+//   await unlink(filePath)
+//   await deleteDirectory(filePath)
+//   return await fileRepository.delete(id)
+// }
 
 const deleteDirectory = async (path: string) => {
   const storePath = join(`${path}/../../`)
@@ -112,5 +111,5 @@ export const fileService = {
   saveFile,
   downloadFile,
   softDeleteFile,
-  deleteFile,
+  // deleteFile,
 }

@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { DeleteUserInfo, UserInfo } from '@/variables/interface/api/user'
+import { DeleteUserInfo, UserInfo, UserInfoWithId } from '@/variables/interface/api/user'
 import { addressRepository } from '@/app/_helpers/server/_repository/addressRespository'
 
 const User = db.User
@@ -27,7 +27,7 @@ const getById = async (id: string): Promise<UserInfo> =>
     .populate('addresses', addressProjection)
     .exec()
 
-const getByWalletAddress = async (id: string): Promise<UserInfo> =>
+const getByWalletAddress = async (id: string): Promise<UserInfoWithId> =>
   await User.findOne({ userWalletAddress: id, deletedDate: null }, userProjection)
     .populate('addresses', addressProjection)
     .exec()

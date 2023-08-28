@@ -20,7 +20,7 @@ const authenticate = async ({
     throw 'Invalid Value: password is incorrect'
   }
   // create jwt token that is valid for7 days
-  const token = jwt.sign({ sub: user.id }, process.env.jwtSecret!, {
+  const token = jwt.sign({ sub: user._id }, process.env.jwtSecret!, {
     expiresIn: '7d',
   })
 

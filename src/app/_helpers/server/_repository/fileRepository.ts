@@ -31,15 +31,15 @@ const softDelete = async (id: string, path: string): Promise<string> => {
   return (await file.save())._id
 }
 
-const _delete = async (id: string) => {
-  await File.findByIdAndRemove(id)
-  return id
-}
+// const _delete = async (id: string) => {
+//   await File.findByIdAndRemove(id)
+//   return id
+// }
 
 export const fileRepository = {
   save,
   getById,
   getByProductId,
   softDelete,
-  delete: _delete,
+  // delete: _delete,
 }

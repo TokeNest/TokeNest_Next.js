@@ -12,3 +12,7 @@ export interface DeleteFileInfo extends FileInfo {
   deletedDate: Date
   save(): any
 }
+
+export interface FileInfoWithId extends FileInfo {
+  _id: string
+}

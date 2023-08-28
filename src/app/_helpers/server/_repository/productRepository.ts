@@ -2,10 +2,9 @@ import { db } from '@/app/_helpers/server'
 import { HydratedDocument } from 'mongoose'
 import { ProductInfo } from '@/variables/interface/api/product'
 
+// TODO Product code refactoring
 const Product = db.Product
-const Store = db.Store
 const productProjection = {
-  productId: true,
   productName: true,
   productIntro: true,
   productInfo: true,
@@ -35,34 +34,22 @@ const getById = async (id: string): Promise<ProductInfo> =>
 const save = async (id: string, productInfo: ProductInfo): Promise<string> =>
   (await new Product({ store: id, ...productInfo }).save())._id
 
-/*
-const save = async (id: string, addressInfo: AddressInfo): Promise<string> => {
-  const user = await User.findOne({ _id: id, deletedDate: null }).exec()
-  const address = new Address({ user, ...addressInfo })
-  await address.save()
-  // setting relationship
-  user.addresses.push(address)
-  await user.save()
-  return address._id
-}
- */
-
 const update = async (id: string, productInfo: ProductInfo): Promise<string> => {
   const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
   Object.assign(product, productInfo)
   return (await product.save())._id
 }
 
-const softDelete = async (id: string) => {
+const softDelete = async (id: string): Promise<string> => {
   const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
   product.deletedDate = new Date()
   return (await product.save())._id
 }
 
-const _delete = async (id: string) => {
-  await Product.findByIdAndDelete(id)
-  return id
-}
+// const _delete = async (id: string) => {
+//   await Product.findByIdAndDelete(id)
+//   return id
+// }
 
 export const productRepository = {
   getAll,
@@ -72,5 +59,5 @@ export const productRepository = {
   save,
   update,
   softDelete: softDelete,
-  delete: _delete,
+  // delete: _delete,
 }
