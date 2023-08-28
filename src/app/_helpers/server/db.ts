@@ -253,12 +253,12 @@ function orderModel() {
       orderNum: { type: Number, required: true },
       orderStatus: { type: String, required: true },
       deletedDate: { type: Date, default: null },
-      storeId: {
+      store: {
         type: Schema.Types.ObjectId,
         ref: 'Store',
         required: true,
       },
-      orderDetails: [
+      orderOptions: [
         {
           type: Schema.Types.ObjectId,
           ref: 'OrderOption',
@@ -288,12 +288,7 @@ function orderOptionModel() {
   const schema = new Schema(
     {
       orderAmount: { type: Number, required: true },
-      optionId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Order',
-        required: true,
-      },
-      productId: {
+      product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
@@ -301,7 +296,7 @@ function orderOptionModel() {
       productOptions: [
         {
           type: Schema.Types.ObjectId,
-          ref: 'Product_Option',
+          ref: 'ProductOption',
         },
       ],
     },
