@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry'
-import AppHeader from '@/components/AppHeader'
+import ThemeRegistry from '@/app/_components/ThemeRegistry/ThemeRegistry'
+import AppHeader from '@/app/_components/AppHeader'
 import { ReduxProvider } from '@/redux/provider'
 import { Container } from '@mui/material'
 import Web3Provider from '@/web3/Web3Provider'

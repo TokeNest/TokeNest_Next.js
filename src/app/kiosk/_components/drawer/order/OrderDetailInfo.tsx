@@ -5,8 +5,8 @@ import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { Product } from '@/variables/interface/kiosk-interface'
-import OrderQuantityButton from '@/components/kiosk/KioskDrawer/order/OrderQuantityButton'
-import { OrderDetailInfoTotalPrice } from '@/components/kiosk/KioskDrawer/order/interaction'
+import OrderQuantityButton from '@/app/kiosk/_components/drawer/order/OrderQuantityButton'
+import { OrderDetailInfoTotalPrice } from '@/app/kiosk/_components/drawer/order/interaction'
 
 export default function OrderDetailInfo({ productInfoHeight }: { productInfoHeight: number }) {
   const { product } = useDrawerContext()

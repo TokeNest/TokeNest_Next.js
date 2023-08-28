@@ -11,8 +11,7 @@ import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 import { useDispatch } from 'react-redux'
 import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
-import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export function ProductCardActionArea({
   children,
@@ -22,13 +21,13 @@ export function ProductCardActionArea({
   product: Product
 }) {
   const router = useRouter()
-  const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
-  const { setProduct } = useDrawerContext()
+  const { setProduct, setDrawerIsOpen } = useDrawerContext()
   const clickEvent = () => {
     setProduct(product)
     dispatch(setOrderProduct(convertOrderProduct(product)))
-    router.push(`${pathname}?drawer=${DRAWER_TYPE.ORDER}`)
+    router.push(`kiosk/order/${product.productId}`)
+    setDrawerIsOpen(true)
   }
   return (
     <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
