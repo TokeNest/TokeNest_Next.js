@@ -12,7 +12,7 @@ const softDeleteProduct = async (id: string) => {
   if (fileId) {
     if (await fileRepository.getById(fileId)) {
       // delete file
-      await fileService.softDeleteFile(fileId)
+      await fileService.softDeleteFileById(fileId)
     }
   }
   return productRepository.softDelete(id)

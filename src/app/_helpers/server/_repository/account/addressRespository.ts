@@ -5,13 +5,11 @@ import { addressProjection } from '@/variables/enum/projection-enum'
 
 const Address = db.Address
 
-const getById = async (id: string): Promise<AddressInfo> =>
-  Address.findOne({ _id: id, deletedDate: null }, addressProjection).exec()
-
-const getByUserId = async (id: string): Promise<AddressInfo[]> =>
-  Address.find({ user: id, deletedDate: null }, addressProjection).exec()
-
-const save = async (id: string, addressInfo: AddressInfo, userInfo: UserInfo): Promise<string> => {
+const create = async (
+  id: string,
+  addressInfo: AddressInfo,
+  userInfo: UserInfo
+): Promise<string> => {
   const address = new Address({ user: id, ...addressInfo })
   await address.save()
   // setting relationship
@@ -19,6 +17,12 @@ const save = async (id: string, addressInfo: AddressInfo, userInfo: UserInfo): P
   await userInfo.save()
   return address._id
 }
+
+const getById = async (id: string): Promise<AddressInfo> =>
+  Address.findOne({ _id: id, deletedDate: null }, addressProjection).exec()
+
+const getByUserId = async (id: string): Promise<AddressInfo[]> =>
+  Address.find({ user: id, deletedDate: null }, addressProjection).exec()
 
 const update = async (id: string, addressInfo: AddressInfo): Promise<string> => {
   const address = await getById(id)
@@ -52,11 +56,11 @@ const softDelete = async (id: string): Promise<string> => {
 // }
 
 export const addressRepository = {
+  create,
   getById,
   getByUserId,
-  save,
   update,
+  deleteByUserId,
   softDelete,
   // delete: _delete,
-  deleteByUserId,
 }

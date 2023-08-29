@@ -1,55 +1,42 @@
 import { db } from '@/app/_helpers/server'
+import { StoreInfo, StoreInfoDelete } from '@/variables/interface/api/store'
+import { storeProjection } from '@/variables/enum/projection-enum'
 
 const Store = db.Store
 
-export const storeRepository = {
-  getAll,
-  getById,
-  create,
-  update,
-  softDelete: _softDelete,
-  delete: _delete,
-}
+// TODO store의 조회범위 어떻게 할지 정해야됨.
+const create = async (id: string, storeInfo: StoreInfo): Promise<string> =>
+  (await new Store({ user: id, ...storeInfo }).save())._id
 
-function getAll() {
-  return Store.find({ deletedDate: null })
-}
+const getAll = async (): Promise<StoreInfo[]> =>
+  Store.find({ deletedDate: null }, storeProjection).exec()
 
-async function getById(id: string) {
-  try {
-    return Store.findById(id)
-  } catch {
-    throw 'Store Not Found'
-  }
-}
+const getById = async (id: string): Promise<StoreInfo> =>
+  Store.findOne({ _id: id, deletedDate: null }, storeProjection).exec()
 
-async function create(params: any) {
-  const store = new Store(params)
+const getByUserId = async (id: string): Promise<StoreInfo[]> =>
+  Store.find({ user: id, deletedDate: null }, storeProjection).exec()
+
+const update = async (id: string, storeInfo: StoreInfo): Promise<string> => {
+  const store = await getById(id)
+  Object.assign(store, storeInfo)
   return (await store.save())._id
 }
 
-async function update(id: string, params: any) {
-  const store = await Store.findById(id)
-  if (!store) {
-    throw 'Store Not Found'
-  }
-
-  Object.assign(store, params)
-
-  await store.save()
-}
-
-async function _softDelete(id: string) {
-  const store = await Store.findById(id)
-  if (!store) {
-    throw 'Store Not Found'
-  }
-
+const softDelete = async (id: string): Promise<string> => {
+  const store: StoreInfoDelete = await Store.findOne({ _id: id, deletedDate: null }).exec()
   store.deletedDate = new Date()
-
-  await store.save()
+  return (await store.save())._id
 }
 
-async function _delete(id: string) {
-  await Store.findByIdAndDelete(id)
+// const _delete = (id: string) => await Store.findByIdAndDelete(id)
+
+export const storeRepository = {
+  create,
+  getAll,
+  getById,
+  getByUserId,
+  update,
+  softDelete,
+  // delete: _delete,
 }

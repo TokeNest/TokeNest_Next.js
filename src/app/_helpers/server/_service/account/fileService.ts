@@ -2,8 +2,9 @@ import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/p
 import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
+import { FileInfo } from '@/variables/interface/api/file'
 
-const saveFile = async (data: FormData, id: string) => {
+const uploadFileByProductId = async (data: FormData, id: string) => {
   const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))
   const product = await productRepository.getById(id)
   const storeId = await productRepository.getStoreIdByProductId(id)
@@ -18,12 +19,12 @@ const saveFile = async (data: FormData, id: string) => {
     if (err.code === 'ENOENT') {
       await createDirectory(`${storePath}/${id}/`)
     } else {
-      throw 'Error with checking directory'
+      throw 'error while checking directory'
     }
   }
 
   if ((await readdir(`${storePath}/${id}`)).length) {
-    throw 'File Already Exist'
+    throw 'file already exist'
   }
 
   const path = `${storePath}/${id}/${file.name}`
@@ -31,11 +32,11 @@ const saveFile = async (data: FormData, id: string) => {
   try {
     await writeFile(path, Buffer.from(await file.arrayBuffer()))
   } catch (err) {
-    throw 'Error with create file'
+    throw 'error while creating file'
   }
 
   // save in db
-  return fileRepository.save(product, {
+  return fileRepository.create(product, {
     fileName: file.name,
     fileType: file.type,
     fileCapacity: file.size.toString(),
@@ -43,22 +44,26 @@ const saveFile = async (data: FormData, id: string) => {
   })
 }
 
-const downloadFile = async (id: string) => {
+const downloadFileById = async (id: string) => {
   const file = await fileRepository.getById(id)
-  try {
-    const fileBuffer = await readFile(file.filePath)
-    return new Response(fileBuffer, {
-      headers: {
-        'Content-Type': 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="${file.fileName}"`,
-      },
-    })
-  } catch (err: any) {
-    throw 'File not found'
-  }
+  return downloadFile(file)
+}
+const downloadFileByProductId = async (id: string) => {
+  const file = await fileRepository.getById(await productRepository.getFileIdByProductId(id))
+  return downloadFile(file)
 }
 
-const softDeleteFile = async (id: string) => {
+const getFileById = async (id: string) => {
+  const file = await fileRepository.getById(id)
+  return file ? file : Promise.reject('file not found')
+}
+
+const getFileByProductId = async (id: string) => {
+  const file = await fileRepository.getById(await productRepository.getFileIdByProductId(id))
+  return file ? file : Promise.reject('file not found')
+}
+
+const softDeleteFileById = async (id: string) => {
   const file = (await fileRepository.getById(id)) || (await Promise.reject('file not found'))
   const filePath = file.filePath
 
@@ -74,7 +79,7 @@ const softDeleteFile = async (id: string) => {
     await rename(filePath, archivePath)
     await deleteDirectory(filePath)
   } catch {
-    throw 'Occur Error while archiving file'
+    throw 'error while archiving file'
   }
 
   return fileRepository.softDelete(id, archivePath)
@@ -88,6 +93,28 @@ const softDeleteFile = async (id: string) => {
 //   return fileRepository.delete(id)
 // }
 
+const createDirectory = async (path: string) => {
+  try {
+    await mkdir(path, { recursive: true })
+  } catch (mkdirError) {
+    throw 'error while creating directory'
+  }
+}
+
+const downloadFile = async (file: FileInfo) => {
+  try {
+    const fileBuffer = await readFile(file.filePath)
+    return new Response(fileBuffer, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${file.fileName}"`,
+      },
+    })
+  } catch (err: any) {
+    throw 'file not found'
+  }
+}
+
 const deleteDirectory = async (path: string) => {
   const storePath = join(`${path}/../../`)
   const productPath = join(`${path}/../`)
@@ -100,17 +127,12 @@ const deleteDirectory = async (path: string) => {
   }
 }
 
-const createDirectory = async (path: string) => {
-  try {
-    await mkdir(path, { recursive: true })
-  } catch (mkdirError) {
-    throw 'Error with create directory'
-  }
-}
-
 export const fileService = {
-  saveFile,
-  downloadFile,
-  softDeleteFile,
+  uploadFileByProductId,
+  downloadFileById,
+  downloadFileByProductId,
+  getFileById,
+  getFileByProductId,
+  softDeleteFileById,
   // deleteFile,
 }

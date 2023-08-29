@@ -2,7 +2,6 @@ import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/addres
 
 export interface UserInfo {
   userName: string
-  userPasswordHash: string
   userPhone: string
   userEmail: string
   userWalletAddress: string
@@ -11,15 +10,17 @@ export interface UserInfo {
 
   save(): any
 }
-export interface SaveUserInfo extends UserInfo {
+export interface UserInfoUpdate extends UserInfo {
+  userPasswordHash: string
   userPassword: string
 }
 
-export interface DeleteUserInfo extends UserInfo {
+export interface UserinfoDelete extends UserInfo {
   deletedDate: Date
   addresses: AddressInfoDelete[]
 }
 
-export interface UserInfoWithId extends UserInfo {
+export interface UserInfoAuth extends UserInfo {
   _id: string
+  userPasswordHash: string
 }

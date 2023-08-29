@@ -56,3 +56,13 @@ export const productOptionProjection = {
   productOptionName: true,
   productOptionPrice: true,
 }
+
+export const storeProjection = {
+  storeName: true,
+  storeTel: true,
+  storeEmail: true,
+  storeCategory: true,
+  storeOffDay: true,
+  storeOpenCloseTime: true,
+  storeStatus: true,
+}

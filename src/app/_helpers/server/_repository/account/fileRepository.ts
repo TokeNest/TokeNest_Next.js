@@ -5,7 +5,7 @@ import { fileProjection } from '@/variables/enum/projection-enum'
 
 const File = db.File
 
-const save = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> => {
+const create = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> => {
   const file = await new File({ ...fileInfo }).save()
   product.file = file
   product.save()
@@ -14,9 +14,6 @@ const save = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> =
 
 const getById = async (id: string): Promise<FileInfo> =>
   File.findOne({ _id: id, deletedDate: null }, fileProjection).exec()
-
-const getByProductId = async (id: string) =>
-  File.findOne({ product: id, deletedDate: null }, fileProjection).exec()
 
 const softDelete = async (id: string, path: string): Promise<string> => {
   const file: FileInfoDelete = await File.findOne({ _id: id, deletedDate: null }).exec()
@@ -31,9 +28,8 @@ const softDelete = async (id: string, path: string): Promise<string> => {
 // }
 
 export const fileRepository = {
-  save,
+  create,
   getById,
-  getByProductId,
   softDelete,
   // delete: _delete,
 }

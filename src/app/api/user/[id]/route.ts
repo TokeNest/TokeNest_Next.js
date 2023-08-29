@@ -9,7 +9,7 @@ async function getById(_req: Request, { params }: ParamsInputId) {
 }
 
 async function updateUser(req: Request, { params }: ParamsInputId) {
-  return userService.update(params.id, await req.json())
+  return userService.updateUserById(params.id, await req.json())
 }
 
 updateUser.schema = joi.object({
@@ -32,7 +32,7 @@ async function _delete(req: Request, { params }: ParamsInputId) {
   // auto logout and soft delete if deleted self
   if (params.id === req.headers.get('userId')) {
     cookies().delete('authorization')
-    return userService.softDelete(params.id)
+    return userService.softDeleteUserById(params.id)
   }
 
   throw 'Not match login User and params'

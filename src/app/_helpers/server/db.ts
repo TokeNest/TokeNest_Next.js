@@ -226,6 +226,11 @@ const storeModel = () => {
       storeOffDay: { type: String, required: true, default: '0000000' },
       storeOpenCloseTime: { type: String, required: true, default: '00:00-23:59' },
       storeStatus: { type: String, required: true },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
       deletedDate: { type: Date, default: null },
     },
     {

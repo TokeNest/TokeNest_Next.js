@@ -2,27 +2,28 @@ import { addressRepository } from '@/app/_helpers/server/_repository/account/add
 import { AddressInfo } from '@/variables/interface/api/address'
 import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 
-const getAddress = async (id: string) => {
+const createAddressByUserId = async (userId: string, params: AddressInfo) =>
+  addressRepository.create(userId, params, await userRepository.getById(userId))
+
+const getAddressById = async (id: string) => {
   const address = await addressRepository.getById(id)
   return address ? address : Promise.reject('address not found')
 }
 
-const getAddresses = async (id: string) => {
+const getAddressesByUserId = async (id: string) => {
   const addresses = await addressRepository.getByUserId(id)
   return addresses.length ? addresses : Promise.reject('address not found')
 }
 
-const createAddress = async (userId: string, params: AddressInfo) =>
-  addressRepository.save(userId, params, await userRepository.getById(userId))
+const updateAddressById = async (id: string, params: AddressInfo) =>
+  (await addressRepository.getById(id))
+    ? addressRepository.update(id, params)
+    : Promise.reject('address not found')
 
-const updateAddress = async (id: string, params: AddressInfo) =>
-  addressRepository.update(id, params)
-
-const softDeleteAddress = async (id: string) => {
-  return (await addressRepository.getById(id))
+const softDeleteAddressById = async (id: string) =>
+  (await addressRepository.getById(id))
     ? addressRepository.softDelete(id)
     : Promise.reject('address not found')
-}
 
 // const deleteAddress = async (id: string) => {
 //   isExistAddress(await addressRepository.getById(id))
@@ -30,10 +31,10 @@ const softDeleteAddress = async (id: string) => {
 // }
 
 export const addressService = {
-  getAddress,
-  getAddresses,
-  createAddress,
-  updateAddress,
-  softDeleteAddress,
+  createAddressByUserId,
+  getAddressById,
+  getAddressesByUserId,
+  updateAddressById,
+  softDeleteAddressById,
   // deleteAddress,
 }

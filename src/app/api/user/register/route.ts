@@ -4,7 +4,7 @@ import { apiHandler } from '@/app/_helpers/server/api'
 import { userService } from '@/app/_helpers/server/_service/account/userService'
 
 const register = async function (req: Request) {
-  return userService.create(await req.json())
+  return userService.createUser(await req.json())
 }
 
 register.schema = joi.object({

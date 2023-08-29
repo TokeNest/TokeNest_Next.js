@@ -14,9 +14,9 @@ async function jwtMiddleware(req: NextRequest) {
 
 function isPublicPath(req: NextRequest) {
   const publicPaths = [
-    'POST:/api/account/login',
-    'POST:/api/account/logout',
-    'POST:/api/account/register',
+    'POST:/api/user/login',
+    'POST:/api/user/logout',
+    'POST:/api/user/register',
     'POST:/api/store',
     'GET:/api/store',
     'POST:/api/store',
