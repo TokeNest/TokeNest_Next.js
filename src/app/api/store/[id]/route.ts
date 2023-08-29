@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import joi from 'joi'
-import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 import { storeService } from '@/app/_helpers/server/_service/store/storeService'
 
 async function getById(_req: Request, { params }: ParamsInputId) {

@@ -1,7 +1,7 @@
 import { db } from '@/app/_helpers/server'
 import { productOptionRepository } from '@/app/_helpers/server/_repository/store/productOptionRepository'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/productOptionGroup'
-import { ProductInfo } from '@/variables/interface/api/product'
+import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
+import { ProductInfo } from '@/variables/interface/api/product-interface'
 
 const ProductOptionGroup = db.ProductOptionGroup
 

@@ -2,7 +2,7 @@ import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/p
 import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
-import { FileInfo } from '@/variables/interface/api/file'
+import { FileInfo } from '@/variables/interface/api/file-interface'
 
 const uploadFileByProductId = async (data: FormData, id: string) => {
   const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))

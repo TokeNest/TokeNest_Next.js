@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { OrderInfo } from '@/variables/interface/api/order'
+import { OrderInfo } from '@/variables/interface/api/order-interface'
 import {
   orderOptionProjection,
   orderProjection,

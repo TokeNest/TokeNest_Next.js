@@ -1,4 +1,4 @@
-import { ProductOptionGroupInfo } from '@/variables/interface/api/productOptionGroup'
+import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
 import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/productOptionGroupRepository'
 

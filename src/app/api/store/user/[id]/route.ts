@@ -1,7 +1,7 @@
 import { storeService } from '@/app/_helpers/server/_service/store/storeService'
 import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
-import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 
 async function create(req: Request, { params }: ParamsInputId) {
   return storeService.createStoreByUserId(params.id, await req.json())

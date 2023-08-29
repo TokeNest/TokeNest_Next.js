@@ -1,4 +1,4 @@
-import { StoreInfo } from '@/variables/interface/api/store'
+import { StoreInfo } from '@/variables/interface/api/store-interface'
 import { storeRepository } from '@/app/_helpers/server/_repository/store/storeRepository'
 
 const createStoreByUserId = async (id: string, storeInfo: StoreInfo) =>

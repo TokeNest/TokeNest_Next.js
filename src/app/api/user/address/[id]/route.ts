@@ -1,6 +1,6 @@
 import { addressService } from '@/app/_helpers/server/_service/account/addressService'
 import { apiHandler } from '@/app/_helpers/server/api'
-import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 import joi from 'joi'
 
 const getById = async function (_req: Request, { params }: ParamsInputId) {

@@ -37,7 +37,8 @@ function checkPathWithParams(path: string) {
     'POST:/api/store/',
     'DELETE:/api/store/',
     'GET:/api/kiosk/',
-    'GET:/api/file',
+    'GET:/api/file/',
+    'GET:/api/product/store/',
   ]
   pathsWithParam.forEach((pathWithParam) => {
     if (path.includes(pathWithParam)) {

@@ -1,6 +1,6 @@
 import { db } from '@/app/_helpers/server'
-import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/address'
-import { UserInfo } from '@/variables/interface/api/user'
+import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/address-interface'
+import { UserInfo } from '@/variables/interface/api/user-interface'
 import { addressProjection } from '@/variables/enum/projection-enum'
 
 const Address = db.Address

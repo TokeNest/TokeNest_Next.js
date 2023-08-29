@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import joi from 'joi'
-import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import { productService } from '@/app/_helpers/server/_service/store/productService'
 

@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { StoreInfo, StoreInfoDelete } from '@/variables/interface/api/store'
+import { StoreInfo, StoreInfoDelete } from '@/variables/interface/api/store-interface'
 import { storeProjection } from '@/variables/enum/projection-enum'
 
 const Store = db.Store

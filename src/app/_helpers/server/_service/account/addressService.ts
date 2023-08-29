@@ -1,5 +1,5 @@
 import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
-import { AddressInfo } from '@/variables/interface/api/address'
+import { AddressInfo } from '@/variables/interface/api/address-interface'
 import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 
 const createAddressByUserId = async (userId: string, params: AddressInfo) =>

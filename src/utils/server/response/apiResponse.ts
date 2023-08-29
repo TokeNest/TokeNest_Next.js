@@ -1,4 +1,4 @@
-import ApiExecuteResult from '@/variables/interface/api/apiResponseInterface'
+import ApiExecuteResult from '@/variables/interface/api/api-response-interface'
 
 const apiExecuteSuccessWithBody = function (body: any) {
   const result: ApiExecuteResult = {

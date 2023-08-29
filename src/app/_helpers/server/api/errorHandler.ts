@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import ApiExecuteResult from '@/variables/interface/api/apiResponseInterface'
+import ApiExecuteResult from '@/variables/interface/api/api-response-interface'
 
 export { errorHandler }
 

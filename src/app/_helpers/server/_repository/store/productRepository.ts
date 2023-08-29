@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { ProductInfo } from '@/variables/interface/api/product'
+import { ProductInfo } from '@/variables/interface/api/product-interface'
 import {
   fileProjection,
   productOptionGroupsProjection,

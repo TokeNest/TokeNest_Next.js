@@ -4,7 +4,7 @@ import {
   UserInfoAuth,
   UserinfoDelete,
   UserInfoUpdate,
-} from '@/variables/interface/api/user'
+} from '@/variables/interface/api/user-interface'
 import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
 import { addressProjection, userProjection } from '@/variables/enum/projection-enum'
 
