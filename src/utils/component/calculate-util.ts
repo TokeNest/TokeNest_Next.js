@@ -6,6 +6,7 @@ import {
   OrderProductOptionGroup,
   TokenOption,
 } from '@/variables/interface/kiosk-interface'
+import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
 
 export const getOptionMarketPrice = (
   optionPrice: number,
@@ -38,28 +39,35 @@ export const setCalculateOptionPrice = (
   return optionPrice
 }
 
-export const getCurrentPrice = (optionGroups: OptionGroup[], marketList: MarketInfo[]) =>
+export const getCurrentPrice = (optionGroups: ProductOptionGroupInfo[], marketList: MarketInfo[]) =>
   optionGroups.reduce((pre, optionGroup) => {
-    const { optionGroupType, options } = optionGroup
-    switch (optionGroupType) {
+    const { productOptionGroupType, productOptions } = optionGroup
+    switch (productOptionGroupType) {
       case OPTION_TYPE.RADIO: {
-        const option = options.find(({ isDefault }) => isDefault)
+        const option = productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)
         return option
-          ? pre + setCalculateOptionPrice(marketList, option.optionPrice, option.tokenOption)
+          ? pre +
+              setCalculateOptionPrice(
+                marketList,
+                option.productOptionPrice,
+                option.productOptionTokenOption
+              )
           : pre
       }
       case OPTION_TYPE.CHECKBOX:
         return (
           pre +
-          options
-            .filter(({ isDefault }) => isDefault)
+          productOptions
+            .filter(({ productOptionIsDefault }) => productOptionIsDefault)
             .reduce(
-              (optionTotal, { optionPrice, tokenOption }) =>
-                optionTotal + setCalculateOptionPrice(marketList, optionPrice, tokenOption),
+              (optionTotal, { productOptionPrice, productOptionTokenOption }) =>
+                optionTotal +
+                setCalculateOptionPrice(marketList, productOptionPrice, productOptionTokenOption),
               0
             )
         )
     }
+    return pre
   }, 0)
 
 export const calculateTotalPrice = (

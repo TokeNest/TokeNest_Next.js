@@ -1,4 +1,4 @@
-import ApiExecuteResult from '@/variables/interface/api/apiResponseInterface'
+import ApiExecuteResult from '@/variables/interface/api/api-response-interface'
 
 const apiExecuteSuccessWithBody = function (body: any) {
   const result: ApiExecuteResult = {
@@ -8,17 +8,6 @@ const apiExecuteSuccessWithBody = function (body: any) {
   }
   return result
 }
-
-const apiExecuteFail = function (message: Error | string) {
-  const result: ApiExecuteResult = {
-    success: false,
-    message,
-    body: {},
-  }
-  return result
-}
-
 export const apiResponses = {
   apiExecuteSuccessWithBody,
-  apiExecuteFail,
 }

@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import { CardHeader } from '@mui/material'
 import * as React from 'react'
 import { useCallback } from 'react'
-import { Product } from '@/variables/interface/kiosk-interface'
 import { getCurrentPrice } from '@/utils/component/calculate-util'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import CardActionArea from '@mui/material/CardActionArea'
@@ -12,13 +11,14 @@ import { useDispatch } from 'react-redux'
 import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
 import { useRouter } from 'next/navigation'
+import { ProductInfo, ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 export function ProductCardActionArea({
   children,
   product,
 }: {
   children: React.ReactNode
-  product: Product
+  product: ProductInfoClient
 }) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
@@ -26,7 +26,7 @@ export function ProductCardActionArea({
   const clickEvent = () => {
     setProduct(product)
     dispatch(setOrderProduct(convertOrderProduct(product)))
-    router.push(`kiosk/order/${product.productId}`)
+    router.push(`kiosk/order/${product.id}`)
     setDrawerIsOpen(true)
   }
   return (
@@ -37,14 +37,14 @@ export function ProductCardActionArea({
 }
 
 export function ProductCardHeader({
-  product: { productPrice, optionGroups, productName },
+  product: { productPrice, productOptionGroups, productName },
 }: {
-  product: Product
+  product: ProductInfo
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const getCurrentOptionPrice = useCallback(
-    () => getCurrentPrice(optionGroups, marketList),
-    [optionGroups, marketList]
+    () => getCurrentPrice(productOptionGroups, marketList),
+    [productOptionGroups, marketList]
   )
   const currentPrice = productPrice + getCurrentOptionPrice()
 

@@ -3,14 +3,14 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardMedia } from '@mui/material'
-import { Product } from '@/variables/interface/kiosk-interface'
 import Image from 'next/image'
 import {
   ProductCardActionArea,
   ProductCardHeader,
 } from '@/app/kiosk/_components/productCard/interaction'
+import { ProductInfo } from '@/variables/interface/api/product-interface'
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product }: { product: ProductInfo }) {
   return (
     <Card sx={{ borderRadius: 3, p: 0 }}>
       <ProductCardActionArea product={product}>
@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             <Image
               fill={true}
-              src={product.productImageUrl}
+              src={''}
               alt={product.productName}
               sizes="(max-width: 200px) 100vw"
               style={{ objectFit: 'cover' }}
@@ -28,7 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <ProductCardHeader product={product} />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            {product.productIntroduction}
+            {product.productInfo}
           </Typography>
         </CardContent>
       </ProductCardActionArea>
