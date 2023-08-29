@@ -11,7 +11,7 @@ import {
 const Product = db.Product
 
 const getAll = async () => {
-  return await Product.find({ deletedDate: null }, productProjection)
+  return Product.find({ deletedDate: null }, productProjection)
     .populate({
       path: 'productOptionGroups',
       populate: {
@@ -45,7 +45,7 @@ const getStoreIdByProductId = async (id: string) => {
 }
 
 const getById = async (id: string): Promise<ProductInfo> =>
-  await Product.findOne({ _id: id, deletedDate: null }).exec()
+  Product.findOne({ _id: id, deletedDate: null }).exec()
 
 const save = async (id: string, productInfo: ProductInfo): Promise<string> =>
   (await new Product({ store: id, ...productInfo }).save())._id

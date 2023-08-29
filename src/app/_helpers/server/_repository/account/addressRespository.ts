@@ -6,10 +6,10 @@ import { addressProjection } from '@/variables/enum/projection-enum'
 const Address = db.Address
 
 const getById = async (id: string): Promise<AddressInfo> =>
-  await Address.findOne({ _id: id, deletedDate: null }, addressProjection).exec()
+  Address.findOne({ _id: id, deletedDate: null }, addressProjection).exec()
 
 const getByUserId = async (id: string): Promise<AddressInfo[]> =>
-  await Address.find({ user: id, deletedDate: null }, addressProjection).exec()
+  Address.find({ user: id, deletedDate: null }, addressProjection).exec()
 
 const save = async (id: string, addressInfo: AddressInfo, userInfo: UserInfo): Promise<string> => {
   const address = new Address({ user: id, ...addressInfo })

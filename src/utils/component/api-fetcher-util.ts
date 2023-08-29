@@ -14,4 +14,4 @@ export const axiosFetcher = async (url: string) => {
 export const nextFetcher = async (
   url: RequestInfo | URL,
   init?: RequestInit | undefined
-): Promise<ApiExecuteResult> => await (await fetch(`${baseURL}/api/${url}`, init)).json()
+): Promise<ApiExecuteResult>  (await fetch(`${baseURL}/api/${url}`, init)).json()

@@ -3,7 +3,7 @@ import { fileService } from '@/app/_helpers/server/_service/account/fileService'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
 
 const getProducts = async () => {
-  return await productRepository.getAll()
+  return productRepository.getAll()
 }
 
 const softDeleteProduct = async (id: string) => {
@@ -15,7 +15,7 @@ const softDeleteProduct = async (id: string) => {
       await fileService.softDeleteFile(fileId)
     }
   }
-  return await productRepository.softDelete(id)
+  return productRepository.softDelete(id)
 }
 
 export const productService = {

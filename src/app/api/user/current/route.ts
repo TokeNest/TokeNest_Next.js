@@ -6,5 +6,5 @@ module.exports = apiHandler({
 })
 
 async function getCurrent() {
-  return await userService.getCurrentUser()
+  return userService.getCurrentUser()
 }

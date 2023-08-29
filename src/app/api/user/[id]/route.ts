@@ -5,11 +5,11 @@ import { userService } from '@/app/_helpers/server/_service/account/userService'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
 
 async function getById(_req: Request, { params }: ParamsInputId) {
-  return await userService.getUserById(params.id)
+  return userService.getUserById(params.id)
 }
 
 async function updateUser(req: Request, { params }: ParamsInputId) {
-  return await userService.update(params.id, await req.json())
+  return userService.update(params.id, await req.json())
 }
 
 updateUser.schema = joi.object({
@@ -30,15 +30,15 @@ updateUser.schema = joi.object({
 
 async function _delete(req: Request, { params }: ParamsInputId) {
   // auto logout and soft delete if deleted self
-  if (params.id === req.headers.get('user_id')) {
+  if (params.id === req.headers.get('userId')) {
     cookies().delete('authorization')
-    return await userService.softDelete(params.id)
+    return userService.softDelete(params.id)
   }
 
   throw 'Not match login User and params'
 
   // hard delete if manager try deleted
-  // return await userService._delete(params.id)
+  // return userService._delete(params.id)
 }
 
 module.exports = apiHandler({

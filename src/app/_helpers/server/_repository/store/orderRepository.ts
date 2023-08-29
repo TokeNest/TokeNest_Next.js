@@ -9,7 +9,7 @@ import {
 const Order = db.Order
 
 const getAll = async (): Promise<(Omit<OrderInfo, never> & {})[]> =>
-  await Order.find({ deletedDate: null }, orderProjection)
+  Order.find({ deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
       match: { deletedDate: { $eq: null } },

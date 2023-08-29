@@ -13,10 +13,10 @@ const save = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> =
 }
 
 const getById = async (id: string): Promise<FileInfo> =>
-  await File.findOne({ _id: id, deletedDate: null }, fileProjection).exec()
+  File.findOne({ _id: id, deletedDate: null }, fileProjection).exec()
 
 const getByProductId = async (id: string) =>
-  await File.findOne({ product: id, deletedDate: null }, fileProjection).exec()
+  File.findOne({ product: id, deletedDate: null }, fileProjection).exec()
 
 const softDelete = async (id: string, path: string): Promise<string> => {
   const file: FileInfoDelete = await File.findOne({ _id: id, deletedDate: null }).exec()

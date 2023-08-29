@@ -12,7 +12,7 @@ async function getAll() {
 }
 
 async function create(req: Request) {
-  return await storeRepository.create(await req.json())
+  return storeRepository.create(await req.json())
 }
 
 create.schema = joi.object({

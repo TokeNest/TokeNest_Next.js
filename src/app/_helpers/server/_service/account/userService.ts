@@ -3,7 +3,6 @@ import { SaveUserInfo } from '@/variables/interface/api/user'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
-import { validUserAlreadyExistAsWalletAddress } from '@/utils/server/validate/validateUser'
 
 const authenticate = async ({
   userWalletAddress,
@@ -15,61 +14,55 @@ const authenticate = async ({
   const user = await userRepository.getByWalletAddress(userWalletAddress)
   // validate user info
   if (!user) {
-    throw 'This User is not exist or already deleted.'
+    throw 'user not found'
   } else if (!bcrypt.compareSync(userPassword, user.userPasswordHash)) {
-    throw 'Invalid Value: password is incorrect'
+    throw 'password incorrect'
   }
   // create jwt token that is valid for7 days
-  const token = jwt.sign({ sub: user._id }, process.env.jwtSecret!, {
+  const token = jwt.sign({ sub: user._id }, process.env['jwtSecret']!, {
     expiresIn: '7d',
   })
 
   return { user, token }
 }
 
-const getUsers = async () => (await userRepository.getAll()).map((user: Omit<any, never>) => user)
+const getUsers = async () => {
+  const users = await userRepository.getAll()
+  return users.length ? users : Promise.reject('user not found')
+}
 
 const getUserById = async (id: string) => {
-  // isExistUser(id)
-  return await userRepository.getById(id)
+  const user = await userRepository.getById(id)
+  return user ? user : Promise.reject('user not found')
 }
 
 const getCurrentUser = async () => {
-  const id = headers().get('user_id')
-  if (!id) {
-    throw 'User Not Found'
-  }
-  return await userRepository.getById(id)
+  const id = headers().get('userId')
+  return id ? await userRepository.getById(id) : Promise.reject('user not found')
 }
 
-const join = async (params: SaveUserInfo) => {
+const create = async (params: SaveUserInfo) => {
   // hash password
-  const user = params
-  if (params.userPassword) {
-    user.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
-  }
-
-  // validate
-  await validUserAlreadyExistAsWalletAddress(params.userWalletAddress)
-  return await userRepository.save(user)
+  params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
+  return (await userRepository.getByWalletAddress(params.userWalletAddress))
+    ? Promise.reject('user already exist')
+    : await userRepository.create(params)
 }
 
 const update = (id: string, params: SaveUserInfo) => {
-  // hash password if it was entered
-  if (params.userPassword) {
-    params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
-  }
-  // copy params properties to find
+  // hash password
+  params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
   return userRepository.update(id, params)
 }
 
-const softDelete = async (id: string) => {
-  return userRepository.softDelete(id)
-}
+const updatePassword = (id: string, password: string) =>
+  userRepository.updatePassword(id, bcrypt.hashSync(password, 10))
+
+const softDelete = async (id: string) => userRepository.softDelete(id)
 
 // const _delete = async (id: string) => {
 //   isExistUser(await userRepository.getById(id))
-//   return await userRepository.delete(id)
+//   return userRepository.delete(id)
 // }
 
 export const userService = {
@@ -77,8 +70,9 @@ export const userService = {
   getUsers,
   getUserById,
   getCurrentUser,
-  join,
+  create,
   update,
+  updatePassword,
   softDelete,
   // _delete,
 }

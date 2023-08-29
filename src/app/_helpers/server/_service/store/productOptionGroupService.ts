@@ -3,7 +3,7 @@ import { productRepository } from '@/app/_helpers/server/_repository/store/produ
 import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/productOptionGroupRepository'
 
 const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo) =>
-  await productOptionGroupRepository.create(
+  productOptionGroupRepository.create(
     id,
     await productRepository.getById(id),
     productOptionGroupInfo

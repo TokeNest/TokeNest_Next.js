@@ -7,12 +7,12 @@ module.exports = apiHandler({
   GET: getAll,
   POST: create,
 })
-function getAll() {
+function getAll(_req: Request, { params }: ParamsInputId) {
   return productRepository.getAll()
 }
 
 async function create(req: Request, { params }: ParamsInputId) {
-  return await productRepository.save(params.id, await req.json())
+  return productRepository.save(params.id, await req.json())
 }
 
 create.schema = joi.object({

@@ -12,7 +12,7 @@ const getCategoryList = async (): Promise<Category[]> => {
   const data = await nextFetcher(`kiosk/${storeId}`, {
     cache: 'no-store',
   })
-  return await data.body
+  return data.body
 }
 
 export default async function KioskPage({

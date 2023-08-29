@@ -9,7 +9,7 @@ async function jwtMiddleware(req: NextRequest) {
   }
 
   const id = auth.verifyToken()
-  req.headers.set('user_id', id)
+  req.headers.set('userId', id)
 }
 
 function isPublicPath(req: NextRequest) {

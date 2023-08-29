@@ -24,7 +24,7 @@ function getAllByGroupId(id: string) {
 
 async function getById(id: string) {
   try {
-    return await ProductOption.findById(id)
+    return ProductOption.findById(id)
   } catch {
     throw 'ProductOption Not Found'
   }

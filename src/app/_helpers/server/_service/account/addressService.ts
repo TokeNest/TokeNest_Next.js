@@ -1,32 +1,27 @@
 import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
 import { AddressInfo } from '@/variables/interface/api/address'
-import isExistAddress from '@/utils/server/validate/validateAddress'
 import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
 
 const getAddress = async (id: string) => {
   const address = await addressRepository.getById(id)
-  isExistAddress(address)
-  return address
+  return address ? address : Promise.reject('address not found')
 }
 
 const getAddresses = async (id: string) => {
   const addresses = await addressRepository.getByUserId(id)
-
-  return addresses.map((address: AddressInfo) => {
-    isExistAddress(address)
-    return address
-  })
+  return addresses.length ? addresses : Promise.reject('address not found')
 }
 
 const createAddress = async (userId: string, params: AddressInfo) =>
-  await addressRepository.save(userId, params, await userRepository.getById(userId))
+  addressRepository.save(userId, params, await userRepository.getById(userId))
 
 const updateAddress = async (id: string, params: AddressInfo) =>
-  await addressRepository.update(id, params)
+  addressRepository.update(id, params)
 
 const softDeleteAddress = async (id: string) => {
-  isExistAddress(await addressRepository.getById(id))
-  return addressRepository.softDelete(id)
+  return (await addressRepository.getById(id))
+    ? addressRepository.softDelete(id)
+    : Promise.reject('address not found')
 }
 
 // const deleteAddress = async (id: string) => {

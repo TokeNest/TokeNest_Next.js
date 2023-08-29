@@ -17,7 +17,7 @@ function getAll() {
 
 async function getById(id: string) {
   try {
-    return await Store.findById(id)
+    return Store.findById(id)
   } catch {
     throw 'Store Not Found'
   }

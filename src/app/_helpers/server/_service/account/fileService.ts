@@ -1,13 +1,10 @@
-import { isExistFile, ValidateFile } from '@/utils/server/validate/validateFile'
 import { access, mkdir, readdir, readFile, rename, rmdir, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/fileRepository'
-import { FileInfo } from '@/variables/interface/api/file'
 
 const saveFile = async (data: FormData, id: string) => {
-  const file: File | null = data.get('file') as unknown as File
-  ValidateFile(file)
+  const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))
   const product = await productRepository.getById(id)
   const storeId = await productRepository.getStoreIdByProductId(id)
   // ./src/public/images/ <- path is must change to your cloud url
@@ -38,15 +35,12 @@ const saveFile = async (data: FormData, id: string) => {
   }
 
   // save in db
-  const fileData: FileInfo = {
+  return fileRepository.save(product, {
     fileName: file.name,
     fileType: file.type,
     fileCapacity: file.size.toString(),
     filePath: path,
-    product,
-  }
-
-  return await fileRepository.save(product, fileData)
+  })
 }
 
 const downloadFile = async (id: string) => {
@@ -65,8 +59,7 @@ const downloadFile = async (id: string) => {
 }
 
 const softDeleteFile = async (id: string) => {
-  const file = await fileRepository.getById(id)
-  isExistFile(file)
+  const file = (await fileRepository.getById(id)) || (await Promise.reject('file not found'))
   const filePath = file.filePath
 
   // create archive path
@@ -84,7 +77,7 @@ const softDeleteFile = async (id: string) => {
     throw 'Occur Error while archiving file'
   }
 
-  return await fileRepository.softDelete(id, archivePath)
+  return fileRepository.softDelete(id, archivePath)
 }
 
 // const deleteFile = async (id: string) => {
@@ -92,7 +85,7 @@ const softDeleteFile = async (id: string) => {
 //   // file delete in storage
 //   await unlink(filePath)
 //   await deleteDirectory(filePath)
-//   return await fileRepository.delete(id)
+//   return fileRepository.delete(id)
 // }
 
 const deleteDirectory = async (path: string) => {

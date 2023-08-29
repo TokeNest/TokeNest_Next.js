@@ -14,7 +14,7 @@ function getAll(_req: Request, { params }: ParamsInputId) {
 }
 
 async function create(req: Request, { params }: ParamsInputId) {
-  return await productOptionGroupService.create(params.id, await req.json())
+  return productOptionGroupService.create(params.id, await req.json())
 }
 
 create.schema = joi.object({

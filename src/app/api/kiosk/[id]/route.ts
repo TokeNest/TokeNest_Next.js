@@ -5,5 +5,5 @@
 //   GET: getAll,
 // })
 // export async function getAll(_request: Request, { params }: ParamsInputId) {
-//   return await kioskService.getProductList(params.id)
+//   return kioskService.getProductList(params.id)
 // }

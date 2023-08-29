@@ -6,5 +6,5 @@ module.exports = apiHandler({
 })
 
 async function getAll(req: Request) {
-  return await productService.getProducts()
+  return productService.getProducts()
 }

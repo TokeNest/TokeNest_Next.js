@@ -10,7 +10,7 @@ module.exports = apiHandler({
 })
 
 async function getAll(_req: Request, { params }: ParamsInputId) {
-  return await productOptionGroupRepository.getById(params.id)
+  return productOptionGroupRepository.getById(params.id)
 }
 
 async function update(req: Request, { params }: ParamsInputId) {

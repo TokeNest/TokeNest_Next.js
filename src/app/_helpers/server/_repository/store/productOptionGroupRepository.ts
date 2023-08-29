@@ -5,13 +5,13 @@ import { ProductInfo } from '@/variables/interface/api/product'
 
 const ProductOptionGroup = db.ProductOptionGroup
 
-const getAll = async () => await ProductOptionGroup.find({ deletedDate: null }).exec()
+const getAll = async () => ProductOptionGroup.find({ deletedDate: null }).exec()
 
 const getAllByProductId = async (id: string) =>
-  await ProductOptionGroup.find({ deletedDate: null, product: id }).exec()
+  ProductOptionGroup.find({ deletedDate: null, product: id }).exec()
 
 const getById = async (id: string): Promise<ProductOptionGroupInfo> =>
-  await ProductOptionGroup.findOne({ _id: id, deletedDate: null }).exec()
+  ProductOptionGroup.findOne({ _id: id, deletedDate: null }).exec()
 
 const create = async (
   id: string,

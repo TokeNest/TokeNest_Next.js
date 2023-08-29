@@ -6,28 +6,45 @@ import { addressProjection, userProjection } from '@/variables/enum/projection-e
 const User = db.User
 
 const getAll = async (): Promise<(Omit<UserInfo, never> & {})[]> =>
-  await User.find({ deletedDate: null }, userProjection)
-    .populate('addresses', addressProjection)
+  User.find({ deletedDate: null }, userProjection)
+    .populate({
+      path: 'addresses',
+      match: { deletedDate: { $eq: null } },
+      select: addressProjection,
+    })
     .exec()
 
 const getById = async (id: string): Promise<UserInfo> =>
-  await User.findOne({ _id: id, deletedDate: null }, userProjection)
-    .populate('addresses', addressProjection)
+  User.findOne({ _id: id, deletedDate: null }, userProjection)
+    .populate({
+      path: 'addresses',
+      match: { deletedDate: { $eq: null } },
+      select: addressProjection,
+    })
     .exec()
 
 const getByWalletAddress = async (id: string): Promise<UserInfoWithId> =>
-  await User.findOne({ userWalletAddress: id, deletedDate: null }, userProjection)
-    .populate('addresses', addressProjection)
+  User.findOne({ userWalletAddress: id, deletedDate: null }, userProjection)
+    .populate({
+      path: 'addresses',
+      match: { deletedDate: { $eq: null } },
+      select: addressProjection,
+    })
     .exec()
 
-const save = async (userInfo: UserInfo): Promise<string> =>
+const create = async (userInfo: UserInfo): Promise<string> =>
   (await new User({ ...userInfo }).save())._id
 
 const update = async (id: string, userInfo: UserInfo): Promise<string> => {
-  const user = await User.findOne({ _id: id, deletedDate: null }).exec()
+  const user = await getById(id)
   Object.assign(user, userInfo)
-  await user.save()
-  return user._id
+  return (await user.save())._id
+}
+
+const updatePassword = async (id: string, password: string): Promise<string> => {
+  const user = await getById(id)
+  user.userPasswordHash = password
+  return (await user.save())._id
 }
 
 const softDelete = async (id: string): Promise<string> => {
@@ -46,8 +63,9 @@ export const userRepository = {
   getAll,
   getById,
   getByWalletAddress,
-  save,
+  create,
   update,
+  updatePassword,
   // delete: _delete,
   softDelete,
 }

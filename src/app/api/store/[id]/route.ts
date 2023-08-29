@@ -10,7 +10,7 @@ module.exports = apiHandler({
 })
 
 async function getById(_req: Request, { params }: ParamsInputId) {
-  return await storeRepository.getById(params.id)
+  return storeRepository.getById(params.id)
 }
 
 async function update(req: Request, { params }: ParamsInputId) {
