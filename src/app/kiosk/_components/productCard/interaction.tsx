@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
 import { useRouter } from 'next/navigation'
-import { ProductInfo, ProductInfoClient } from '@/variables/interface/api/product-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 export function ProductCardActionArea({
   children,
@@ -39,7 +39,7 @@ export function ProductCardActionArea({
 export function ProductCardHeader({
   product: { productPrice, productOptionGroups, productName },
 }: {
-  product: ProductInfo
+  product: ProductInfoClient
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const getCurrentOptionPrice = useCallback(

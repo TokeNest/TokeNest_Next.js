@@ -6,7 +6,7 @@ import {
   OrderProductOptionGroup,
   TokenOption,
 } from '@/variables/interface/kiosk-interface'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
 
 export const getOptionMarketPrice = (
   optionPrice: number,
@@ -39,7 +39,10 @@ export const setCalculateOptionPrice = (
   return optionPrice
 }
 
-export const getCurrentPrice = (optionGroups: ProductOptionGroupInfo[], marketList: MarketInfo[]) =>
+export const getCurrentPrice = (
+  optionGroups: ProductOptionGroupInfoClient[],
+  marketList: MarketInfo[]
+) =>
   optionGroups.reduce((pre, optionGroup) => {
     const { productOptionGroupType, productOptions } = optionGroup
     switch (productOptionGroupType) {

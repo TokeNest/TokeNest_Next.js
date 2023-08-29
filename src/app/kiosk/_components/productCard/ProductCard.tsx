@@ -8,9 +8,9 @@ import {
   ProductCardActionArea,
   ProductCardHeader,
 } from '@/app/kiosk/_components/productCard/interaction'
-import { ProductInfo } from '@/variables/interface/api/product-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
-export default function ProductCard({ product }: { product: ProductInfo }) {
+export default function ProductCard({ product }: { product: ProductInfoClient }) {
   return (
     <Card sx={{ borderRadius: 3, p: 0 }}>
       <ProductCardActionArea product={product}>
@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: ProductInfo }) {
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             <Image
               fill={true}
-              src={''}
+              src={product.file.filePath}
               alt={product.productName}
               sizes="(max-width: 200px) 100vw"
               style={{ objectFit: 'cover' }}
