@@ -1,7 +1,7 @@
 import { FileInfo, FileInfoDelete } from '@/variables/interface/api/file-interface'
 import { db } from '@/app/_helpers/server'
 import { ProductInfo } from '@/variables/interface/api/product-interface'
-import { fileProjection } from '@/variables/enum/projection-enum'
+import { fileProjection } from '@/variables/projection/projection'
 
 const File = db.File
 

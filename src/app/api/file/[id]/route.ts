@@ -1,5 +1,5 @@
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { fileService } from '@/app/_helpers/server/_service/account/fileService'
+import { fileService } from '@/app/_helpers/server/_service/account/FileService'
 import { apiHandler } from '@/app/_helpers/server/api'
 
 async function getById(_req: Request, { params }: ParamsInputId) {

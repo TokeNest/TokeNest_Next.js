@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { productOptionRepository } from '@/app/_helpers/server/_repository/store/productOptionRepository'
+import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
 import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
 import { ProductInfo } from '@/variables/interface/api/product-interface'
 

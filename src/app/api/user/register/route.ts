@@ -1,7 +1,7 @@
 import joi from 'joi'
 
 import { apiHandler } from '@/app/_helpers/server/api'
-import { userService } from '@/app/_helpers/server/_service/account/userService'
+import { userService } from '@/app/_helpers/server/_service/account/UserService'
 
 const register = async function (req: Request) {
   return userService.createUser(await req.json())

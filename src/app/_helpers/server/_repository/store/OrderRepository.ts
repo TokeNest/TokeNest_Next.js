@@ -4,7 +4,7 @@ import {
   orderOptionProjection,
   orderProjection,
   productOptionProjection,
-} from '@/variables/enum/projection-enum'
+} from '@/variables/projection/projection'
 
 const Order = db.Order
 

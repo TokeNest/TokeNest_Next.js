@@ -1,8 +1,8 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/productOptionGroupRepository'
+import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/ProductOptionGroupRepository'
 import joi from 'joi'
-import { productOptionGroupService } from '@/app/_helpers/server/_service/store/productOptionGroupService'
+import { productOptionGroupService } from '@/app/_helpers/server/_service/store/ProductOptionGroupService'
 
 module.exports = apiHandler({
   GET: getAll,

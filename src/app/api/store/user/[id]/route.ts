@@ -1,4 +1,4 @@
-import { storeService } from '@/app/_helpers/server/_service/store/storeService'
+import { storeService } from '@/app/_helpers/server/_service/store/StoreService'
 import joi from 'joi'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'

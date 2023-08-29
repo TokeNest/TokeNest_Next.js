@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { fileService } from '@/app/_helpers/server/_service/account/fileService'
+import { fileService } from '@/app/_helpers/server/_service/account/FileService'
 
 async function getByProductId(_req: Request, { params }: ParamsInputId) {
   return fileService.getFileByProductId(params.id)

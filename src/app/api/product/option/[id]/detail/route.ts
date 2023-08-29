@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { productOptionRepository } from '@/app/_helpers/server/_repository/store/productOptionRepository'
+import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
 
 module.exports = apiHandler({
   GET: getAll,

@@ -1,4 +1,4 @@
-import { addressService } from '@/app/_helpers/server/_service/account/addressService'
+import { addressService } from '@/app/_helpers/server/_service/account/AddressService'
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 import joi from 'joi'

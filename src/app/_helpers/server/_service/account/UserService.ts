@@ -2,7 +2,7 @@ import { headers } from 'next/headers'
 import { UserInfoUpdate } from '@/variables/interface/api/user-interface'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { userRepository } from '@/app/_helpers/server/_repository/account/userRepository'
+import { userRepository } from '@/app/_helpers/server/_repository/account/UserRepository'
 
 const createUser = async (params: UserInfoUpdate) => {
   // hash password

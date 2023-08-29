@@ -5,8 +5,8 @@ import {
   UserinfoDelete,
   UserInfoUpdate,
 } from '@/variables/interface/api/user-interface'
-import { addressRepository } from '@/app/_helpers/server/_repository/account/addressRespository'
-import { addressProjection, userProjection } from '@/variables/enum/projection-enum'
+import { addressRepository } from '@/app/_helpers/server/_repository/account/AddressRepository'
+import { addressProjection, userProjection } from '@/variables/projection/projection'
 
 const User = db.User
 

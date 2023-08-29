@@ -1,5 +1,5 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { productOptionRepository } from '@/app/_helpers/server/_repository/store/productOptionRepository'
+import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
 import joi from 'joi'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 

@@ -1,6 +1,6 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { userService } from '@/app/_helpers/server/_service/account/userService'
+import { userService } from '@/app/_helpers/server/_service/account/UserService'
 import joi from 'joi'
 
 async function updatePassword(req: Request, { params }: ParamsInputId) {
