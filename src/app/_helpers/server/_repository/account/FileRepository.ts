@@ -1,18 +1,19 @@
-import { FileInfo, FileInfoDelete } from '@/variables/interface/api/file-interface'
+import { FileInfo, FileInfoClient, FileInfoDelete } from '@/variables/interface/api/file-interface'
 import { db } from '@/app/_helpers/server'
-import { ProductInfoCreate } from '@/variables/interface/api/product-interface'
+import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 import { fileProjection } from '@/variables/projection/projection'
 
 const File = db.File
 
-const create = async (product: ProductInfoCreate, fileInfo: FileInfo): Promise<string> => {
-  const file = await new File({ ...fileInfo }).save()
+const create = async (product: ProductInfoSave, fileInfo: FileInfo): Promise<string> => {
+  const file = await new File({ ...fileInfo })
+  await file.save()
   product.file = file
   product.save()
   return file._id
 }
 
-const getById = async (id: string): Promise<FileInfo> =>
+const getById = async (id: string): Promise<FileInfoClient> =>
   File.findOne({ _id: id, deletedDate: null }, fileProjection).exec()
 
 const softDelete = async (id: string, path: string): Promise<string> => {

@@ -2,18 +2,24 @@ import { db } from '../../db'
 import {
   UserInfo,
   UserInfoAuth,
+  UserInfoClient,
   UserinfoDelete,
+  UserInfoSave,
   UserInfoUpdate,
 } from '@/variables/interface/api/user-interface'
 import { addressRepository } from '@/app/_helpers/server/_repository/account/AddressRepository'
-import { addressProjection, userProjection } from '@/variables/projection/projection'
+import {
+  addressProjection,
+  userLoginProjection,
+  userProjection,
+} from '@/variables/projection/projection'
 
 const User = db.User
 
 const create = async (userInfo: UserInfo): Promise<string> =>
   (await new User({ ...userInfo }).save())._id
 
-const getAll = async (): Promise<(Omit<UserInfo, never> & {})[]> =>
+const getAll = async (): Promise<(Omit<UserInfoClient, never> & {})[]> =>
   User.find({ deletedDate: null }, userProjection)
     .populate({
       path: 'addresses',
@@ -22,7 +28,7 @@ const getAll = async (): Promise<(Omit<UserInfo, never> & {})[]> =>
     })
     .exec()
 
-const getById = async (id: string): Promise<UserInfo> =>
+const getById = async (id: string): Promise<UserInfoClient> =>
   User.findOne({ _id: id, deletedDate: null }, userProjection)
     .populate({
       path: 'addresses',
@@ -32,7 +38,7 @@ const getById = async (id: string): Promise<UserInfo> =>
     .exec()
 
 const getByWalletAddress = async (id: string): Promise<UserInfoAuth> =>
-  User.findOne({ userWalletAddress: id, deletedDate: null }, userProjection)
+  User.findOne({ userWalletAddress: id, deletedDate: null }, userLoginProjection)
     .populate({
       path: 'addresses',
       match: { deletedDate: { $eq: null } },
@@ -40,23 +46,23 @@ const getByWalletAddress = async (id: string): Promise<UserInfoAuth> =>
     })
     .exec()
 
-const update = async (id: string, userInfo: UserInfo): Promise<string> => {
-  const user = await getById(id)
+const update = async (id: string, userInfo: UserInfoSave): Promise<string> => {
+  const user = (await getById(id)) as UserInfoSave
   Object.assign(user, userInfo)
-  return (await user.save())._id
+  return (await user.save!())._id
 }
 
 const updatePassword = async (id: string, hashPassword: string): Promise<string> => {
   const user: UserInfoUpdate = await User.findOne({ _id: id, deletedDate: null }).exec()
   user.userPasswordHash = hashPassword
-  return (await user.save())._id
+  return (await user.save!())._id
 }
 
 const softDelete = async (id: string): Promise<string> => {
   const user: UserinfoDelete = await User.findOne({ _id: id, deletedDate: null }).exec()
   user.deletedDate = new Date()
   await addressRepository.deleteByUserId(id)
-  return (await user.save())._id
+  return (await user.save!())._id
 }
 // const _delete = async (id: string): Promise<string> => {
 //   await addressRepository.deleteByUserId(id)

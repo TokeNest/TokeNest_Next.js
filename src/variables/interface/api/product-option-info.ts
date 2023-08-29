@@ -1,13 +1,14 @@
-import { TokenOption } from '@/variables/interface/kiosk-interface'
+import { TokenInfo } from '@/variables/interface/api/token-interface'
 
 export interface ProductOptionInfo {
   productOptionName: string
   productOptionPrice: number
+  productOptionIsDefault: boolean
 }
 
 export interface ProductOptionInfoToken extends ProductOptionInfo {
-  productOptionIsDefault: boolean
-  productOptionTokenOption: TokenOption
+  tokenRatio: number
+  productOptionTokenOption: TokenInfo
 }
 
 export interface ProductOptionInfoCreate extends ProductOptionInfoToken {

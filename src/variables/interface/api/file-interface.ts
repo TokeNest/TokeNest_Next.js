@@ -5,7 +5,14 @@ export interface FileInfo {
   filePath: string
 }
 
-export interface FileInfoDelete extends FileInfo {
-  deletedDate: Date
+export interface FileInfoSave extends FileInfo {
   save(): any
+}
+
+export interface FileInfoDelete extends FileInfoSave {
+  deletedDate: Date
+}
+
+export interface FileInfoClient extends FileInfo {
+  id: string
 }

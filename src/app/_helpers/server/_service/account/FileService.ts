@@ -3,6 +3,7 @@ import { dirname, join } from 'path'
 import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/FileRepository'
 import { FileInfo } from '@/variables/interface/api/file-interface'
+import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 
 const uploadFileByProductId = async (data: FormData, id: string) => {
   const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))
@@ -36,7 +37,7 @@ const uploadFileByProductId = async (data: FormData, id: string) => {
   }
 
   // save in db
-  return fileRepository.create(product, {
+  return fileRepository.create(product as ProductInfoSave, {
     fileName: file.name,
     fileType: file.type,
     fileCapacity: file.size.toString(),

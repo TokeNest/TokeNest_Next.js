@@ -14,11 +14,6 @@ async function updateUser(req: Request, { params }: ParamsInputId) {
 
 updateUser.schema = joi.object({
   userName: joi.string().required(),
-  userPassword: joi
-    .string()
-    // 영문 대, 소문자와 숫자, 특수기호가 적어도 1개 이상 포함된 8 ~ 20자
-    .pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}$/)
-    .required(),
   userPhone: joi
     .string()
     // 9 ~ 11자리 숫자

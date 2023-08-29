@@ -6,6 +6,21 @@ const Schema = mongoose.Schema
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
+const tokenModel = () => {
+  const tokenSchema = new Schema(
+    {
+      tokenSymbol: { type: String, required: true },
+      tokenAddress: { type: String, required: true },
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+      },
+    }
+  )
+  return mongoose.models.Token || mongoose.model('Token', tokenSchema)
+}
+
 const fileModel = () => {
   const fileSchema = new Schema(
     {
@@ -17,7 +32,7 @@ const fileModel = () => {
     },
     {
       timestamps: {
-        createdAt: 'created_date',
+        createdAt: 'createdDate',
       },
     }
   )
@@ -189,12 +204,12 @@ const productOptionModel = () => {
       productOptionName: { type: String, required: true },
       productOptionIsDefault: { type: Boolean, required: true, default: false },
       productOptionPrice: { type: Number, required: true, default: 0 },
+      token: {
+        type: Schema.Types.ObjectId,
+        ref: 'Token',
+        default: null,
+      },
       deletedDate: { type: Date, default: null },
-      // productOptionGroup: {
-      //   type: Schema.Types.ObjectId,
-      //   ref: 'ProductOptionGroup',
-      //   required: true,
-      // },
     },
     {
       timestamps: {
@@ -281,7 +296,7 @@ function orderModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -316,7 +331,7 @@ function orderOptionModel() {
   schema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {
+    transform: function (_, ret) {
       delete ret._id
       delete ret.hash
     },
@@ -325,6 +340,7 @@ function orderOptionModel() {
 }
 
 export const db = {
+  Token: tokenModel(),
   File: fileModel(),
   Product: productModel(),
   User: userModel(),

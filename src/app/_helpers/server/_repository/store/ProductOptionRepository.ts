@@ -2,7 +2,7 @@ import { db } from '@/app/_helpers/server'
 import { ProductOptionInfoCreate } from '@/variables/interface/api/product-option-info'
 import { ProductOptionGroupInfoCreate } from '@/variables/interface/api/product-option-group'
 
-// TODO 여기 손봐야됨.
+// TODO #2 리펙토링 & 토큰 입력 시 등록 로직 추가 (토큰등록 Api필요할 듯??)
 const ProductOption = db.ProductOption
 
 function getAll() {

@@ -6,11 +6,14 @@ export const addressProjection = {
 
 export const userProjection = {
   userName: true,
-  userPasswordHash: true,
   userPhone: true,
   userEmail: true,
   userWalletAddress: true,
   userAccountType: true,
+}
+
+export const userLoginProjection = {
+  userPasswordHash: true,
 }
 
 export const productProjection = {
