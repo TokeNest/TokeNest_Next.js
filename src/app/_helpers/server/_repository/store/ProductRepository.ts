@@ -7,7 +7,7 @@ import {
   productProjection,
 } from '@/variables/projection/projection'
 
-// TODO Product code refactoring
+// TODO #1 클라이언트로 보내는거 타입체크 잘하고 productOptionGroup & productOption들어가면 될듯.
 const Product = db.Product
 
 const getAll = async (): Promise<(Omit<Omit<ProductInfoClient, never> & {}, never> & {})[]> =>

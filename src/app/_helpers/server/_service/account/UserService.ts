@@ -49,13 +49,10 @@ const getCurrentUser = async () => {
   return id ? await userRepository.getById(id) : Promise.reject('user not found')
 }
 
-const updateUserById = async (id: string, params: UserInfoUpdate) => {
-  // hash password
-  params.userPasswordHash = bcrypt.hashSync(params.userPassword, 10)
-  return (await userRepository.getById(id))
+const updateUserById = async (id: string, params: UserInfoUpdate) =>
+  (await userRepository.getById(id))
     ? userRepository.update(id, params)
     : Promise.reject('user not found')
-}
 
 const updateUserPasswordById = async (id: string, password: string) =>
   (await userRepository.getById(id))
