@@ -17,7 +17,7 @@ import {
   ListItemDetailInfo,
   OpenDetailInfoBtn,
   QuantityButtonGroup,
-} from '@/components/kiosk/KioskDrawer/cart/interaction'
+} from '@/app/kiosk/_components/drawer/cart/interaction'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import {
   Option,

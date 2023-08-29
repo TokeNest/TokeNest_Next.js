@@ -6,11 +6,11 @@ import { useAppSelector } from '@/redux/store'
 import { useProductsContext } from '@/app/kiosk/products-provider'
 import { Product } from '@/variables/interface/kiosk-interface'
 import Typography from '@mui/material/Typography'
-import { CartItemTotalPrice } from '@/components/kiosk/KioskDrawer/cart/interaction'
+import { CartItemTotalPrice } from '@/app/kiosk/_components/drawer/cart/interaction'
 import {
   KioskCartPriceProvider,
   KioskListProvider,
-} from '@/components/kiosk/KioskDrawer/cart/provider'
+} from '@/app/kiosk/_components/drawer/cart/provider'
 
 export default function KioskCartBody() {
   const { products } = useProductsContext()

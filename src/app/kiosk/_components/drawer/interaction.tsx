@@ -7,11 +7,11 @@ import { addCartBasket, clearCartBasket } from '@/redux/slice/cart-slice'
 import Typography from '@mui/material/Typography'
 import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 import Button from '@mui/material/Button'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
-  const searchParams = useSearchParams()
-  const isShowDrawer = searchParams.get('drawer') !== null
+  const { drawerIsOpen } = useDrawerContext()
   return (
     <Drawer
       anchor="right"
@@ -24,7 +24,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
-      open={isShowDrawer}
+      open={drawerIsOpen}
       hideBackdrop={false}
       keepMounted={false}
     >
@@ -34,16 +34,17 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 }
 
 export function KioskFooterCardActions() {
-  const router = useRouter()
+  const { setDrawerIsOpen } = useDrawerContext()
   const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
   const searchParams = useSearchParams()
   const isOrder = searchParams.get('drawer') === DRAWER_TYPE.ORDER
   const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const handleCartBasket = () => {
-    dispatch(isOrder ? addCartBasket(orderProduct) : clearCartBasket())
-    router.push(pathname)
+    dispatch(pathname.includes('order') ? addCartBasket(orderProduct) : clearCartBasket())
+    setDrawerIsOpen(false)
   }
+
   return (
     <CardActions sx={{ height: 1 / 10 }} onClick={handleCartBasket}>
       <Button
@@ -59,20 +60,17 @@ export function KioskFooterCardActions() {
 }
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const pathname = usePathname()
+  const { setDrawerIsOpen } = useDrawerContext()
   return (
-    <IconButton size="large" onClick={() => router.push(pathname)}>
+    <IconButton size="large" onClick={() => setDrawerIsOpen(false)}>
       {children}
     </IconButton>
   )
 }
 
 export function KioskHeaderTypography() {
-  const searchParams = useSearchParams()
+  const pathname = usePathname()
   return (
-    <Typography variant="h4">
-      {searchParams.get('drawer') === DRAWER_TYPE.ORDER ? '주문 옵션' : '장바구니'}
-    </Typography>
+    <Typography variant="h4">{pathname.includes('order') ? '주문 옵션' : '장바구니'}</Typography>
   )
 }
