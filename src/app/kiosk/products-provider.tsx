@@ -1,17 +1,17 @@
 'use client'
 import React, { createContext, useContext, useState } from 'react'
-import { Product } from '@/variables/interface/kiosk-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 interface ProductsContextType {
-  products: Product[]
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  products: ProductInfoClient[]
+  setProducts: React.Dispatch<React.SetStateAction<ProductInfoClient[]>>
 }
 export const ProductsContext = createContext<ProductsContextType>({
   products: [],
   setProducts: () => {},
 })
 export default function ProductsProvider({ children }: { children: React.ReactNode }) {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<ProductInfoClient[]>([])
   return (
     <ProductsContext.Provider value={{ products, setProducts }}>
       {children}

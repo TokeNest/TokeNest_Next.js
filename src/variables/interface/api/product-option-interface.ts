@@ -6,8 +6,15 @@ export interface ProductOptionInterface {
 }
 
 export interface ProductOptionInfo extends ProductOptionInterface {
-  _id: string
   productOptionIsDefault: boolean
-  productOptionTokenOption?: TokenOption
+  productOptionTokenOption: TokenOption
+}
+
+export interface ProductOptionInfoServer extends ProductOptionInfo {
+  _id: string
   save(): any
+}
+
+export interface ProductOptionInfoClient extends ProductOptionInfo {
+  id: string
 }

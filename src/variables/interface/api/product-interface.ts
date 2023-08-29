@@ -1,5 +1,8 @@
 import { FileInfo } from '@/variables/interface/api/file-interface'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
+import {
+  ProductOptionGroupInfo,
+  ProductOptionGroupInfoClient,
+} from '@/variables/interface/api/product-option-group'
 
 export interface ProductInfo {
   productName: string
@@ -17,4 +20,5 @@ export interface ProductInfoServer extends ProductInfo {
 
 export interface ProductInfoClient extends ProductInfo {
   id: string
+  productOptionGroups: ProductOptionGroupInfoClient[]
 }

@@ -1,13 +1,13 @@
 'use client'
 
 import React, { createContext, useContext, useState } from 'react'
-import { ProductInfo } from '@/variables/interface/api/product-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 interface DrawerContextType {
   drawerIsOpen: boolean
   setDrawerIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  product: ProductInfo | null
-  setProduct: React.Dispatch<React.SetStateAction<ProductInfo | null>>
+  product: ProductInfoClient | null
+  setProduct: React.Dispatch<React.SetStateAction<ProductInfoClient | null>>
 }
 export const DrawerContext = createContext<DrawerContextType>({
   drawerIsOpen: false,
@@ -18,7 +18,7 @@ export const DrawerContext = createContext<DrawerContextType>({
 
 export default function DrawerProvider({ children }: { children: React.ReactNode }) {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false)
-  const [product, setProduct] = useState<ProductInfo | null>(null)
+  const [product, setProduct] = useState<ProductInfoClient | null>(null)
   return (
     <DrawerContext.Provider value={{ drawerIsOpen, setDrawerIsOpen, product, setProduct }}>
       {children}
