@@ -4,19 +4,17 @@ import Badge from '@mui/material/Badge'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { CloseReason, OpenReason, SpeedDial } from '@mui/material'
 import { useAppSelector } from '@/redux/store'
-import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function KioskOrderBadge() {
   const router = useRouter()
-  const pathname = usePathname()
   const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
   const handleChangeOpen = (
     _: React.SyntheticEvent<{}, Event>,
     reason: CloseReason | OpenReason
   ) => {
     if (reason === 'toggle') {
-      router.push(`${pathname}?drawer=${DRAWER_TYPE.CART}`)
+      router.push(`kiosk/cart`)
     }
   }
   return (
@@ -31,7 +29,6 @@ export default function KioskOrderBadge() {
       }
       onClose={handleChangeOpen}
       onOpen={handleChangeOpen}
-      open={false}
     />
   )
 }

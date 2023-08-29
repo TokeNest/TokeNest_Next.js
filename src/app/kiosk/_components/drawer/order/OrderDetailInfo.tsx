@@ -1,23 +1,25 @@
-'use client'
 import * as React from 'react'
 import { CardHeader, CardMedia, Paper } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
-import { useDrawerContext } from '@/app/kiosk/drawer-provider'
-import { Product } from '@/variables/interface/kiosk-interface'
 import OrderQuantityButton from '@/app/kiosk/_components/drawer/order/OrderQuantityButton'
 import { OrderDetailInfoTotalPrice } from '@/app/kiosk/_components/drawer/order/interaction'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
-export default function OrderDetailInfo({ productInfoHeight }: { productInfoHeight: number }) {
-  const { product } = useDrawerContext()
-  const { productPrice, productImageUrl, productName, productInfo, optionGroups } =
-    product as Product
+export default function OrderDetailInfo({
+  product: { productPrice, file, productName, productInfo, productOptionGroups },
+  productInfoHeight,
+}: {
+  product: ProductInfoClient
+  productInfoHeight: number
+}) {
+  const imageUrl = file === null ? '' : file.filePath
   return (
     <Paper elevation={0} sx={{ height: 400, display: 'flex' }}>
       <CardMedia
         component="img"
         alt="image"
-        image={productImageUrl}
+        image={imageUrl}
         sx={{ width: 400, height: productInfoHeight, p: 1, borderRadius: 6 }}
       />
       <Grid container justifyContent="space-around">
@@ -25,7 +27,10 @@ export default function OrderDetailInfo({ productInfoHeight }: { productInfoHeig
           <CardHeader
             title={<Typography variant="h3">{productName}</Typography>}
             subheader={
-              <OrderDetailInfoTotalPrice optionGroups={optionGroups} productPrice={productPrice} />
+              <OrderDetailInfoTotalPrice
+                optionGroups={productOptionGroups}
+                productPrice={productPrice}
+              />
             }
           />
         </Grid>

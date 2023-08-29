@@ -7,7 +7,7 @@ import { addCartBasket, clearCartBasket } from '@/redux/slice/cart-slice'
 import Typography from '@mui/material/Typography'
 import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 import Button from '@mui/material/Button'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
@@ -34,6 +34,7 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 }
 
 export function KioskFooterCardActions() {
+  const router = useRouter()
   const { setDrawerIsOpen } = useDrawerContext()
   const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
@@ -43,6 +44,7 @@ export function KioskFooterCardActions() {
   const handleCartBasket = () => {
     dispatch(pathname.includes('order') ? addCartBasket(orderProduct) : clearCartBasket())
     setDrawerIsOpen(false)
+    router.back()
   }
 
   return (
@@ -61,8 +63,15 @@ export function KioskFooterCardActions() {
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
   const { setDrawerIsOpen } = useDrawerContext()
+  const router = useRouter()
   return (
-    <IconButton size="large" onClick={() => setDrawerIsOpen(false)}>
+    <IconButton
+      size="large"
+      onClick={() => {
+        router.back()
+        setDrawerIsOpen(false)
+      }}
+    >
       {children}
     </IconButton>
   )

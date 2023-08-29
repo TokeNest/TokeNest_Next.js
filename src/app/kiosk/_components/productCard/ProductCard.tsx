@@ -11,15 +11,16 @@ import {
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 export default function ProductCard({ product }: { product: ProductInfoClient }) {
+  const fileUrl = product.file === null ? '' : product.file?.filePath.slice(1)
   return (
     <Card sx={{ borderRadius: 3, p: 0 }}>
       <ProductCardActionArea product={product}>
         <CardMedia sx={{ p: 1, height: 200 }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             <Image
-              fill={true}
-              src={product.file.filePath}
-              alt={product.productName}
+              fill
+              src={fileUrl}
+              alt={product.file?.fileName ?? ''}
               sizes="(max-width: 200px) 100vw"
               style={{ objectFit: 'cover' }}
             />

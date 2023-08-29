@@ -19,29 +19,27 @@ import {
   QuantityButtonGroup,
 } from '@/app/kiosk/_components/drawer/cart/interaction'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
-import {
-  Option,
-  OptionGroup,
-  OrderProductOptionGroup,
-  Product,
-} from '@/variables/interface/kiosk-interface'
+import { OrderProductOptionGroup } from '@/variables/interface/kiosk-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
+import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 
 export default function KioskListItem({
-  product: { productName, productPrice, optionGroups },
+  product: { productName, productPrice, productOptionGroups },
   productQuantity,
   optionGroupsInfo,
 }: {
-  product: Product
+  product: ProductInfoClient
   productQuantity: number
   optionGroupsInfo: OrderProductOptionGroup[]
 }) {
   const selectGroupOptions = optionGroupsInfo.map(({ optionGroupId: groupId, optionIds }) => {
-    const { optionGroupName, options } = optionGroups.find(
-      ({ optionGroupId }) => optionGroupId === groupId
-    ) as OptionGroup
+    const { productOptionGroupName, productOptions } = productOptionGroups.find(
+      ({ id }) => id === groupId
+    ) as ProductOptionGroupInfoClient
     return {
-      optionGroupName,
-      options: options.find(({ optionId }) => optionIds.includes(optionId)) as Option,
+      productOptionGroupName,
+      options: productOptions.find(({ id }) => optionIds.includes(id)) as ProductOptionInfoClient,
     }
   })
   return (
@@ -82,28 +80,30 @@ export default function KioskListItem({
         <List
           sx={{ pl: 4, flexGrow: 1, minHeight: 240, '& .MuiTypography-body1': { display: 'flex' } }}
         >
-          {selectGroupOptions.map(({ optionGroupName, options: { optionId, optionName } }) => {
-            return (
-              <ListItem key={optionId}>
-                <ListItemText
-                  primary={
-                    <>
-                      <Typography variant="h6">{optionGroupName}</Typography>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <HorizontalRuleIcon fontSize="small" color="action" sx={{ mx: 1 }} />
-                        <Typography>{optionName}</Typography>
-                      </Box>
-                    </>
-                  }
-                />
-              </ListItem>
-            )
-          })}
+          {selectGroupOptions.map(
+            ({ productOptionGroupName, options: { id, productOptionName } }) => {
+              return (
+                <ListItem key={id}>
+                  <ListItemText
+                    primary={
+                      <>
+                        <Typography variant="h6">{productOptionGroupName}</Typography>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <HorizontalRuleIcon fontSize="small" color="action" sx={{ mx: 1 }} />
+                          <Typography>{productOptionName}</Typography>
+                        </Box>
+                      </>
+                    }
+                  />
+                </ListItem>
+              )
+            }
+          )}
           <Divider />
         </List>
         <ButtonGroup orientation="vertical" variant="text" size="large" sx={{ height: 1, px: 2 }}>

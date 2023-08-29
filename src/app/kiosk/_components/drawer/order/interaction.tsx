@@ -2,19 +2,19 @@
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { OptionGroup } from '@/variables/interface/kiosk-interface'
 import { calculateTotalPrice } from '@/utils/component/calculate-util'
 import { useDispatch } from 'react-redux'
 import { setOrderProductQuantity } from '@/redux/slice/order-product-slice'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
 
 export function OrderDetailInfoTotalPrice({
   optionGroups,
   productPrice,
 }: {
-  optionGroups: OptionGroup[]
+  optionGroups: ProductOptionGroupInfoClient[]
   productPrice: number
 }) {
   const [{ marketList }, { optionGroupsInfo, productQuantity }] = useAppSelector(

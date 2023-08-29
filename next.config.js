@@ -8,12 +8,13 @@ const nextConfig = {
     },
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'source.unsplash.com',
+        hostname: 'via.placeholder.com',
         port: '',
-        pathname: '/random',
+        pathname: '/150/**',
       },
     ],
   },

@@ -8,7 +8,6 @@ import {
   useKioskListContext,
 } from '@/app/kiosk/_components/drawer/cart/provider'
 import Typography from '@mui/material/Typography'
-import { Option } from '@/variables/interface/kiosk-interface'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { getOptionMarketPrice } from '@/utils/component/calculate-util'
 import { useDispatch } from 'react-redux'
@@ -16,6 +15,7 @@ import { setOrderProductQuantity } from '@/redux/slice/order-product-slice'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 
 export function OpenDetailInfoBtn() {
   const { open, setOpen } = useKioskListContext()
@@ -52,14 +52,14 @@ export function ListItemCalculatePrice({
 }: {
   quantity: number
   productPrice: number
-  options: Option[]
+  options: ProductOptionInfoClient[]
 }) {
   const { setTotalPrice } = useKioskCartPriceContext()
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const totalPrice =
     options.reduce(
-      (pre, { optionPrice, tokenOption }) =>
-        pre + getOptionMarketPrice(optionPrice, tokenOption, marketList),
+      (pre, { productOptionPrice, productOptionTokenOption }) =>
+        pre + getOptionMarketPrice(productOptionPrice, productOptionTokenOption, marketList),
       productPrice
     ) * quantity
 

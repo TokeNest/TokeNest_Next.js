@@ -1,4 +1,3 @@
-'use client'
 import { Box, Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
@@ -7,21 +6,20 @@ import {
   CheckboxOptionGroup,
   RadioOptionGroup,
 } from '@/app/kiosk/_components/drawer/order/OptionGroup'
-import { useDrawerContext } from '@/app/kiosk/drawer-provider'
-import { Product } from '@/variables/interface/kiosk-interface'
+import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
-export default function OrderOptionGroups() {
-  const { product } = useDrawerContext()
-  const { optionGroups } = product as Product
-  return optionGroups.map((optionGroup) => {
-    const { optionGroupId, optionGroupType, optionGroupName } = optionGroup
+export default function OrderOptionGroups({ product }: { product: ProductInfoClient }) {
+  return product.productOptionGroups.map((optionGroup) => {
+    const { id, productOptionGroupType, productOptionGroupName } = optionGroup
     return (
-      <Box sx={{ py: 6 }} key={optionGroupId}>
+      <Box sx={{ py: 6 }} key={id}>
         <Divider component="div" textAlign="left" role="presentation">
-          <Typography variant="h4">{optionGroupName}</Typography>
+          <Typography variant="h4">{productOptionGroupName}</Typography>
         </Divider>
-        {optionGroupType === OPTION_TYPE.RADIO && <RadioOptionGroup optionGroup={optionGroup} />}
-        {optionGroupType === OPTION_TYPE.CHECKBOX && (
+        {productOptionGroupType === OPTION_TYPE.RADIO && (
+          <RadioOptionGroup optionGroup={optionGroup} />
+        )}
+        {productOptionGroupType === OPTION_TYPE.CHECKBOX && (
           <CheckboxOptionGroup optionGroup={optionGroup} />
         )}
       </Box>

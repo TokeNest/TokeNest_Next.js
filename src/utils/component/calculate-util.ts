@@ -1,11 +1,7 @@
 import { MarketInfo } from '@/variables/interface/web3-interface'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import {
-  OptionGroup,
-  OrderProductOptionGroup,
-  TokenOption,
-} from '@/variables/interface/kiosk-interface'
+import { OrderProductOptionGroup, TokenOption } from '@/variables/interface/kiosk-interface'
 import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
 
 export const getOptionMarketPrice = (
@@ -76,16 +72,16 @@ export const getCurrentPrice = (
 export const calculateTotalPrice = (
   productPrice: number,
   optionGroupsInfo: OrderProductOptionGroup[],
-  optionGroups: OptionGroup[],
+  optionGroups: ProductOptionGroupInfoClient[],
   marketList: MarketInfo[]
 ) => {
   const optionIds = optionGroupsInfo.flatMap(({ optionIds }) => optionIds)
   return optionGroups
-    .flatMap(({ options }) => options)
-    .filter(({ optionId }) => optionIds.includes(optionId))
+    .flatMap(({ productOptions }) => productOptions)
+    .filter(({ id }) => optionIds.includes(id))
     .reduce(
-      (pre, { optionPrice, tokenOption }) =>
-        pre + getOptionMarketPrice(optionPrice, tokenOption, marketList),
+      (pre, { productOptionPrice, productOptionTokenOption }) =>
+        pre + getOptionMarketPrice(productOptionPrice, productOptionTokenOption, marketList),
       productPrice
     )
 }

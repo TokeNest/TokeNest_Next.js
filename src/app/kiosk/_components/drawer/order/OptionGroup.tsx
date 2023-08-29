@@ -1,42 +1,48 @@
 'use client'
-import { OptionGroup } from '@/variables/interface/kiosk-interface'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import * as React from 'react'
 import { useCallback, useState } from 'react'
 import { Tab, Tabs } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
 
 export function RadioOptionGroup({
-  optionGroup: { options, optionGroupId },
+  optionGroup: { productOptions, id },
 }: {
-  optionGroup: OptionGroup
+  optionGroup: ProductOptionGroupInfoClient
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const dispatch = useDispatch<AppDispatch>()
-  const [tabValue, setTabValue] = useState(options.find(({ isDefault }) => isDefault)?.optionId)
+  const [tabValue, setTabValue] = useState(
+    productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)?.id
+  )
   const handleChange = useCallback(
     (_: React.SyntheticEvent, id: string) => {
-      dispatch(setOrderProductOptionIds({ optionGroupId, optionIds: [id] }))
+      dispatch(setOrderProductOptionIds({ optionGroupId: id, optionIds: [id] }))
       setTabValue(id)
     },
-    [dispatch, optionGroupId]
+    [dispatch]
   )
 
   return (
     <Tabs value={tabValue} onChange={handleChange} centered>
-      {options.map(({ optionName, optionId }, i) => (
-        <Tab key={i} value={optionId} label={optionName} sx={{ flexGrow: 1 }} />
+      {productOptions.map(({ productOptionName, id }) => (
+        <Tab key={id} value={id} label={productOptionName} sx={{ flexGrow: 1 }} />
       ))}
     </Tabs>
   )
 }
 
-export function CheckboxOptionGroup({ optionGroup: { options } }: { optionGroup: OptionGroup }) {
+export function CheckboxOptionGroup({
+  optionGroup: { productOptions },
+}: {
+  optionGroup: ProductOptionGroupInfoClient
+}) {
   return (
     <div>
-      {options.map((res, i) => (
-        <div key={i}>{res.optionId}</div>
+      {productOptions.map((res) => (
+        <div key={res.id}>{res.id}</div>
       ))}
     </div>
   )
