@@ -1,11 +1,11 @@
 import { FileInfo, FileInfoDelete } from '@/variables/interface/api/file-interface'
 import { db } from '@/app/_helpers/server'
-import { ProductInfo } from '@/variables/interface/api/product-interface'
+import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 import { fileProjection } from '@/variables/projection/projection'
 
 const File = db.File
 
-const create = async (product: ProductInfo, fileInfo: FileInfo): Promise<string> => {
+const create = async (product: ProductInfoSave, fileInfo: FileInfo): Promise<string> => {
   const file = await new File({ ...fileInfo }).save()
   product.file = file
   product.save()

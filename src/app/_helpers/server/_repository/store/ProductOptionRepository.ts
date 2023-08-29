@@ -1,18 +1,9 @@
 import { db } from '@/app/_helpers/server'
-import { ProductOptionInfo } from '@/variables/interface/api/product-option-interface'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
+import { ProductOptionInfoCreate } from '@/variables/interface/api/product-option-info'
+import { ProductOptionGroupInfoCreate } from '@/variables/interface/api/product-option-group'
 
+// TODO 여기 손봐야됨.
 const ProductOption = db.ProductOption
-
-export const productOptionRepository = {
-  getAll,
-  getAllByGroupId,
-  getById,
-  create,
-  update,
-  softDelete: _softDelete,
-  delete: _delete,
-}
 
 function getAll() {
   return ProductOption.find({ deletedDate: null })
@@ -31,10 +22,10 @@ async function getById(id: string) {
 }
 
 async function create(
-  productOptionGroupInfo: ProductOptionGroupInfo,
-  productOptionInfo: ProductOptionInfo
+  productOptionGroupInfo: ProductOptionGroupInfoCreate,
+  productOptionInfo: ProductOptionInfoCreate
 ) {
-  const productOption: ProductOptionInfo = new ProductOption(productOptionInfo)
+  const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
   await productOption.save()
 
   productOptionGroupInfo.productOptions.push(productOption)
@@ -65,4 +56,14 @@ async function _softDelete(id: string) {
 
 async function _delete(id: string) {
   await ProductOption.findByIdAndDelete(id)
+}
+
+export const productOptionRepository = {
+  getAll,
+  getAllByGroupId,
+  getById,
+  create,
+  update,
+  softDelete: _softDelete,
+  delete: _delete,
 }

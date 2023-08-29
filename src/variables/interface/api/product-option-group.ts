@@ -1,18 +1,18 @@
 import {
-  ProductOptionInfo,
   ProductOptionInfoClient,
-} from '@/variables/interface/api/product-option-interface'
+  ProductOptionInfoToken,
+} from '@/variables/interface/api/product-option-info'
 
 export interface ProductOptionGroupInfo {
   productOptionGroupName: string
   productOptionGroupType: string
-  productOptions: ProductOptionInfo[]
+  productOptions: ProductOptionInfoToken[]
 }
 
-export interface ProductOptionGroupInfoServer extends ProductOptionGroupInfo {
-  _id: string
+export interface ProductOptionGroupInfoCreate extends ProductOptionGroupInfo {
   save(): any
 }
+
 export interface ProductOptionGroupInfoClient extends ProductOptionGroupInfo {
   id: string
   productOptions: ProductOptionInfoClient[]

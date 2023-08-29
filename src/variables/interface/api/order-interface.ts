@@ -1,4 +1,4 @@
-import { ProductOptionInterface } from '@/variables/interface/api/product-option-interface'
+import { ProductOptionInfo } from '@/variables/interface/api/product-option-info'
 
 export interface OrderInfo {
   orderNum: number
@@ -8,7 +8,7 @@ export interface OrderInfo {
 
 export interface OrderOptionInfo {
   orderAmount: number
-  productOptions: ProductOptionInterface[]
+  productOptions: ProductOptionInfo[]
 }
 
 export interface OrderInfoCreate extends OrderInfo {

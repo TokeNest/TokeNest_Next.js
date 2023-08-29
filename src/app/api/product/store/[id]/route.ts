@@ -4,11 +4,11 @@ import { productRepository } from '@/app/_helpers/server/_repository/store/Produ
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
 
 module.exports = apiHandler({
-  GET: getAll,
+  GET: getByStoreId,
   POST: create,
 })
 
-function getAll(_req: Request, { params }: ParamsInputId) {
+function getByStoreId(_req: Request, { params }: ParamsInputId) {
   return productRepository.getAll()
 }
 
