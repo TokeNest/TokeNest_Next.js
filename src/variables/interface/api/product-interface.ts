@@ -13,8 +13,7 @@ export interface ProductInfo {
   productOptionGroups: ProductOptionGroupInfo[]
 }
 
-export interface ProductInfoServer extends ProductInfo {
-  _id: string
+export interface ProductInfoSave extends ProductInfo {
   save(): any
 }
 

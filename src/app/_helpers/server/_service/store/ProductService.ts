@@ -16,6 +16,11 @@ const getProductsByStoreId = async (id: string) => {
   return products.length ? products : Promise.reject('product not found')
 }
 
+const getProductById = async (id: string) => {
+  const product = await productRepository.getById(id)
+  return product ? product : Promise.reject('product not found')
+}
+
 const softDeleteProduct = async (id: string) => {
   const fileId = await productRepository.getFileIdByProductId(id)
 
@@ -28,8 +33,21 @@ const softDeleteProduct = async (id: string) => {
   return productRepository.softDelete(id)
 }
 
+const updateProductById = async (id: string, productInfo: ProductInfo) =>
+  (await productRepository.getById(id))
+    ? productRepository.update(id, productInfo)
+    : Promise.reject('product not found')
+
+const softDeleteProductById = async (id: string) =>
+  (await productRepository.getById(id))
+    ? productRepository.softDelete(id)
+    : Promise.reject('product not found')
+
 export const productService = {
   getProducts,
   getProductsByStoreId,
+  getProductById,
   softDeleteProduct,
+  updateProductById,
+  softDeleteProductById,
 }

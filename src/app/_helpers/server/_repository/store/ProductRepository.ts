@@ -51,12 +51,11 @@ const getAllByStoreId = async (
 const getFileIdByProductId = async (id: string): Promise<string> =>
   (await Product.findOne({ _id: id, deletedDate: null }).exec()).file._id
 
-const getStoreIdByProductId = async (id: string) => {
-  return (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
-}
+const getStoreIdByProductId = async (id: string) =>
+  (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
 
 const getById = async (id: string): Promise<ProductInfo> =>
-  Product.findOne({ _id: id, deletedDate: null })
+  Product.findOne({ _id: id, deletedDate: null }, productProjection)
     .populate({
       path: 'productOptionGroups',
       populate: {
@@ -101,6 +100,6 @@ export const productRepository = {
   getById,
   create,
   update,
-  softDelete: softDelete,
+  softDelete,
   // delete: _delete,
 }
