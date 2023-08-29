@@ -1,7 +1,8 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { productRepository } from '@/app/_helpers/server/_repository'
 import joi from 'joi'
 import { ParamsInputId } from '@/variables/interface/api/paramsInput'
+import { productRepository } from '@/app/_helpers/server/_repository/store/productRepository'
+import { productService } from '@/app/_helpers/server/_service/store/productService'
 
 module.exports = apiHandler({
   GET: getById,
@@ -10,7 +11,7 @@ module.exports = apiHandler({
 })
 
 async function getById(_req: Request, { params }: ParamsInputId) {
-  return await productRepository.getById(params.id)
+  return productRepository.getById(params.id)
 }
 
 async function update(req: Request, { params }: ParamsInputId) {
@@ -28,5 +29,5 @@ update.schema = joi.object({
 })
 
 async function _delete(_req: Request, { params }: ParamsInputId) {
-  await productRepository.softDelete(params.id)
+  return productService.softDeleteProduct(params.id)
 }

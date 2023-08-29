@@ -6,24 +6,25 @@ const Schema = mongoose.Schema
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
-function fileModel() {
+const fileModel = () => {
   const fileSchema = new Schema(
     {
       fileName: { type: String, required: true },
-      fileDir: { type: String, required: true },
+      fileType: { type: String, required: true },
+      fileCapacity: { type: String, require: true },
+      filePath: { type: String, required: true },
       deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
-        createdAt: 'createdDate',
-        updateAt: 'updatedDate',
+        createdAt: 'created_date',
       },
     }
   )
   return mongoose.models.File || mongoose.model('File', fileSchema)
 }
 
-function addressModel() {
+const addressModel = () => {
   const addressSchema = new Schema(
     {
       user: {
@@ -55,7 +56,7 @@ function addressModel() {
   return mongoose.models.Address || mongoose.model('Address', addressSchema)
 }
 
-function userModel() {
+const userModel = () => {
   const userSchema = new Schema(
     {
       userName: { type: String, required: true },
@@ -92,7 +93,7 @@ function userModel() {
   return mongoose.models.User || mongoose.model('User', userSchema)
 }
 
-function productModel() {
+const productModel = () => {
   const schema = new Schema(
     {
       productName: { type: String, required: true },
@@ -102,17 +103,22 @@ function productModel() {
       productPrice: { type: Number, required: true },
       productCategory: { type: String, required: true },
       deletedDate: { type: Date, default: null },
-      storeId: {
+      store: {
         type: Schema.Types.ObjectId,
         ref: 'Store',
         required: true,
       },
-      optionGroups: [
+      productOptionGroups: [
         {
           type: Schema.Types.ObjectId,
           ref: 'ProductOptionGroup',
         },
       ],
+      file: {
+        type: Schema.Types.ObjectId,
+        ref: 'File',
+        default: null,
+      },
     },
     {
       timestamps: {
@@ -139,18 +145,18 @@ function productModel() {
   return mongoose.models.Product || mongoose.model('Product', schema)
 }
 
-function productOptionGroupModel() {
+const productOptionGroupModel = () => {
   const schema = new Schema(
     {
       productOptionGroupName: { type: String, required: true },
       productOptionGroupType: { type: String, required: true },
       deletedDate: { type: Date, default: null },
-      productId: {
+      product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,
       },
-      options: [
+      productOptions: [
         {
           type: Schema.Types.ObjectId,
           ref: 'ProductOption',
@@ -177,19 +183,18 @@ function productOptionGroupModel() {
   return mongoose.models.ProductOptionGroup || mongoose.model('ProductOptionGroup', schema)
 }
 
-function productOptionModel() {
+const productOptionModel = () => {
   const schema = new Schema(
     {
       productOptionName: { type: String, required: true },
       productOptionIsDefault: { type: Boolean, required: true, default: false },
-      productOptionInfo: { type: String },
       productOptionPrice: { type: Number, required: true, default: 0 },
       deletedDate: { type: Date, default: null },
-      groupId: {
-        type: Schema.Types.ObjectId,
-        ref: 'ProductOptionGroup',
-        required: true,
-      },
+      // productOptionGroup: {
+      //   type: Schema.Types.ObjectId,
+      //   ref: 'ProductOptionGroup',
+      //   required: true,
+      // },
     },
     {
       timestamps: {
@@ -211,7 +216,7 @@ function productOptionModel() {
   return mongoose.models.ProductOption || mongoose.model('ProductOption', schema)
 }
 
-function storeModel() {
+const storeModel = () => {
   const schema = new Schema(
     {
       storeName: { type: String, required: true },
@@ -221,6 +226,11 @@ function storeModel() {
       storeOffDay: { type: String, required: true, default: '0000000' },
       storeOpenCloseTime: { type: String, required: true, default: '00:00-23:59' },
       storeStatus: { type: String, required: true },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
       deletedDate: { type: Date, default: null },
     },
     {
@@ -242,6 +252,78 @@ function storeModel() {
   return mongoose.models.Store || mongoose.model('Store', schema)
 }
 
+function orderModel() {
+  const schema = new Schema(
+    {
+      orderNum: { type: Number, required: true },
+      orderStatus: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
+      store: {
+        type: Schema.Types.ObjectId,
+        ref: 'Store',
+        required: true,
+      },
+      orderOptions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'OrderOption',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.Order || mongoose.model('Order', schema)
+}
+
+function orderOptionModel() {
+  const schema = new Schema(
+    {
+      orderAmount: { type: Number, required: true },
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
+      productOptions: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'ProductOption',
+        },
+      ],
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+        updatedAt: 'updatedDate',
+      },
+    }
+  )
+
+  schema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      delete ret._id
+      delete ret.hash
+    },
+  })
+  return mongoose.models.OrderOption || mongoose.model('OrderOption', schema)
+}
+
 export const db = {
   File: fileModel(),
   Product: productModel(),
@@ -250,4 +332,6 @@ export const db = {
   ProductOptionGroup: productOptionGroupModel(),
   ProductOption: productOptionModel(),
   Store: storeModel(),
+  Order: orderModel(),
+  OrderOption: orderOptionModel(),
 }

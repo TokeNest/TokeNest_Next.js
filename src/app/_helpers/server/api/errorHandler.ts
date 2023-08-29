@@ -15,7 +15,7 @@ function errorHandler(err: ApiExecuteResult) {
     return NextResponse.json({ success: err.success, message: 'Unauthorized' }, { status: 401 })
   }
 
-  // console.error(err)
+  console.error(err)
   return NextResponse.json(
     { success: err.success, message: err.message.message, body: err.body },
     { status: 500 }

@@ -8,17 +8,6 @@ const apiExecuteSuccessWithBody = function (body: any) {
   }
   return result
 }
-
-const apiExecuteFail = function (message: Error | string) {
-  const result: ApiExecuteResult = {
-    success: false,
-    message,
-    body: {},
-  }
-  return result
-}
-
 export const apiResponses = {
   apiExecuteSuccessWithBody,
-  apiExecuteFail,
 }

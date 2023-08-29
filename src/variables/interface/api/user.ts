@@ -1,14 +1,26 @@
-import { AddressInfo } from '@/variables/interface/api/address'
+import { AddressInfo, AddressInfoDelete } from '@/variables/interface/api/address'
 
 export interface UserInfo {
-  user_name: string
-  user_password_hash: string
-  user_phone: string
-  user_email: string
+  userName: string
+  userPhone: string
+  userEmail: string
   userWalletAddress: string
   addresses: AddressInfo[]
-  user_account_type: string
+  userAccountType: string
+
+  save(): any
 }
-export interface SaveUserInfo extends UserInfo {
-  user_password: string
+export interface UserInfoUpdate extends UserInfo {
+  userPasswordHash: string
+  userPassword: string
+}
+
+export interface UserinfoDelete extends UserInfo {
+  deletedDate: Date
+  addresses: AddressInfoDelete[]
+}
+
+export interface UserInfoAuth extends UserInfo {
+  _id: string
+  userPasswordHash: string
 }

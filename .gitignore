@@ -7,8 +7,12 @@
 
 # database
 /mongodb
+
+# store
 /src/public/images/*
 !/src/public/images/cuteMockCat.png
+/src/public/imagesArchive/*
+!/src/public/imagesArchive/cuteMockCat.png
 
 .idea
 # testing
