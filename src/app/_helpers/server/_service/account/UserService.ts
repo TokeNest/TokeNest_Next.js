@@ -3,6 +3,7 @@ import { UserInfoUpdate } from '@/variables/interface/api/user-interface'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '@/app/_helpers/server/_repository/account/UserRepository'
+import { addressService } from '@/app/_helpers/server/_service/account/AddressService'
 
 const createUser = async (params: UserInfoUpdate) => {
   // hash password
@@ -59,10 +60,13 @@ const updateUserPasswordById = async (id: string, password: string) =>
     ? userRepository.updatePassword(id, bcrypt.hashSync(password, 10))
     : Promise.reject('user not found')
 
-const softDeleteUserById = async (id: string) =>
-  (await userRepository.getById(id))
-    ? userRepository.softDelete(id)
-    : Promise.reject('user not found')
+const softDeleteUserById = async (id: string) => {
+  if (!(await userRepository.getById(id))) {
+    throw 'user not found'
+  }
+  await addressService.softDeleteAddressByUserId(id)
+  return userRepository.softDelete(id)
+}
 
 // const _delete = async (id: string) => {
 //   isExistUser(await userRepository.getById(id))

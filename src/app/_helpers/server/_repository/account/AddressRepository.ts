@@ -35,7 +35,7 @@ const update = async (id: string, addressInfo: AddressInfo): Promise<string> => 
   return (await address.save!())._id
 }
 
-const deleteByUserId = async (id: string): Promise<Promise<string>[]> => {
+const softDeleteByUserId = async (id: string): Promise<Promise<string>[]> => {
   const addresses: AddressInfoDelete[] = await Address.find({
     user: id,
     deletedDate: null,
@@ -65,7 +65,7 @@ export const addressRepository = {
   getById,
   getByUserId,
   update,
-  deleteByUserId,
+  softDeleteByUserId,
   softDelete,
   // delete: _delete,
 }

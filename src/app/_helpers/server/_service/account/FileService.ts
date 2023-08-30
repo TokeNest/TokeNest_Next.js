@@ -8,7 +8,7 @@ import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 const uploadFileByProductId = async (data: FormData, id: string) => {
   const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))
   const product = await productRepository.getById(id)
-  const storeId = await productRepository.getStoreIdByProductId(id)
+  const storeId = await productRepository.getStoreIdById(id)
   // ./src/public/images/ <- path is must change to your cloud url
   const storePath = `./src/public/images/${storeId}`
 
@@ -50,7 +50,7 @@ const downloadFileById = async (id: string) => {
   return downloadFile(file)
 }
 const downloadFileByProductId = async (id: string) => {
-  const file = await fileRepository.getById(await productRepository.getFileIdByProductId(id))
+  const file = await fileRepository.getById(await productRepository.getFileIdById(id))
   return downloadFile(file)
 }
 
@@ -60,7 +60,7 @@ const getFileById = async (id: string) => {
 }
 
 const getFileByProductId = async (id: string) => {
-  const file = await fileRepository.getById(await productRepository.getFileIdByProductId(id))
+  const file = await fileRepository.getById(await productRepository.getFileIdById(id))
   return file ? file : Promise.reject('file not found')
 }
 

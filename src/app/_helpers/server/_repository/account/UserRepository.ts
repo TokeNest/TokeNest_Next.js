@@ -7,7 +7,6 @@ import {
   UserInfoSave,
   UserInfoUpdate,
 } from '@/variables/interface/api/user-interface'
-import { addressRepository } from '@/app/_helpers/server/_repository/account/AddressRepository'
 import {
   addressProjection,
   userLoginProjection,
@@ -61,7 +60,6 @@ const updatePassword = async (id: string, hashPassword: string): Promise<string>
 const softDelete = async (id: string): Promise<string> => {
   const user: UserinfoDelete = await User.findOne({ _id: id, deletedDate: null }).exec()
   user.deletedDate = new Date()
-  await addressRepository.deleteByUserId(id)
   return (await user.save!())._id
 }
 // const _delete = async (id: string): Promise<string> => {

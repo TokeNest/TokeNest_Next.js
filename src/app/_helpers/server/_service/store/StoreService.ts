@@ -1,8 +1,12 @@
 import { StoreInfo } from '@/variables/interface/api/store-interface'
 import { storeRepository } from '@/app/_helpers/server/_repository/store/StoreRepository'
+import { userRepository } from '@/app/_helpers/server/_repository/account/UserRepository'
+import { productService } from '@/app/_helpers/server/_service/store/ProductService'
 
 const createStoreByUserId = async (id: string, storeInfo: StoreInfo) =>
-  storeRepository.create(id, storeInfo)
+  (await userRepository.getById(id))
+    ? storeRepository.create(id, storeInfo)
+    : Promise.reject('user not found')
 
 const getStores = async () => {
   const stores = await storeRepository.getAll()
@@ -24,10 +28,13 @@ const updateStoreById = async (id: string, storeInfo: StoreInfo) =>
     ? storeRepository.update(id, storeInfo)
     : Promise.reject('store not found')
 
-const softDeleteStoreById = async (id: string) =>
-  (await storeRepository.getById(id))
-    ? storeRepository.softDelete(id)
-    : Promise.reject('store not found')
+const softDeleteStoreById = async (id: string) => {
+  if (!(await storeRepository.getById(id))) {
+    throw 'store not found'
+  }
+  await productService.softDeleteProductByStoreId(id)
+  return storeRepository.softDelete(id)
+}
 
 // const _delete = async (id: string) =>
 //   (await storeRepository.getById(id))

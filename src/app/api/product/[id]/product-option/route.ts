@@ -5,11 +5,11 @@ import joi from 'joi'
 import { productOptionGroupService } from '@/app/_helpers/server/_service/store/ProductOptionGroupService'
 
 module.exports = apiHandler({
-  GET: getAll,
+  GET: getAllByProductId,
   POST: create,
 })
 
-function getAll(_req: Request, { params }: ParamsInputId) {
+function getAllByProductId(_req: Request, { params }: ParamsInputId) {
   return productOptionGroupRepository.getAllByProductId(params.id)
 }
 
@@ -24,5 +24,7 @@ create.schema = joi.object({
     productOptionName: joi.string().required(),
     productOptionIsDefault: joi.boolean(),
     productOptionPrice: joi.number().required(),
+    tokenRatio: joi.number().allow(null),
+    tokenAddress: joi.string().allow(null),
   }),
 })

@@ -32,15 +32,21 @@ export const fileProjection = {
   filePath: true,
 }
 
-export const productOptionGroupsProjection = {
+export const productOptionGroupProjection = {
   productOptionGroupName: true,
   productOptionGroupType: true,
 }
 
-export const productOptionsProjection = {
+export const productOptionProjection = {
   productOptionName: true,
   productOptionIsDefault: true,
   productOptionPrice: true,
+  tokenRatio: true,
+}
+
+export const tokenProjection = {
+  tokenSymbol: true,
+  tokenAddress: true,
 }
 
 export const orderProjection = {
@@ -52,11 +58,6 @@ export const orderProjection = {
 export const orderOptionProjection = {
   orderAmount: true,
   product: true,
-  productOptionPrice: true,
-}
-
-export const productOptionProjection = {
-  productOptionName: true,
   productOptionPrice: true,
 }
 
