@@ -2,8 +2,8 @@ import { db } from '@/app/_helpers/server'
 import {
   ProductOptionInfoClient,
   ProductOptionInfoSave,
-} from '@/variables/interface/api/product-option-info'
-import { ProductOptionGroupInfoSave } from '@/variables/interface/api/product-option-group'
+} from '@/variables/interface/api/product-option-interface'
+import { ProductOptionGroupInfoSave } from '@/variables/interface/api/product-option-group-interface'
 import { TokenInfo } from '@/variables/interface/api/token-interface'
 import { productOptionProjection, tokenProjection } from '@/variables/projection/projection'
 

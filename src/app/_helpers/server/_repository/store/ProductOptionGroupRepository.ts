@@ -4,7 +4,7 @@ import {
   ProductOptionGroupInfoClient,
   ProductOptionGroupInfoDelete,
   ProductOptionGroupInfoSave,
-} from '@/variables/interface/api/product-option-group'
+} from '@/variables/interface/api/product-option-group-interface'
 import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 import {
   productOptionGroupProjection,
@@ -84,6 +84,7 @@ const update = async (
   Object.assign(productOptionGroup, productOptionGroupInfo)
   return (await productOptionGroup.save!())._id
 }
+
 const softDelete = async (id: string): Promise<string> => {
   const productOptionGroup: ProductOptionGroupInfoDelete = await ProductOptionGroup.findOne({
     _id: id,
