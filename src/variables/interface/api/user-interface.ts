@@ -13,16 +13,16 @@ export interface UserInfo {
   userAccountType: string
 }
 
-export interface UserInfoSave extends UserInfo {
+export interface UserInfoCreate extends UserInfo {
   save?(): any
 }
 
-export interface UserInfoUpdate extends UserInfoSave {
+export interface UserInfoUpdate extends UserInfoCreate {
   userPasswordHash: string
   userPassword: string
 }
 
-export interface UserinfoDelete extends UserInfoSave {
+export interface UserinfoDelete extends UserInfoCreate {
   deletedDate: Date
   addresses: AddressInfoDelete[]
 }

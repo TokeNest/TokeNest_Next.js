@@ -9,11 +9,11 @@ export interface ProductOptionInfo {
   }
 }
 
-export interface ProductOptionInfoSave extends ProductOptionInfo {
+export interface ProductOptionInfoCreate extends ProductOptionInfo {
   save?(): any
 }
 
-export interface ProductOptionInfoDelete extends ProductOptionInfoSave {
+export interface ProductOptionInfoDelete extends ProductOptionInfoCreate {
   deletedDate: Date
 }
 

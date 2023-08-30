@@ -4,11 +4,11 @@ export interface AddressInfo {
   addressDetail: string
 }
 
-export interface AddressInfoSave extends AddressInfo {
+export interface AddressInfoCreate extends AddressInfo {
   save?(): any
 }
 
-export interface AddressInfoDelete extends AddressInfoSave {
+export interface AddressInfoDelete extends AddressInfoCreate {
   deletedDate: Date
 }
 

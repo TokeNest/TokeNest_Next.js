@@ -8,11 +8,11 @@ export interface StoreInfo {
   storeStatus: string
 }
 
-export interface StoreInfoSave extends StoreInfo {
+export interface StoreInfoCreate extends StoreInfo {
   save?(): any
 }
 
-export interface StoreInfoDelete extends StoreInfoSave {
+export interface StoreInfoDelete extends StoreInfoCreate {
   deletedDate: Date
 }
 

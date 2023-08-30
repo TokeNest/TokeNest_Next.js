@@ -1,9 +1,9 @@
 import { db } from '@/app/_helpers/server'
 import {
   ProductOptionInfoClient,
-  ProductOptionInfoSave,
+  ProductOptionInfoCreate,
 } from '@/variables/interface/api/product-option-interface'
-import { ProductOptionGroupInfoSave } from '@/variables/interface/api/product-option-group-interface'
+import { ProductOptionGroupInfoCreate } from '@/variables/interface/api/product-option-group-interface'
 import { TokenInfo } from '@/variables/interface/api/token-interface'
 import { productOptionProjection, tokenProjection } from '@/variables/projection/projection'
 
@@ -28,11 +28,11 @@ const getById = async (id: string): Promise<ProductOptionInfoClient> =>
     .exec()
 
 const create = async (
-  productOptionGroupInfo: ProductOptionGroupInfoSave,
-  productOptionInfo: ProductOptionInfoSave,
+  productOptionGroupInfo: ProductOptionGroupInfoCreate,
+  productOptionInfo: ProductOptionInfoCreate,
   tokenInfo: TokenInfo | null
 ): Promise<string> => {
-  const productOption: ProductOptionInfoSave = new ProductOption(productOptionInfo)
+  const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
   if (tokenInfo) {
     productOption.token = tokenInfo
   }
@@ -43,7 +43,7 @@ const create = async (
 }
 
 const update = async (id: string, params: any): Promise<string> => {
-  const productOption: ProductOptionInfoSave = await getById(id)
+  const productOption: ProductOptionInfoCreate = await getById(id)
   Object.assign(productOption, params)
   return (await productOption.save!())._id
 }

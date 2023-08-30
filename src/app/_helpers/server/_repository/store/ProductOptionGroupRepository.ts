@@ -2,10 +2,10 @@ import { db } from '@/app/_helpers/server'
 import {
   ProductOptionGroupInfo,
   ProductOptionGroupInfoClient,
+  ProductOptionGroupInfoCreate,
   ProductOptionGroupInfoDelete,
-  ProductOptionGroupInfoSave,
 } from '@/variables/interface/api/product-option-group-interface'
-import { ProductInfoSave } from '@/variables/interface/api/product-interface'
+import { ProductInfoCreate } from '@/variables/interface/api/product-interface'
 import {
   productOptionGroupProjection,
   productOptionProjection,
@@ -16,7 +16,7 @@ const ProductOptionGroup = db.ProductOptionGroup
 
 const create = async (
   id: string,
-  productInfo: ProductInfoSave,
+  productInfo: ProductInfoCreate,
   productOptionGroupInfo: ProductOptionGroupInfo
 ): Promise<string> => {
   const productOptionGroup = new ProductOptionGroup({
@@ -80,7 +80,7 @@ const update = async (
   id: string,
   productOptionGroupInfo: ProductOptionGroupInfo
 ): Promise<string> => {
-  const productOptionGroup: ProductOptionGroupInfoSave = await getById(id)
+  const productOptionGroup: ProductOptionGroupInfoCreate = await getById(id)
   Object.assign(productOptionGroup, productOptionGroupInfo)
   return (await productOptionGroup.save!())._id
 }
