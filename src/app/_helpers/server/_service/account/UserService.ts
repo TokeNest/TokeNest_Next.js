@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '@/app/_helpers/server/_repository/account/UserRepository'
 import { addressService } from '@/app/_helpers/server/_service/account/AddressService'
+import { storeService } from '@/app/_helpers/server/_service/store/StoreService'
 
 const createUser = async (params: UserInfoUpdate) => {
   // hash password
@@ -64,7 +65,10 @@ const softDeleteUserById = async (id: string) => {
   if (!(await userRepository.getById(id))) {
     throw 'user not found'
   }
+  // relationship collection delete
   await addressService.softDeleteAddressByUserId(id)
+  await storeService.softDeleteStoreByUserId(id)
+
   return userRepository.softDelete(id)
 }
 

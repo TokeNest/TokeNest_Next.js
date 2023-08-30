@@ -107,14 +107,6 @@ const update = async (id: string, productInfo: ProductInfo): Promise<string> => 
   return (await product.save())._id
 }
 
-const softDeleteByStoreId = async (id: string): Promise<Promise<string>[]> => {
-  const products: ProductInfoDelete[] = await Product.find({ store: id, deletedDate: null }).exec()
-  return products.map(async (product) => {
-    product.deletedDate = new Date()
-    return product.save!()
-  })
-}
-
 const softDelete = async (id: string): Promise<string> => {
   const product: ProductInfoDelete = await Product.findOne({ _id: id, deletedDate: null }).exec()
   product.deletedDate = new Date()
@@ -134,7 +126,6 @@ export const productRepository = {
   getById,
   create,
   update,
-  softDeleteByStoreId,
   softDelete,
   // delete: _delete,
 }

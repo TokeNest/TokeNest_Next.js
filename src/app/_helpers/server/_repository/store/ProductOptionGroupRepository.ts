@@ -2,6 +2,8 @@ import { db } from '@/app/_helpers/server'
 import {
   ProductOptionGroupInfo,
   ProductOptionGroupInfoClient,
+  ProductOptionGroupInfoDelete,
+  ProductOptionGroupInfoSave,
 } from '@/variables/interface/api/product-option-group'
 import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 import {
@@ -12,6 +14,24 @@ import {
 
 const ProductOptionGroup = db.ProductOptionGroup
 
+const create = async (
+  id: string,
+  productInfo: ProductInfoSave,
+  productOptionGroupInfo: ProductOptionGroupInfo
+): Promise<string> => {
+  const productOptionGroup = new ProductOptionGroup({
+    product: id,
+    productOptionGroupName: productOptionGroupInfo.productOptionGroupName,
+    productOptionGroupType: productOptionGroupInfo.productOptionGroupType,
+  })
+  await productOptionGroup.save()
+
+  // relation setting
+  productInfo.productOptionGroups.push(productOptionGroup)
+  await productInfo.save!()
+
+  return productOptionGroup._id
+}
 const getAll = async (): Promise<(Omit<ProductOptionGroupInfoClient, never> & {})[]> =>
   ProductOptionGroup.find({ deletedDate: null }, productOptionGroupProjection)
     .populate({
@@ -42,7 +62,7 @@ const getAllByProductId = async (
     })
     .exec()
 
-const getById = async (id: string): Promise<ProductOptionGroupInfo> =>
+const getById = async (id: string): Promise<ProductOptionGroupInfoClient> =>
   ProductOptionGroup.findOne({ _id: id, deletedDate: null }, productOptionGroupProjection)
     .populate({
       path: 'productOptions',
@@ -56,57 +76,33 @@ const getById = async (id: string): Promise<ProductOptionGroupInfo> =>
     })
     .exec()
 
-const create = async (
+const update = async (
   id: string,
-  productInfo: ProductInfoSave,
   productOptionGroupInfo: ProductOptionGroupInfo
 ): Promise<string> => {
-  const productOptionGroup = new ProductOptionGroup({
-    product: id,
-    productOptionGroupName: productOptionGroupInfo.productOptionGroupName,
-    productOptionGroupType: productOptionGroupInfo.productOptionGroupType,
-  })
-  await productOptionGroup.save()
-
-  // relation setting
-  productInfo.productOptionGroups.push(productOptionGroup)
-  await productInfo.save!()
-
-  return productOptionGroup._id
+  const productOptionGroup: ProductOptionGroupInfoSave = await getById(id)
+  Object.assign(productOptionGroup, productOptionGroupInfo)
+  return (await productOptionGroup.save!())._id
 }
-
-async function update(id: string, params: any) {
-  const productOptionGroup = await ProductOptionGroup.findById(id)
-  if (!productOptionGroup) {
-    throw 'ProductOptionGroup Not Found'
-  }
-
-  Object.assign(productOptionGroup, params)
-
-  await productOptionGroup.save()
-}
-
-async function _softDelete(id: string) {
-  const productOptionGroup = await ProductOptionGroup.findById(id)
-  if (!productOptionGroup) {
-    throw 'ProductOptionGroup Not Found'
-  }
-
+const softDelete = async (id: string): Promise<string> => {
+  const productOptionGroup: ProductOptionGroupInfoDelete = await ProductOptionGroup.findOne({
+    _id: id,
+    deletedDate: null,
+  }).exec()
   productOptionGroup.deletedDate = new Date()
-
-  await productOptionGroup.save()
+  return (await productOptionGroup.save!())._id
 }
 
-async function _delete(id: string) {
-  await ProductOptionGroup.findByIdAndDelete(id)
-}
+// async function _delete(id: string) {
+//   await ProductOptionGroup.findByIdAndDelete(id)
+// }
 
 export const productOptionGroupRepository = {
+  create,
   getAll,
   getAllByProductId,
   getById,
-  create,
   update,
-  softDelete: _softDelete,
-  delete: _delete,
+  softDelete,
+  // delete: _delete,
 }

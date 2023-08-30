@@ -28,10 +28,17 @@ const updateStoreById = async (id: string, storeInfo: StoreInfo) =>
     ? storeRepository.update(id, storeInfo)
     : Promise.reject('store not found')
 
-const softDeleteStoreById = async (id: string) => {
-  if (!(await storeRepository.getById(id))) {
-    throw 'store not found'
+const softDeleteStoreByUserId = async (id: string) => {
+  const stores = await storeRepository.getByUserId(id)
+  for (const store of stores) {
+    await softDeleteOptions(store.id)
   }
+}
+
+const softDeleteStoreById = async (id: string) =>
+  (await storeRepository.getById(id)) ? softDeleteOptions(id) : Promise.reject('store not found')
+
+const softDeleteOptions = async (id: string) => {
   await productService.softDeleteProductByStoreId(id)
   return storeRepository.softDelete(id)
 }
@@ -47,6 +54,7 @@ export const storeService = {
   getStoreById,
   getStoreByUserId,
   updateStoreById,
+  softDeleteStoreByUserId,
   softDeleteStoreById,
   // delete: _delete,
 }

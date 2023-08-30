@@ -30,20 +30,9 @@ const getByUserId = async (id: string): Promise<AddressInfoClient[]> =>
   Address.find({ user: id, deletedDate: null }, addressProjection).exec()
 
 const update = async (id: string, addressInfo: AddressInfo): Promise<string> => {
-  const address = (await getById(id)) as AddressInfoSave
+  const address: AddressInfoSave = await getById(id)
   Object.assign(address, addressInfo)
   return (await address.save!())._id
-}
-
-const softDeleteByUserId = async (id: string): Promise<Promise<string>[]> => {
-  const addresses: AddressInfoDelete[] = await Address.find({
-    user: id,
-    deletedDate: null,
-  }).exec()
-  return addresses.map(async (address): Promise<string> => {
-    address.deletedDate = new Date()
-    return (await address.save!())._id
-  })
 }
 
 const softDelete = async (id: string): Promise<string> => {
@@ -65,7 +54,6 @@ export const addressRepository = {
   getById,
   getByUserId,
   update,
-  softDeleteByUserId,
   softDelete,
   // delete: _delete,
 }

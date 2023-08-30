@@ -7,7 +7,8 @@ import { ProductInfoSave } from '@/variables/interface/api/product-interface'
 
 const uploadFileByProductId = async (data: FormData, id: string) => {
   const file: File = (data.get('file') as File) || (await Promise.reject('file not found'))
-  const product = await productRepository.getById(id)
+  const product =
+    (await productRepository.getById(id)) || (await Promise.reject('product not found'))
   const storeId = await productRepository.getStoreIdById(id)
   // ./src/public/images/ <- path is must change to your cloud url
   const storePath = `./src/public/images/${storeId}`
