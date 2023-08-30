@@ -1,4 +1,5 @@
 import { db } from '@/app/_helpers/server'
+import { OrderOptionInfoCreate } from '@/variables/interface/api/order-interface'
 
 const OrderOption = db.OrderOption
 
@@ -10,9 +11,10 @@ const getById = async (id: string) => {
   await OrderOption.find({ _id: id, deletedDate: null }).exec()
 }
 
-const create = async (params: any): Promise<void> => {
+const create = async (params: OrderOptionInfoCreate): Promise<string> => {
   const orderOption = new OrderOption(params)
   await orderOption.save()
+  return orderOption._id
 }
 
 async function update(id: string, params: any): Promise<void> {

@@ -2,8 +2,7 @@ import { ProductOptionInfo } from '@/variables/interface/api/product-option-inte
 
 export interface OrderInfo {
   orderNum: number
-  orderStatus: string
-  OrderOptions: OrderOptionInfo[]
+  orderOptions: OrderOptionInfo[]
 }
 
 export interface OrderOptionInfo {
@@ -11,6 +10,14 @@ export interface OrderOptionInfo {
   productOptions: ProductOptionInfo[]
 }
 
-export interface OrderInfoCreate extends OrderInfo {
+export interface OrderInfoCreate {
+  orderNum: number
   store: string
+  orderOptions: OrderOptionInfoCreate[]
+}
+
+export interface OrderOptionInfoCreate {
+  orderAmount: number
+  product: string
+  productOptions: string[]
 }
