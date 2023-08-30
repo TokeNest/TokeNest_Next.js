@@ -9,8 +9,12 @@ export interface ProductOptionGroupInfo {
   productOptions: ProductOptionInfoToken[]
 }
 
-export interface ProductOptionGroupInfoCreate extends ProductOptionGroupInfo {
-  save(): any
+export interface ProductOptionGroupInfoSave extends ProductOptionGroupInfo {
+  save?(): any
+}
+
+export interface ProductOptionGroupInfoDelete extends ProductOptionGroupInfoSave {
+  deletedDate: Date
 }
 
 export interface ProductOptionGroupInfoClient extends ProductOptionGroupInfo {

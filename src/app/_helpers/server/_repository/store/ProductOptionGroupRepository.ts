@@ -1,24 +1,67 @@
 import { db } from '@/app/_helpers/server'
-import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group'
-import { ProductInfo } from '@/variables/interface/api/product-interface'
+import {
+  ProductOptionGroupInfo,
+  ProductOptionGroupInfoClient,
+} from '@/variables/interface/api/product-option-group'
+import { ProductInfoSave } from '@/variables/interface/api/product-interface'
+import {
+  productOptionGroupProjection,
+  productOptionProjection,
+  tokenProjection,
+} from '@/variables/projection/projection'
 
 const ProductOptionGroup = db.ProductOptionGroup
 
-const getAll = async () => ProductOptionGroup.find({ deletedDate: null }).exec()
+const getAll = async (): Promise<(Omit<ProductOptionGroupInfoClient, never> & {})[]> =>
+  ProductOptionGroup.find({ deletedDate: null }, productOptionGroupProjection)
+    .populate({
+      path: 'productOptions',
+      match: { deletedDate: { $eq: null } },
+      select: productOptionProjection,
+      populate: {
+        path: 'token',
+        match: { deletedDate: { $eq: null } },
+        select: tokenProjection,
+      },
+    })
+    .exec()
 
-const getAllByProductId = async (id: string) =>
-  ProductOptionGroup.find({ deletedDate: null, product: id }).exec()
+const getAllByProductId = async (
+  id: string
+): Promise<(Omit<ProductOptionGroupInfoClient, never> & {})[]> =>
+  ProductOptionGroup.find({ deletedDate: null, product: id }, productOptionGroupProjection)
+    .populate({
+      path: 'productOptions',
+      match: { deletedDate: { $eq: null } },
+      select: productOptionProjection,
+      populate: {
+        path: 'token',
+        match: { deletedDate: { $eq: null } },
+        select: tokenProjection,
+      },
+    })
+    .exec()
 
 const getById = async (id: string): Promise<ProductOptionGroupInfo> =>
-  ProductOptionGroup.findOne({ _id: id, deletedDate: null }).exec()
+  ProductOptionGroup.findOne({ _id: id, deletedDate: null }, productOptionGroupProjection)
+    .populate({
+      path: 'productOptions',
+      match: { deletedDate: { $eq: null } },
+      select: productOptionProjection,
+      populate: {
+        path: 'token',
+        match: { deletedDate: { $eq: null } },
+        select: tokenProjection,
+      },
+    })
+    .exec()
 
 const create = async (
   id: string,
-  productInfo: ProductInfo,
+  productInfo: ProductInfoSave,
   productOptionGroupInfo: ProductOptionGroupInfo
-) => {
-  const productOptionGroup: ProductOptionGroupInfo = new ProductOptionGroup({
+): Promise<string> => {
+  const productOptionGroup = new ProductOptionGroup({
     product: id,
     productOptionGroupName: productOptionGroupInfo.productOptionGroupName,
     productOptionGroupType: productOptionGroupInfo.productOptionGroupType,
@@ -27,11 +70,8 @@ const create = async (
 
   // relation setting
   productInfo.productOptionGroups.push(productOptionGroup)
-  await productInfo.save()
+  await productInfo.save!()
 
-  for (const productOption of productOptionGroupInfo.productOptions) {
-    await productOptionRepository.create(productOptionGroup, productOption)
-  }
   return productOptionGroup._id
 }
 

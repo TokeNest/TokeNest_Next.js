@@ -204,6 +204,7 @@ const productOptionModel = () => {
       productOptionName: { type: String, required: true },
       productOptionIsDefault: { type: Boolean, required: true, default: false },
       productOptionPrice: { type: Number, required: true, default: 0 },
+      tokenRatio: { type: Number, required: false, default: null },
       token: {
         type: Schema.Types.ObjectId,
         ref: 'Token',

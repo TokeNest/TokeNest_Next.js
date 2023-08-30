@@ -1,14 +1,21 @@
 import { db } from '@/app/_helpers/server'
-import { ProductInfo, ProductInfoClient } from '@/variables/interface/api/product-interface'
+import {
+  ProductInfo,
+  ProductInfoClient,
+  ProductInfoDelete,
+} from '@/variables/interface/api/product-interface'
 import {
   fileProjection,
-  productOptionGroupsProjection,
-  productOptionsProjection,
+  productOptionGroupProjection,
+  productOptionProjection,
   productProjection,
+  tokenProjection,
 } from '@/variables/projection/projection'
 
-// TODO #1 클라이언트로 보내는거 타입체크 잘하고 productOptionGroup & productOption들어가면 될듯.
 const Product = db.Product
+
+const create = async (id: string, productInfo: ProductInfo): Promise<string> =>
+  (await new Product({ store: id, ...productInfo }).save())._id
 
 const getAll = async (): Promise<(Omit<Omit<ProductInfoClient, never> & {}, never> & {})[]> =>
   Product.find({ deletedDate: null }, productProjection)
@@ -17,9 +24,14 @@ const getAll = async (): Promise<(Omit<Omit<ProductInfoClient, never> & {}, neve
       populate: {
         path: 'productOptions',
         match: { deletedDate: { $eq: null } },
-        select: productOptionsProjection,
+        select: productOptionProjection,
+        populate: {
+          path: 'token',
+          match: { deletedDate: { $eq: null } },
+          select: tokenProjection,
+        },
       },
-      select: productOptionGroupsProjection,
+      select: productOptionGroupProjection,
     })
     .populate({
       path: 'file',
@@ -37,9 +49,14 @@ const getAllByStoreId = async (
       populate: {
         path: 'productOptions',
         match: { deletedDate: { $eq: null } },
-        select: productOptionsProjection,
+        select: productOptionProjection,
+        populate: {
+          path: 'token',
+          match: { deletedDate: { $eq: null } },
+          select: tokenProjection,
+        },
       },
-      select: productOptionGroupsProjection,
+      select: productOptionGroupProjection,
     })
     .populate({
       path: 'file',
@@ -48,22 +65,21 @@ const getAllByStoreId = async (
     })
     .exec()
 
-const getFileIdByProductId = async (id: string): Promise<string> =>
-  (await Product.findOne({ _id: id, deletedDate: null }).exec()).file._id
-
-const getStoreIdByProductId = async (id: string) =>
-  (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
-
-const getById = async (id: string): Promise<ProductInfo> =>
+const getById = async (id: string): Promise<ProductInfoClient> =>
   Product.findOne({ _id: id, deletedDate: null }, productProjection)
     .populate({
       path: 'productOptionGroups',
       populate: {
         path: 'productOptions',
         match: { deletedDate: { $eq: null } },
-        select: productOptionsProjection,
+        select: productOptionProjection,
+        populate: {
+          path: 'token',
+          match: { deletedDate: { $eq: null } },
+          select: tokenProjection,
+        },
       },
-      select: productOptionGroupsProjection,
+      select: productOptionGroupProjection,
     })
     .populate({
       path: 'file',
@@ -72,8 +88,18 @@ const getById = async (id: string): Promise<ProductInfo> =>
     })
     .exec()
 
-const create = async (id: string, productInfo: ProductInfo): Promise<string> =>
-  (await new Product({ store: id, ...productInfo }).save())._id
+const getFileIdById = async (id: string): Promise<string> => {
+  const product = await Product.findOne({ _id: id, deletedDate: null })
+    .populate({
+      path: 'file',
+      match: { deletedDate: { $eq: null } },
+    })
+    .exec()
+  return product.file ? product.file._id : null
+}
+
+const getStoreIdById = async (id: string): Promise<string> =>
+  (await Product.findOne({ _id: id, deletedDate: null }).exec()).store._id
 
 const update = async (id: string, productInfo: ProductInfo): Promise<string> => {
   const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
@@ -81,10 +107,18 @@ const update = async (id: string, productInfo: ProductInfo): Promise<string> => 
   return (await product.save())._id
 }
 
+const softDeleteByStoreId = async (id: string): Promise<Promise<string>[]> => {
+  const products: ProductInfoDelete[] = await Product.find({ store: id, deletedDate: null }).exec()
+  return products.map(async (product) => {
+    product.deletedDate = new Date()
+    return product.save!()
+  })
+}
+
 const softDelete = async (id: string): Promise<string> => {
-  const product = await Product.findOne({ _id: id, deletedDate: null }).exec()
+  const product: ProductInfoDelete = await Product.findOne({ _id: id, deletedDate: null }).exec()
   product.deletedDate = new Date()
-  return (await product.save())._id
+  return (await product.save!())._id
 }
 
 // const _delete = async (id: string) => {
@@ -94,12 +128,13 @@ const softDelete = async (id: string): Promise<string> => {
 
 export const productRepository = {
   getAll,
-  getFileIdByProductId,
+  getFileIdById,
   getAllByStoreId,
-  getStoreIdByProductId,
+  getStoreIdById,
   getById,
   create,
   update,
+  softDeleteByStoreId,
   softDelete,
   // delete: _delete,
 }

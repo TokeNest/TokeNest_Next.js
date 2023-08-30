@@ -20,6 +20,8 @@ const updateAddressById = async (id: string, params: AddressInfo) =>
     ? addressRepository.update(id, params)
     : Promise.reject('address not found')
 
+const softDeleteAddressByUserId = async (id: string) => addressRepository.softDeleteByUserId(id)
+
 const softDeleteAddressById = async (id: string) =>
   (await addressRepository.getById(id))
     ? addressRepository.softDelete(id)
@@ -35,6 +37,7 @@ export const addressService = {
   getAddressById,
   getAddressesByUserId,
   updateAddressById,
+  softDeleteAddressByUserId,
   softDeleteAddressById,
   // deleteAddress,
 }

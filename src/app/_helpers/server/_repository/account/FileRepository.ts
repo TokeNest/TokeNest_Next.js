@@ -9,7 +9,7 @@ const create = async (product: ProductInfoSave, fileInfo: FileInfo): Promise<str
   const file = await new File({ ...fileInfo })
   await file.save()
   product.file = file
-  product.save()
+  await product.save!()
   return file._id
 }
 

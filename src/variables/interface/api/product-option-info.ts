@@ -7,13 +7,17 @@ export interface ProductOptionInfo {
 }
 
 export interface ProductOptionInfoToken extends ProductOptionInfo {
-  tokenRatio: number
-  productOptionTokenOption: TokenInfo
+  tokenRatio: number | null
+  tokenAddress: string | null
+  token: TokenInfo
 }
 
-export interface ProductOptionInfoCreate extends ProductOptionInfoToken {
-  _id: string
-  save(): any
+export interface ProductOptionInfoSave extends ProductOptionInfoToken {
+  save?(): any
+}
+
+export interface ProductOptionInfoDelete extends ProductOptionInfoSave {
+  deletedDate: Date
 }
 
 export interface ProductOptionInfoClient extends ProductOptionInfoToken {

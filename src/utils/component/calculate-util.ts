@@ -45,12 +45,7 @@ export const getCurrentPrice = (
       case OPTION_TYPE.RADIO: {
         const option = productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)
         return option
-          ? pre +
-              setCalculateOptionPrice(
-                marketList,
-                option.productOptionPrice,
-                option.productOptionTokenOption
-              )
+          ? pre + setCalculateOptionPrice(marketList, option.productOptionPrice, option.token)
           : pre
       }
       case OPTION_TYPE.CHECKBOX:
@@ -59,9 +54,8 @@ export const getCurrentPrice = (
           productOptions
             .filter(({ productOptionIsDefault }) => productOptionIsDefault)
             .reduce(
-              (optionTotal, { productOptionPrice, productOptionTokenOption }) =>
-                optionTotal +
-                setCalculateOptionPrice(marketList, productOptionPrice, productOptionTokenOption),
+              (optionTotal, { productOptionPrice, token }) =>
+                optionTotal + setCalculateOptionPrice(marketList, productOptionPrice, token),
               0
             )
         )

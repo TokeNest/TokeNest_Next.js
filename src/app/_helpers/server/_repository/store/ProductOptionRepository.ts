@@ -1,11 +1,12 @@
 import { db } from '@/app/_helpers/server'
-import { ProductOptionInfoCreate } from '@/variables/interface/api/product-option-info'
-import { ProductOptionGroupInfoCreate } from '@/variables/interface/api/product-option-group'
+import { ProductOptionInfoSave } from '@/variables/interface/api/product-option-info'
+import { ProductOptionGroupInfoSave } from '@/variables/interface/api/product-option-group'
+import { TokenInfo } from '@/variables/interface/api/token-interface'
 
 // TODO #2 리펙토링 & 토큰 입력 시 등록 로직 추가 (토큰등록 Api필요할 듯??)
 const ProductOption = db.ProductOption
 
-function getAll() {
+const getAll = () => {
   return ProductOption.find({ deletedDate: null })
 }
 
@@ -22,14 +23,18 @@ async function getById(id: string) {
 }
 
 async function create(
-  productOptionGroupInfo: ProductOptionGroupInfoCreate,
-  productOptionInfo: ProductOptionInfoCreate
+  productOptionGroupInfo: ProductOptionGroupInfoSave,
+  productOptionInfo: ProductOptionInfoSave,
+  tokenInfo: TokenInfo | null
 ) {
-  const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
-  await productOption.save()
+  const productOption: ProductOptionInfoSave = new ProductOption(productOptionInfo)
+  if (tokenInfo) {
+    productOption.token = tokenInfo
+  }
+  await productOption.save!()
 
   productOptionGroupInfo.productOptions.push(productOption)
-  await productOptionGroupInfo.save()
+  return (await productOptionGroupInfo.save!())._id
 }
 
 async function update(id: string, params: any) {

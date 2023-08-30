@@ -6,10 +6,12 @@ export interface StoreInfo {
   storeOffDay: string
   storeOpenCloseTime: string
   storeStatus: string
-
-  save(): any
 }
 
-export interface StoreInfoDelete extends StoreInfo {
+export interface StoreInfoSave extends StoreInfo {
+  save?(): any
+}
+
+export interface StoreInfoDelete extends StoreInfoSave {
   deletedDate: Date
 }

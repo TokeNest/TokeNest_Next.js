@@ -1,5 +1,9 @@
 import { db } from '@/app/_helpers/server'
-import { StoreInfo, StoreInfoDelete } from '@/variables/interface/api/store-interface'
+import {
+  StoreInfo,
+  StoreInfoDelete,
+  StoreInfoSave,
+} from '@/variables/interface/api/store-interface'
 import { storeProjection } from '@/variables/projection/projection'
 
 const Store = db.Store
@@ -18,15 +22,15 @@ const getByUserId = async (id: string): Promise<StoreInfo[]> =>
   Store.find({ user: id, deletedDate: null }, storeProjection).exec()
 
 const update = async (id: string, storeInfo: StoreInfo): Promise<string> => {
-  const store = await getById(id)
+  const store = (await getById(id)) as StoreInfoSave
   Object.assign(store, storeInfo)
-  return (await store.save())._id
+  return (await store.save!())._id
 }
 
 const softDelete = async (id: string): Promise<string> => {
   const store: StoreInfoDelete = await Store.findOne({ _id: id, deletedDate: null }).exec()
   store.deletedDate = new Date()
-  return (await store.save())._id
+  return (await store.save!())._id
 }
 
 // const _delete = (id: string) => await Store.findByIdAndDelete(id)
