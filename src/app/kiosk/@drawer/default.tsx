@@ -1,3 +1,5 @@
+import CardContent from '@mui/material/CardContent'
+
 export default function Default() {
-  return null
+  return <CardContent sx={{ height: 1 }} />
 }

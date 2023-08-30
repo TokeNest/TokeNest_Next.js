@@ -11,6 +11,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
   const { drawerIsOpen } = useDrawerContext()
   return (
     <Drawer
@@ -24,7 +25,11 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
+      SlideProps={{
+        onExited: () => router.back(),
+      }}
       open={drawerIsOpen}
+      onClose={(event: object, reason: string) => console.log(event, reason)}
       hideBackdrop={false}
       keepMounted={false}
     >
@@ -34,7 +39,6 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 }
 
 export function KioskFooterCardActions() {
-  const router = useRouter()
   const { setDrawerIsOpen } = useDrawerContext()
   const pathname = usePathname()
   const dispatch = useDispatch<AppDispatch>()
@@ -44,7 +48,6 @@ export function KioskFooterCardActions() {
   const handleCartBasket = () => {
     dispatch(pathname.includes('order') ? addCartBasket(orderProduct) : clearCartBasket())
     setDrawerIsOpen(false)
-    router.back()
   }
 
   return (
@@ -63,15 +66,8 @@ export function KioskFooterCardActions() {
 
 export function KioskHeaderBackButton({ children }: { children: React.ReactNode }) {
   const { setDrawerIsOpen } = useDrawerContext()
-  const router = useRouter()
   return (
-    <IconButton
-      size="large"
-      onClick={() => {
-        router.back()
-        setDrawerIsOpen(false)
-      }}
-    >
+    <IconButton size="large" onClick={() => setDrawerIsOpen(false)}>
       {children}
     </IconButton>
   )
