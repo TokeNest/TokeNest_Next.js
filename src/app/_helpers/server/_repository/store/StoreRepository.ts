@@ -1,6 +1,7 @@
 import { db } from '@/app/_helpers/server'
 import {
   StoreInfo,
+  StoreInfoClient,
   StoreInfoDelete,
   StoreInfoSave,
 } from '@/variables/interface/api/store-interface'
@@ -8,21 +9,20 @@ import { storeProjection } from '@/variables/projection/projection'
 
 const Store = db.Store
 
-// TODO store의 조회범위 어떻게 할지 정해야됨.
 const create = async (id: string, storeInfo: StoreInfo): Promise<string> =>
   (await new Store({ user: id, ...storeInfo }).save())._id
 
-const getAll = async (): Promise<StoreInfo[]> =>
+const getAll = async (): Promise<StoreInfoClient[]> =>
   Store.find({ deletedDate: null }, storeProjection).exec()
 
-const getById = async (id: string): Promise<StoreInfo> =>
+const getById = async (id: string): Promise<StoreInfoClient> =>
   Store.findOne({ _id: id, deletedDate: null }, storeProjection).exec()
 
-const getByUserId = async (id: string): Promise<StoreInfo[]> =>
+const getByUserId = async (id: string): Promise<StoreInfoClient[]> =>
   Store.find({ user: id, deletedDate: null }, storeProjection).exec()
 
 const update = async (id: string, storeInfo: StoreInfo): Promise<string> => {
-  const store = (await getById(id)) as StoreInfoSave
+  const store: StoreInfoSave = await getById(id)
   Object.assign(store, storeInfo)
   return (await store.save!())._id
 }

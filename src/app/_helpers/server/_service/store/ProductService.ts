@@ -3,6 +3,7 @@ import { fileService } from '@/app/_helpers/server/_service/account/FileService'
 import { fileRepository } from '@/app/_helpers/server/_repository/account/FileRepository'
 import { ProductInfo } from '@/variables/interface/api/product-interface'
 import { storeRepository } from '@/app/_helpers/server/_repository/store/StoreRepository'
+import { productOptionGroupService } from '@/app/_helpers/server/_service/store/ProductOptionGroupService'
 
 const createProduct = async (id: string, productInfo: ProductInfo) =>
   (await storeRepository.getById(id))
@@ -44,16 +45,25 @@ const updateProductById = async (id: string, productInfo: ProductInfo) =>
   (await productRepository.getById(id))
     ? productRepository.update(id, productInfo)
     : Promise.reject('product not found')
-/* TODO store지우면 그 아래 product -> productOptionGroup -> productOption까지 지워지는 로직 필요.
-   product지우면 그 아래 -> productOptionGroup -> productOption지워져야 함.
-*/
+
 const softDeleteProductByStoreId = async (id: string) => {
-  await productRepository.softDeleteByStoreId(id)
+  const products = await productRepository.getAllByStoreId(id)
+
+  for (const product of products) {
+    await softDeleteOptions(product.id)
+  }
 }
+
 const softDeleteProductById = async (id: string) => {
   if (await productRepository.getById(id)) {
     throw 'product not found'
   }
+  return softDeleteOptions(id)
+}
+
+const softDeleteOptions = async (id: string) => {
+  await productOptionGroupService.softDeleteProductOptionGroupByProductId(id)
+  return productRepository.softDelete(id)
 }
 
 export const productService = {

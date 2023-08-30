@@ -175,6 +175,7 @@ const productOptionGroupModel = () => {
         {
           type: Schema.Types.ObjectId,
           ref: 'ProductOption',
+          enum: ['radio', 'checkbox'],
         },
       ],
     },

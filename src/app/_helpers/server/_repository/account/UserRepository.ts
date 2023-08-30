@@ -46,7 +46,7 @@ const getByWalletAddress = async (id: string): Promise<UserInfoAuth> =>
     .exec()
 
 const update = async (id: string, userInfo: UserInfoSave): Promise<string> => {
-  const user = (await getById(id)) as UserInfoSave
+  const user: UserInfoSave = await getById(id)
   Object.assign(user, userInfo)
   return (await user.save!())._id
 }

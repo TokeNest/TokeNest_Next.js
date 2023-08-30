@@ -15,3 +15,7 @@ export interface StoreInfoSave extends StoreInfo {
 export interface StoreInfoDelete extends StoreInfoSave {
   deletedDate: Date
 }
+
+export interface StoreInfoClient extends StoreInfo {
+  id: string
+}

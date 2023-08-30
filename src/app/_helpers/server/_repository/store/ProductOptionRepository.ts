@@ -1,32 +1,37 @@
 import { db } from '@/app/_helpers/server'
-import { ProductOptionInfoSave } from '@/variables/interface/api/product-option-info'
+import {
+  ProductOptionInfoClient,
+  ProductOptionInfoSave,
+} from '@/variables/interface/api/product-option-info'
 import { ProductOptionGroupInfoSave } from '@/variables/interface/api/product-option-group'
 import { TokenInfo } from '@/variables/interface/api/token-interface'
+import { productOptionProjection, tokenProjection } from '@/variables/projection/projection'
 
-// TODO #2 리펙토링 & 토큰 입력 시 등록 로직 추가 (토큰등록 Api필요할 듯??)
 const ProductOption = db.ProductOption
 
-const getAll = () => {
-  return ProductOption.find({ deletedDate: null })
-}
+const getAll = async (): Promise<(Omit<ProductOptionInfoClient, never> & {})[]> =>
+  ProductOption.find({ deletedDate: null }, productOptionProjection)
+    .populate({
+      path: 'token',
+      match: { deletedDate: { $eq: null } },
+      select: tokenProjection,
+    })
+    .exec()
 
-function getAllByGroupId(id: string) {
-  return ProductOption.find({ deletedDate: null, groupId: id })
-}
+const getById = async (id: string): Promise<ProductOptionInfoClient> =>
+  ProductOption.findOne({ _id: id, deletedDate: null }, productOptionProjection)
+    .populate({
+      path: 'token',
+      match: { deletedDate: { $eq: null } },
+      select: tokenProjection,
+    })
+    .exec()
 
-async function getById(id: string) {
-  try {
-    return ProductOption.findById(id)
-  } catch {
-    throw 'ProductOption Not Found'
-  }
-}
-
-async function create(
+const create = async (
   productOptionGroupInfo: ProductOptionGroupInfoSave,
   productOptionInfo: ProductOptionInfoSave,
   tokenInfo: TokenInfo | null
-) {
+): Promise<string> => {
   const productOption: ProductOptionInfoSave = new ProductOption(productOptionInfo)
   if (tokenInfo) {
     productOption.token = tokenInfo
@@ -37,38 +42,27 @@ async function create(
   return (await productOptionGroupInfo.save!())._id
 }
 
-async function update(id: string, params: any) {
-  const productOption = await ProductOption.findById(id)
-  if (!productOption) {
-    throw 'ProductOption Not Found'
-  }
-
+const update = async (id: string, params: any): Promise<string> => {
+  const productOption: ProductOptionInfoSave = await getById(id)
   Object.assign(productOption, params)
-
-  await productOption.save()
+  return (await productOption.save!())._id
 }
 
-async function _softDelete(id: string) {
-  const productOption = await ProductOption.findById(id)
-  if (!productOption) {
-    throw 'ProductOption Not Found'
-  }
-
+const softDelete = async (id: string): Promise<string> => {
+  const productOption = await ProductOption.findById({ _id: id, deletedDate: null })
   productOption.deletedDate = new Date()
-
-  await productOption.save()
+  return (await productOption.save())._id
 }
 
-async function _delete(id: string) {
-  await ProductOption.findByIdAndDelete(id)
-}
+// async function _delete(id: string) {
+//   await ProductOption.findByIdAndDelete(id)
+// }
 
 export const productOptionRepository = {
   getAll,
-  getAllByGroupId,
   getById,
   create,
   update,
-  softDelete: _softDelete,
-  delete: _delete,
+  softDelete,
+  // delete: _delete,
 }
