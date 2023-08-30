@@ -1,7 +1,7 @@
 import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
 import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/ProductOptionGroupRepository'
 import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
-import { ProductOptionInfo } from '@/variables/interface/api/product-option-info'
+import { ProductOptionInterface } from '@/variables/interface/api/product-option-interface'
 
 const getProductOptions = async (id: string) => {
   const productOptions = await productOptionRepository.getAll()
@@ -18,7 +18,7 @@ const getProductOptionsByProductOptionGroupId = async (id: string) =>
     ? (await productOptionGroupRepository.getById(id)).productOptions
     : Promise.reject('ProductOptionGroup not found')
 
-const updateProductOptionById = async (id: string, productOptionInfo: ProductOptionInfo) =>
+const updateProductOptionById = async (id: string, productOptionInfo: ProductOptionInterface) =>
   (await productOptionRepository.getById(id))
     ? productOptionRepository.update(id, productOptionInfo)
     : Promise.reject('productOption not found')

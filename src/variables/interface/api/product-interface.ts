@@ -2,7 +2,7 @@ import { FileInfo } from '@/variables/interface/api/file-interface'
 import {
   ProductOptionGroupInfo,
   ProductOptionGroupInfoClient,
-} from '@/variables/interface/api/product-option-group'
+} from '@/variables/interface/api/product-option-group-interface'
 
 export interface ProductInfo {
   productName: string
