@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { OrderInfo } from '@/variables/interface/api/order-interface'
+import { OrderInfo, OrderInfoCreate } from '@/variables/interface/api/order-interface'
 import {
   orderOptionProjection,
   orderProjection,
@@ -7,6 +7,14 @@ import {
 } from '@/variables/projection/projection'
 
 const Order = db.Order
+
+const storeProjection = {
+  storeName: true,
+}
+
+const productProjection = {
+  productName: true,
+}
 
 const getAll = async (): Promise<(Omit<OrderInfo, never> & {})[]> =>
   Order.find({ deletedDate: null }, orderProjection)
@@ -26,21 +34,34 @@ const getById = async (id: string): Promise<any> => {
     .populate({
       path: 'orderOptions',
       match: { deletedDate: { $eq: null } },
-      populate: {
-        path: 'optionGroups',
-        select: productOptionProjection,
-      },
+      populate: [
+        {
+          path: 'product',
+          select: productProjection,
+        },
+        {
+          path: 'optionGroups',
+          select: productOptionProjection,
+        },
+      ],
       select: orderOptionProjection,
+    })
+    .populate({
+      path: 'store',
+      match: { deletedDate: { $eq: null } },
+      select: storeProjection,
     })
     .exec()
 }
 
-const create = async (params: any): Promise<void> => {
-  const order = new Order(params)
+const create = async (params: OrderInfoCreate): Promise<string> => {
+  console.log(params)
+  const order = new Order({ ...params })
   await order.save()
+  return order._id
 }
 
-async function update(id: string, params: any): Promise<void> {
+const update = async (id: string, params: any): Promise<void> => {
   const order = await Order.findById(id)
   if (!order) {
     throw 'Order Not Found'
@@ -48,6 +69,16 @@ async function update(id: string, params: any): Promise<void> {
 
   Object.assign(order, params)
 
+  await order.save()
+}
+
+const addOrderOptions = async (id: string, optionId: string): Promise<void> => {
+  const order = await Order.findById(id)
+  if (!order) {
+    throw 'Order Not Found'
+  }
+
+  order.orderOptions.push(optionId)
   await order.save()
 }
 
@@ -70,6 +101,7 @@ export const orderRepository = {
   getById,
   create,
   update,
+  addOrderOptions,
   softDelete: _softDelete,
   delete: _delete,
 }

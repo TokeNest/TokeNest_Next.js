@@ -273,7 +273,7 @@ function orderModel() {
   const schema = new Schema(
     {
       orderNum: { type: Number, required: true },
-      orderStatus: { type: String, required: true },
+      orderStatus: { type: String, required: true, default: '결제완료' },
       deletedDate: { type: Date, default: null },
       store: {
         type: Schema.Types.ObjectId,
