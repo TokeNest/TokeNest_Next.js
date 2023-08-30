@@ -8,21 +8,22 @@ import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
 import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
 
 export function RadioOptionGroup({
-  optionGroup: { productOptions, id },
+  optionGroup: { productOptions, id: optionGroupId },
 }: {
   optionGroup: ProductOptionGroupInfoClient
 }) {
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const { optionGroupsInfo } = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const dispatch = useDispatch<AppDispatch>()
   const [tabValue, setTabValue] = useState(
     productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)?.id
   )
   const handleChange = useCallback(
-    (_: React.SyntheticEvent, id: string) => {
-      dispatch(setOrderProductOptionIds({ optionGroupId: id, optionIds: [id] }))
-      setTabValue(id)
+    (_: React.SyntheticEvent, optionId: string) => {
+      dispatch(setOrderProductOptionIds({ optionGroupId, optionIds: [optionId] }))
+      setTabValue(optionId)
     },
-    [dispatch]
+    [dispatch, optionGroupId]
   )
 
   return (

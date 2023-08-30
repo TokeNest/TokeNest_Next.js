@@ -8,9 +8,9 @@ export const convertOrderProduct = ({
   productId,
   productQuantity: 1,
   optionGroupsInfo: productOptionGroups.map((optionGroup) => ({
-    optionGroupId: optionGroup._id,
+    optionGroupId: optionGroup.id,
     optionIds: optionGroup.productOptions
       .filter(({ productOptionIsDefault }) => productOptionIsDefault)
-      .map(({ _id: productOptionId }) => productOptionId),
+      .map(({ id: productOptionId }) => productOptionId),
   })),
 })
