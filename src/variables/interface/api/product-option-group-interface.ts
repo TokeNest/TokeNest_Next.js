@@ -9,11 +9,11 @@ export interface ProductOptionGroupInfo {
   productOptions: ProductOptionInfo[]
 }
 
-export interface ProductOptionGroupInfoSave extends ProductOptionGroupInfo {
+export interface ProductOptionGroupInfoCreate extends ProductOptionGroupInfo {
   save?(): any
 }
 
-export interface ProductOptionGroupInfoDelete extends ProductOptionGroupInfoSave {
+export interface ProductOptionGroupInfoDelete extends ProductOptionGroupInfoCreate {
   deletedDate: Date
 }
 

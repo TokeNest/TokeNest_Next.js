@@ -2,8 +2,8 @@ import { db } from '@/app/_helpers/server'
 import {
   StoreInfo,
   StoreInfoClient,
+  StoreInfoCreate,
   StoreInfoDelete,
-  StoreInfoSave,
 } from '@/variables/interface/api/store-interface'
 import { storeProjection } from '@/variables/projection/projection'
 
@@ -22,7 +22,7 @@ const getByUserId = async (id: string): Promise<StoreInfoClient[]> =>
   Store.find({ user: id, deletedDate: null }, storeProjection).exec()
 
 const update = async (id: string, storeInfo: StoreInfo): Promise<string> => {
-  const store: StoreInfoSave = await getById(id)
+  const store: StoreInfoCreate = await getById(id)
   Object.assign(store, storeInfo)
   return (await store.save!())._id
 }

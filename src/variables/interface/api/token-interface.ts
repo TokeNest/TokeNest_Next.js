@@ -3,11 +3,11 @@ export interface TokenInfo {
   tokenAddress: string
 }
 
-export interface TokenInfoSave extends TokenInfo {
+export interface TokenInfoCreate extends TokenInfo {
   save(): any
 }
 
-export interface TokenInfoDelete extends TokenInfoSave {
+export interface TokenInfoDelete extends TokenInfoCreate {
   deletedDate: Date
 }
 

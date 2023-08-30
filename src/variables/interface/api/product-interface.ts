@@ -13,11 +13,11 @@ export interface ProductInfo {
   productOptionGroups: ProductOptionGroupInfo[]
 }
 
-export interface ProductInfoSave extends ProductInfo {
+export interface ProductInfoCreate extends ProductInfo {
   save?(): any
 }
 
-export interface ProductInfoDelete extends ProductInfoSave {
+export interface ProductInfoDelete extends ProductInfoCreate {
   deletedDate: Date
 }
 

@@ -2,10 +2,10 @@ import { db } from '@/app/_helpers/server'
 import {
   AddressInfo,
   AddressInfoClient,
+  AddressInfoCreate,
   AddressInfoDelete,
-  AddressInfoSave,
 } from '@/variables/interface/api/address-interface'
-import { UserInfoSave } from '@/variables/interface/api/user-interface'
+import { UserInfoCreate } from '@/variables/interface/api/user-interface'
 import { addressProjection } from '@/variables/projection/projection'
 
 const Address = db.Address
@@ -13,7 +13,7 @@ const Address = db.Address
 const create = async (
   id: string,
   addressInfo: AddressInfo,
-  userInfo: UserInfoSave
+  userInfo: UserInfoCreate
 ): Promise<string> => {
   const address = new Address({ user: id, ...addressInfo })
   await address.save()
@@ -30,7 +30,7 @@ const getByUserId = async (id: string): Promise<AddressInfoClient[]> =>
   Address.find({ user: id, deletedDate: null }, addressProjection).exec()
 
 const update = async (id: string, addressInfo: AddressInfo): Promise<string> => {
-  const address: AddressInfoSave = await getById(id)
+  const address: AddressInfoCreate = await getById(id)
   Object.assign(address, addressInfo)
   return (await address.save!())._id
 }

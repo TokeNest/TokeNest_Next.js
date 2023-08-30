@@ -1,14 +1,14 @@
 import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group-interface'
 import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/ProductOptionGroupRepository'
 import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
-import { ProductOptionInfoSave } from '@/variables/interface/api/product-option-interface'
+import { ProductOptionInfoCreate } from '@/variables/interface/api/product-option-interface'
 import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
-import { ProductInfoSave } from '@/variables/interface/api/product-interface'
+import { ProductInfoCreate } from '@/variables/interface/api/product-interface'
 import { tokenRepository } from '@/app/_helpers/server/_repository/token/TokenRepository'
 import { productOptionService } from '@/app/_helpers/server/_service/store/productOptionService'
 
 const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo) => {
-  const product: ProductInfoSave = await productRepository.getById(id)
+  const product: ProductInfoCreate = await productRepository.getById(id)
   if (!product) {
     throw 'product not found'
   }
@@ -21,12 +21,12 @@ const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo
 
   for (const productOption of productOptionGroupInfo.productOptions) {
     let tokenInfo = null
-    if (productOption.tokenAddress) {
-      tokenInfo = await tokenRepository.getByAddress(productOption.tokenAddress)
+    if (productOption.token.tokenAddress) {
+      tokenInfo = await tokenRepository.getByAddress(productOption.token.tokenAddress)
     }
     await productOptionRepository.create(
       await productOptionGroupRepository.getById(productOptionGroupId),
-      productOption as ProductOptionInfoSave,
+      productOption as ProductOptionInfoCreate,
       tokenInfo
     )
   }

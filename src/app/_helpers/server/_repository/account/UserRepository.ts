@@ -3,8 +3,8 @@ import {
   UserInfo,
   UserInfoAuth,
   UserInfoClient,
+  UserInfoCreate,
   UserinfoDelete,
-  UserInfoSave,
   UserInfoUpdate,
 } from '@/variables/interface/api/user-interface'
 import {
@@ -45,8 +45,8 @@ const getByWalletAddress = async (id: string): Promise<UserInfoAuth> =>
     })
     .exec()
 
-const update = async (id: string, userInfo: UserInfoSave): Promise<string> => {
-  const user: UserInfoSave = await getById(id)
+const update = async (id: string, userInfo: UserInfoCreate): Promise<string> => {
+  const user: UserInfoCreate = await getById(id)
   Object.assign(user, userInfo)
   return (await user.save!())._id
 }

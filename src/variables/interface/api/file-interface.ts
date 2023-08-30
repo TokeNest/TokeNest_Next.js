@@ -5,11 +5,11 @@ export interface FileInfo {
   filePath: string
 }
 
-export interface FileInfoSave extends FileInfo {
+export interface FileInfoCreate extends FileInfo {
   save(): any
 }
 
-export interface FileInfoDelete extends FileInfoSave {
+export interface FileInfoDelete extends FileInfoCreate {
   deletedDate: Date
 }
 
