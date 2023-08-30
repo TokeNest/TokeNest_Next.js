@@ -1,7 +1,6 @@
 'use client'
 import { CardContent, List, Paper } from '@mui/material'
 import * as React from 'react'
-import KioskListItem from './KioskListItem'
 import { useAppSelector } from '@/redux/store'
 import { useProductsContext } from '@/app/kiosk/products-provider'
 import Typography from '@mui/material/Typography'
@@ -11,8 +10,9 @@ import {
   KioskListProvider,
 } from '@/app/kiosk/_components/drawer/cart/provider'
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
+import KioskListItem from '../../_components/drawer/cart/KioskListItem'
 
-export default function KioskCartBody() {
+export default function KioskCartPage() {
   const { products } = useProductsContext()
   const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
   const productOrderList = basket.map(({ productId, optionGroupsInfo, productQuantity }) => ({

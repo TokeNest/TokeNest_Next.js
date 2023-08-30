@@ -4,6 +4,7 @@ import { Paper } from '@mui/material'
 import OrderDetailInfo from '@/app/kiosk/_components/drawer/order/OrderDetailInfo'
 import OrderOptionGroups from '@/app/kiosk/_components/drawer/order/OrderOptionGroups'
 import * as React from 'react'
+import CardContent from '@mui/material/CardContent'
 
 const getProductInfo = async (productId: string): Promise<ProductInfoClient> => {
   const data = await nextFetcher(`product/${productId}`, { cache: 'no-store' })
@@ -18,11 +19,11 @@ export default async function KioskDrawerOrder({
 }) {
   const product = await getProductInfo(productId)
   return (
-    <>
+    <CardContent sx={{ height: 8 / 10 }}>
       <OrderDetailInfo product={product} productInfoHeight={productInfoHeight} />
       <Paper elevation={0} sx={{ height: `calc(100% - ${productInfoHeight}px)`, overflow: 'auto' }}>
         <OrderOptionGroups product={product} />
       </Paper>
-    </>
+    </CardContent>
   )
 }
