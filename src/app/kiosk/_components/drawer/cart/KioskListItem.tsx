@@ -21,7 +21,7 @@ import {
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import { OrderProductOptionGroup } from '@/variables/interface/kiosk-interface'
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
-import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
 import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 
 export default function KioskListItem({

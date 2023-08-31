@@ -8,7 +8,7 @@ import { setOrderProductQuantity } from '@/redux/slice/order-product-slice'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
 
 export function OrderDetailInfoTotalPrice({
   optionGroups,
