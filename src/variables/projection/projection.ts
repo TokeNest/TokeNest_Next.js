@@ -51,13 +51,14 @@ export const tokenProjection = {
 export const orderProjection = {
   orderNum: true,
   orderStatus: true,
-  OrderOptions: true,
+  product: true,
+  orderOptions: true,
 }
 
 export const orderOptionProjection = {
   orderAmount: true,
   product: true,
-  productOptionPrice: true,
+  productOptions: true,
 }
 
 export const storeProjection = {
