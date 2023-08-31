@@ -1,5 +1,5 @@
 import { db } from '@/app/_helpers/server'
-import { OrderInfo, OrderInfoCreate } from '@/variables/interface/api/order-interface'
+import { OrderInfoCreate } from '@/variables/interface/api/order-interface'
 import {
   orderOptionProjection,
   orderProjection,
@@ -16,7 +16,12 @@ const productProjection = {
   productName: true,
 }
 
-const getAll = async (): Promise<(Omit<OrderInfo, never> & {})[]> =>
+const optionProjection = {
+  productOptionName: true,
+  productOptionPrice: true,
+}
+
+const getAll = async (): Promise<any> => //Promise<(Omit<OrderInfo, never> & {})[]>
   Order.find({ deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
@@ -27,32 +32,32 @@ const getAll = async (): Promise<(Omit<OrderInfo, never> & {})[]> =>
       },
       select: orderOptionProjection,
     })
+    .populate({
+      path: 'store',
+    })
     .exec()
 
-const getById = async (id: string): Promise<any> => {
+const getById = async (id: string): Promise<any> =>
   await Order.find({ _id: id, deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
-      match: { deletedDate: { $eq: null } },
       populate: [
         {
           path: 'product',
           select: productProjection,
         },
         {
-          path: 'optionGroups',
-          select: productOptionProjection,
+          path: 'productOptions',
+          select: optionProjection,
         },
       ],
       select: orderOptionProjection,
     })
     .populate({
       path: 'store',
-      match: { deletedDate: { $eq: null } },
       select: storeProjection,
     })
     .exec()
-}
 
 const create = async (params: OrderInfoCreate): Promise<string> => {
   // const order = new Order({ ...params })
@@ -73,6 +78,15 @@ const update = async (id: string, params: any): Promise<void> => {
 
   Object.assign(order, params)
 
+  await order.save()
+}
+
+const updateStatus = async (id: string, params: any): Promise<void> => {
+  const order = await Order.findById(id)
+  if (!order) {
+    throw 'Order Not Found'
+  }
+  order.orderStatus = params.orderStatus
   await order.save()
 }
 
@@ -106,6 +120,7 @@ export const orderRepository = {
   create,
   update,
   addOrderOptions,
+  updateStatus,
   softDelete: _softDelete,
   delete: _delete,
 }
