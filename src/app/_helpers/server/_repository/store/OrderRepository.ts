@@ -1,10 +1,6 @@
 import { db } from '@/app/_helpers/server'
-import { OrderInfoCreate } from '@/variables/interface/api/order-interface'
-import {
-  orderOptionProjection,
-  orderProjection,
-  productOptionProjection,
-} from '@/variables/projection/projection'
+import { OrderInfo, OrderInfoCreate } from '@/variables/interface/api/order-interface'
+import { orderOptionProjection, orderProjection } from '@/variables/projection/projection'
 
 const Order = db.Order
 
@@ -22,23 +18,29 @@ const optionProjection = {
 }
 
 const getAll = async (): Promise<any> => //Promise<(Omit<OrderInfo, never> & {})[]>
-  Order.find({ deletedDate: null }, orderProjection)
+  await Order.find({ deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
-      match: { deletedDate: { $eq: null } },
-      populate: {
-        path: 'optionGroups',
-        select: productOptionProjection,
-      },
+      populate: [
+        {
+          path: 'product',
+          select: productProjection,
+        },
+        {
+          path: 'productOptions',
+          select: optionProjection,
+        },
+      ],
       select: orderOptionProjection,
     })
     .populate({
       path: 'store',
+      select: storeProjection,
     })
     .exec()
 
-const getById = async (id: string): Promise<any> =>
-  await Order.find({ _id: id, deletedDate: null }, orderProjection)
+const getById = async (id: string): Promise<OrderInfo> =>
+  Order.findOne({ _id: id, deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
       populate: [
