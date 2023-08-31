@@ -1,4 +1,3 @@
-import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
 import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/ProductOptionGroupRepository'
 import { productOptionRepository } from '@/app/_helpers/server/_repository/store/ProductOptionRepository'
 import { ProductOptionInfo } from '@/variables/interface/api/product-option-interface'
@@ -25,8 +24,9 @@ const updateProductOptionById = async (id: string, productOptionInfo: ProductOpt
 
 const softDeleteProductOptionByProductOptionGroupId = async (id: string) => {
   const productOptions = (await productOptionGroupRepository.getById(id)).productOptions
+
   for (const productOption of productOptions) {
-    await productRepository.softDelete(productOption.id)
+    await productOptionRepository.softDelete(productOption.id)
   }
 }
 

@@ -62,7 +62,6 @@ const updateProductOptionGroupById = async (
 
 const softDeleteProductOptionGroupByProductId = async (id: string) => {
   const productOptionGroups = await productOptionGroupRepository.getAllByProductId(id)
-
   for (const productOptionGroup of productOptionGroups) {
     await softDeleteOptions(productOptionGroup.id)
   }
