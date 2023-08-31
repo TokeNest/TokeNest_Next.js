@@ -25,11 +25,8 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
           borderBottomLeftRadius: 20,
         },
       }}
-      SlideProps={{
-        onExited: () => router.back(),
-      }}
+      SlideProps={{ onExited: () => router.back() }}
       open={drawerIsOpen}
-      onClose={(event: object, reason: string) => console.log(event, reason)}
       hideBackdrop={false}
       keepMounted={false}
     >

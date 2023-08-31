@@ -42,7 +42,7 @@ export function ProductCardHeader({
 }: {
   product: ProductInfoClient
 }) {
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
   const getCurrentOptionPrice = useCallback(
     () => getCurrentPrice(productOptionGroups, marketList),
     [productOptionGroups, marketList]
