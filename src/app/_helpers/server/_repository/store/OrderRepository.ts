@@ -56,7 +56,12 @@ const getById = async (id: string): Promise<any> => {
 
 const create = async (params: OrderInfoCreate): Promise<string> => {
   console.log(params)
-  const order = new Order({ ...params })
+  // const order = new Order({ ...params })
+  const order = new Order({
+    orderNum: params.orderNum,
+    store: params.store,
+    orderOptions: [],
+  })
   await order.save()
   return order._id
 }
