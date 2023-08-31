@@ -39,6 +39,7 @@
     "prettier": "^3.0.0",
     "react": "18.x",
     "react-dom": "18.x",
+    "react-number-format": "^5.3.0",
     "react-redux": "^8.1.2",
     "react-use-websocket": "^4.3.1",
     "swr": "^2.2.0",

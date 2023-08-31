@@ -9,6 +9,7 @@ import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
+import PriceNumberFormat from '@/components/input/PriceNumberFormat'
 
 export function OrderDetailInfoTotalPrice({
   optionGroups,
@@ -20,11 +21,11 @@ export function OrderDetailInfoTotalPrice({
   const [{ marketList }, { optionGroupsInfo, productQuantity }] = useAppSelector(
     ({ marketReducer, orderProductReducer }) => [marketReducer, orderProductReducer]
   )
-  const calculatePrice =
+  const currentPrice =
     calculateTotalPrice(productPrice, optionGroupsInfo, optionGroups, marketList) * productQuantity
   return (
     <Typography align="right" variant="h4" sx={{ color: 'text.secondary' }}>
-      {calculatePrice.toFixed(0)}
+      <PriceNumberFormat price={currentPrice} />
     </Typography>
   )
 }
