@@ -9,6 +9,7 @@ export interface ProductInfo {
   productIntro: string
   productInfo: string
   productPrice: number
+  productCategory: string
   file: FileInfo
   productOptionGroups: ProductOptionGroupInfo[]
 }
