@@ -56,13 +56,7 @@ export default function KioskListItem({
               <Typography variant="h4" fontWeight="bold">
                 {productName}
               </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexGrow: 1,
-                }}
-              >
+              <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
                 <CloseIcon fontSize="large" color="action" sx={{ mx: 1 }} />
                 <Typography variant="h4">{productQuantity}</Typography>
               </Box>
