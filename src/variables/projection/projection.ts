@@ -45,7 +45,6 @@ export const productOptionProjection = {
 }
 
 export const tokenProjection = {
-  tokenSymbol: true,
   tokenAddress: true,
 }
 

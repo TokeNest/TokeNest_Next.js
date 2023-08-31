@@ -4,7 +4,6 @@ export interface ProductOptionInfo {
   productOptionIsDefault: boolean
   tokenRatio: number | null
   token: {
-    tokenSymbol: string
     tokenAddress: string
   }
 }
