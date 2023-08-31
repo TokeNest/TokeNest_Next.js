@@ -9,7 +9,7 @@ import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export default function KioskOrderBadge() {
   const router = useRouter()
-  const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
+  const basket = useAppSelector(({ cartReducer }) => cartReducer.basket)
   const { setDrawerIsOpen } = useDrawerContext()
   const handleChangeOpen = (
     _: React.SyntheticEvent<{}, Event>,

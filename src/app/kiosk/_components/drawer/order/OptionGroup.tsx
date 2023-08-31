@@ -1,19 +1,17 @@
 'use client'
-import { AppDispatch, useAppSelector } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
 import * as React from 'react'
 import { useCallback, useState } from 'react'
 import { Tab, Tabs } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
-import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
 
 export function RadioOptionGroup({
   optionGroup: { productOptions, id: optionGroupId },
 }: {
   optionGroup: ProductOptionGroupInfoClient
 }) {
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
-  const { optionGroupsInfo } = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const dispatch = useDispatch<AppDispatch>()
   const [tabValue, setTabValue] = useState(
     productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)?.id

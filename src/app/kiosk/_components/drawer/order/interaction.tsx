@@ -18,9 +18,14 @@ export function OrderDetailInfoTotalPrice({
   optionGroups: ProductOptionGroupInfoClient[]
   productPrice: number
 }) {
-  const [{ marketList }, { optionGroupsInfo, productQuantity }] = useAppSelector(
-    ({ marketReducer, orderProductReducer }) => [marketReducer, orderProductReducer]
+  const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
+  const optionGroupsInfo = useAppSelector(
+    ({ orderProductReducer }) => orderProductReducer.optionGroupsInfo
   )
+  const productQuantity = useAppSelector(
+    ({ orderProductReducer }) => orderProductReducer.productQuantity
+  )
+
   const currentPrice =
     calculateTotalPrice(productPrice, optionGroupsInfo, optionGroups, marketList) * productQuantity
   return (
@@ -31,7 +36,9 @@ export function OrderDetailInfoTotalPrice({
 }
 
 export function QuantityButtonGroup() {
-  const { productQuantity } = useAppSelector(({ orderProductReducer }) => orderProductReducer)
+  const productQuantity = useAppSelector(
+    ({ orderProductReducer }) => orderProductReducer.productQuantity
+  )
   const dispatch = useDispatch<AppDispatch>()
   const handleQuantity = (isPlus: boolean) => dispatch(setOrderProductQuantity(isPlus))
 
