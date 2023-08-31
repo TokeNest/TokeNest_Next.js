@@ -4,11 +4,6 @@ import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/
 import joi from 'joi'
 import { productOptionGroupService } from '@/app/_helpers/server/_service/store/ProductOptionGroupService'
 
-module.exports = apiHandler({
-  GET: getAllByProductId,
-  POST: create,
-})
-
 function getAllByProductId(_req: Request, { params }: ParamsInputId) {
   return productOptionGroupRepository.getAllByProductId(params.id)
 }
@@ -17,14 +12,28 @@ async function create(req: Request, { params }: ParamsInputId) {
   return productOptionGroupService.create(params.id, await req.json())
 }
 
+// Token Schema
+const tokenSchema = joi.object({
+  tokenAddress: joi.string().allow(null),
+})
+
+// Product Option Schema
+const productOptionSchema = joi.object({
+  productOptionName: joi.string().required(),
+  productOptionIsDefault: joi.boolean(),
+  productOptionPrice: joi.number().required(),
+  tokenRatio: joi.number().required(),
+  token: tokenSchema.required(),
+})
+
+// Create Schema
 create.schema = joi.object({
   productOptionGroupName: joi.string().required(),
   productOptionGroupType: joi.string().required(),
-  productOptions: joi.array().items({
-    productOptionName: joi.string().required(),
-    productOptionIsDefault: joi.boolean(),
-    productOptionPrice: joi.number().required(),
-    tokenRatio: joi.number().allow(null),
-    tokenAddress: joi.string().allow(null),
-  }),
+  productOptions: joi.array().items(productOptionSchema).min(1).required(),
+})
+
+module.exports = apiHandler({
+  GET: getAllByProductId,
+  POST: create,
 })

@@ -8,6 +8,7 @@ import { tokenRepository } from '@/app/_helpers/server/_repository/token/TokenRe
 import { productOptionService } from '@/app/_helpers/server/_service/store/productOptionService'
 
 const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo) => {
+  console.log(productOptionGroupInfo)
   const product: ProductInfoCreate = await productRepository.getById(id)
   if (!product) {
     throw 'product not found'
@@ -62,7 +63,6 @@ const updateProductOptionGroupById = async (
 
 const softDeleteProductOptionGroupByProductId = async (id: string) => {
   const productOptionGroups = await productOptionGroupRepository.getAllByProductId(id)
-
   for (const productOptionGroup of productOptionGroups) {
     await softDeleteOptions(productOptionGroup.id)
   }

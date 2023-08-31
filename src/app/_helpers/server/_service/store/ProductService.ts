@@ -48,7 +48,6 @@ const updateProductById = async (id: string, productInfo: ProductInfo) =>
 
 const softDeleteProductByStoreId = async (id: string) => {
   const products = await productRepository.getAllByStoreId(id)
-
   for (const product of products) {
     await softDeleteOptions(product.id)
   }
