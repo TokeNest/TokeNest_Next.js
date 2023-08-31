@@ -19,7 +19,7 @@ const createOrder = async (params: OrderInfoCreate) => {
 }
 
 const getOrder = async (id: string) => {
-  return orderRepository.getById(id)
+  return await orderRepository.getById(id)
 }
 
 export const orderService = {
