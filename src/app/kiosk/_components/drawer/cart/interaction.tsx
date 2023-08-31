@@ -9,7 +9,7 @@ import {
 } from '@/app/kiosk/_components/drawer/cart/provider'
 import Typography from '@mui/material/Typography'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { getOptionMarketPrice } from '@/utils/component/calculate-util'
+import { setCalculateOptionPrice } from '@/utils/component/calculate-util'
 import { useDispatch } from 'react-redux'
 import { setOrderProductQuantity } from '@/redux/slice/order-product-slice'
 import Button from '@mui/material/Button'
@@ -58,8 +58,8 @@ export function ListItemCalculatePrice({
   const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
   const totalPrice =
     options.reduce(
-      (pre, { productOptionPrice, productOptionTokenOption }) =>
-        pre + getOptionMarketPrice(productOptionPrice, productOptionTokenOption, marketList),
+      (pre, { productOptionPrice, token, tokenRatio }) =>
+        pre + setCalculateOptionPrice(marketList, productOptionPrice, token, tokenRatio),
       productPrice
     ) * quantity
 

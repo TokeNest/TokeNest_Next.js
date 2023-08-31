@@ -1,37 +1,20 @@
 import { MarketInfo } from '@/variables/interface/web3-interface'
 import BigNumber from 'bignumber.js'
 import { OPTION_TYPE } from '@/variables/enum/kiosk-enum'
-import {
-  OptionGroup,
-  OrderProductOptionGroup,
-  TokenOption,
-} from '@/variables/interface/kiosk-interface'
+import { OrderProductOptionGroup } from '@/variables/interface/kiosk-interface'
 import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
+import { TokenInfo } from '@/variables/interface/api/token-interface'
 
-export const getOptionMarketPrice = (
-  optionPrice: number,
-  tokenOption: TokenOption | undefined,
-  marketList: MarketInfo[]
-) => {
-  if (tokenOption) {
-    const { tokenAddress, tokenRatio } = tokenOption
-    const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
-    if (marketInfo) {
-      const percentage = new BigNumber(tokenRatio).dividedBy(100)
-      return new BigNumber(marketInfo.tokenA.price).times(percentage).plus(optionPrice).toNumber()
-    }
-  }
-  return optionPrice
-}
 export const setCalculateOptionPrice = (
   marketList: MarketInfo[],
   optionPrice: number,
-  tokenOption: TokenOption | undefined
+  tokenOption: TokenInfo | undefined,
+  tokenRatio: number | null
 ) => {
   if (tokenOption) {
-    const { tokenAddress, tokenRatio } = tokenOption
+    const { tokenAddress } = tokenOption
     const marketInfo = marketList.find(({ tokenA: { address } }) => address === tokenAddress)
-    if (marketInfo) {
+    if (marketInfo && tokenRatio !== null) {
       const percentage = new BigNumber(tokenRatio).dividedBy(100)
       return new BigNumber(marketInfo.tokenA.price).times(percentage).plus(optionPrice).toNumber()
     }
@@ -49,7 +32,13 @@ export const getCurrentPrice = (
       case OPTION_TYPE.RADIO: {
         const option = productOptions.find(({ productOptionIsDefault }) => productOptionIsDefault)
         return option
-          ? pre + setCalculateOptionPrice(marketList, option.productOptionPrice, option.token)
+          ? pre +
+              setCalculateOptionPrice(
+                marketList,
+                option.productOptionPrice,
+                option.token,
+                option.tokenRatio
+              )
           : pre
       }
       case OPTION_TYPE.CHECKBOX:
@@ -58,8 +47,9 @@ export const getCurrentPrice = (
           productOptions
             .filter(({ productOptionIsDefault }) => productOptionIsDefault)
             .reduce(
-              (optionTotal, { productOptionPrice, token }) =>
-                optionTotal + setCalculateOptionPrice(marketList, productOptionPrice, token),
+              (optionTotal, { productOptionPrice, token, tokenRatio }) =>
+                optionTotal +
+                setCalculateOptionPrice(marketList, productOptionPrice, token, tokenRatio),
               0
             )
         )
@@ -70,16 +60,16 @@ export const getCurrentPrice = (
 export const calculateTotalPrice = (
   productPrice: number,
   optionGroupsInfo: OrderProductOptionGroup[],
-  optionGroups: OptionGroup[],
+  optionGroups: ProductOptionGroupInfoClient[],
   marketList: MarketInfo[]
 ) => {
   const optionIds = optionGroupsInfo.flatMap(({ optionIds }) => optionIds)
   return optionGroups
-    .flatMap(({ options }) => options)
-    .filter(({ optionId }) => optionIds.includes(optionId))
+    .flatMap(({ productOptions }) => productOptions)
+    .filter(({ id }) => optionIds.includes(id))
     .reduce(
-      (pre, { optionPrice, tokenOption }) =>
-        pre + getOptionMarketPrice(optionPrice, tokenOption, marketList),
+      (pre, { productOptionPrice, token, tokenRatio }) =>
+        pre + setCalculateOptionPrice(marketList, productOptionPrice, token, tokenRatio),
       productPrice
     )
 }
