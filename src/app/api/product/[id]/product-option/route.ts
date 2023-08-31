@@ -25,6 +25,6 @@ create.schema = joi.object({
     productOptionIsDefault: joi.boolean(),
     productOptionPrice: joi.number().required(),
     tokenRatio: joi.number().allow(null),
-    tokenAddress: joi.string().allow(null),
+    token: joi.string().allow(null),
   }),
 })
