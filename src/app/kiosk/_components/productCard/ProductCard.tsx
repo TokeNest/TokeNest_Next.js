@@ -11,7 +11,7 @@ import {
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 export default function ProductCard({ product }: { product: ProductInfoClient }) {
-  const fileUrl = product.file === null ? '' : product.file?.filePath.slice(1)
+  const fileUrl = product.file === null ? '' : product.file?.filePath
   return (
     <Card sx={{ borderRadius: 3, p: 0 }}>
       <ProductCardActionArea product={product}>
