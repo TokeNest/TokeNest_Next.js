@@ -1,11 +1,10 @@
 import { apiHandler } from '@/app/_helpers/server/api'
 import { ParamsInputId } from '@/variables/interface/api/params-input-interface'
-import { productOptionGroupRepository } from '@/app/_helpers/server/_repository/store/ProductOptionGroupRepository'
 import joi from 'joi'
 import { productOptionGroupService } from '@/app/_helpers/server/_service/store/ProductOptionGroupService'
 
 function getAllByProductId(_req: Request, { params }: ParamsInputId) {
-  return productOptionGroupRepository.getAllByProductId(params.id)
+  return productOptionGroupService.getProductOptionGroupsByProductId(params.id)
 }
 
 async function create(req: Request, { params }: ParamsInputId) {
