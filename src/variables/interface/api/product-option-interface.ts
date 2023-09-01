@@ -5,7 +5,7 @@ export interface ProductOptionInfo {
   productOptionPrice: number
   productOptionIsDefault: boolean
   tokenRatio: number | null
-  token: TokenInfo
+  token: TokenInfo | null
 }
 
 export interface ProductOptionInfoCreate extends ProductOptionInfo {

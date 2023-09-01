@@ -33,11 +33,13 @@ const create = async (
   tokenInfo: TokenInfo | null
 ): Promise<string> => {
   const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
+  console.log(productOption)
   if (tokenInfo) {
     productOption.token = tokenInfo
+  } else {
+    productOption.token = null
   }
   await productOption.save!()
-
   productOptionGroupInfo.productOptions.push(productOption)
   return (await productOptionGroupInfo.save!())._id
 }
