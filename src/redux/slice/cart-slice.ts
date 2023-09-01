@@ -47,9 +47,18 @@ export const cart = createSlice({
         state.orderProductsPrice = [...state.orderProductsPrice, payload]
       }
     },
+    deleteCartTotalPrice: (state, { payload }) => {
+      const index = state.orderProductsPrice.findIndex((res) => res.index === payload)
+      state.orderProductsPrice = state.orderProductsPrice.filter((res) => res.index !== index)
+    },
   },
 })
 
-export const { addCartBasket, clearCartBasket, setCartProductQuantity, setCartTotalPrice } =
-  cart.actions
+export const {
+  addCartBasket,
+  clearCartBasket,
+  setCartProductQuantity,
+  setCartTotalPrice,
+  deleteCartTotalPrice,
+} = cart.actions
 export default cart.reducer

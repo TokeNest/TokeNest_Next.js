@@ -11,7 +11,11 @@ import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import PriceNumberFormat from '@/components/input/PriceNumberFormat'
-import { setCartProductQuantity, setCartTotalPrice } from '@/redux/slice/cart-slice'
+import {
+  deleteCartTotalPrice,
+  setCartProductQuantity,
+  setCartTotalPrice,
+} from '@/redux/slice/cart-slice'
 import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 import { setCalculateOptionPrice } from '@/utils/component/calculate-util'
 
@@ -64,8 +68,12 @@ export function ListItemCalculatePrice({
     ) * quantity
   useEffect(() => {
     dispatch(setCartTotalPrice({ index: orderProductIndex, totalPrice }))
-  }, [dispatch, orderProductIndex, totalPrice])
-
+  }, [dispatch, orderProductIndex, quantity, totalPrice])
+  useEffect(() => {
+    return () => {
+      dispatch(deleteCartTotalPrice(orderProductIndex))
+    }
+  }, [dispatch, orderProductIndex])
   return (
     <Typography variant="h4" align="right" fontWeight="bold">
       <PriceNumberFormat price={totalPrice} />

@@ -5,9 +5,8 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { addCartBasket, clearCartBasket } from '@/redux/slice/cart-slice'
 import Typography from '@mui/material/Typography'
-import { DRAWER_TYPE } from '@/variables/enum/kiosk-enum'
 import Button from '@mui/material/Button'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useDrawerContext } from '@/app/kiosk/drawer-provider'
 
 export function KioskDrawerManager({ children }: { children: React.ReactNode }) {
@@ -38,12 +37,11 @@ export function KioskDrawerManager({ children }: { children: React.ReactNode }) 
 export function KioskFooterCardActions() {
   const { setDrawerIsOpen } = useDrawerContext()
   const pathname = usePathname()
+  const isOrder = pathname.includes('order')
   const dispatch = useDispatch<AppDispatch>()
-  const searchParams = useSearchParams()
-  const isOrder = searchParams.get('drawer') === DRAWER_TYPE.ORDER
   const orderProduct = useAppSelector(({ orderProductReducer }) => orderProductReducer)
   const handleCartBasket = () => {
-    dispatch(pathname.includes('order') ? addCartBasket(orderProduct) : clearCartBasket())
+    dispatch(isOrder ? addCartBasket(orderProduct) : clearCartBasket())
     setDrawerIsOpen(false)
   }
 
