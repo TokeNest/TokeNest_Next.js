@@ -14,7 +14,7 @@ export async function getOrder(_req: Request, { params }: ParamsInputId) {
 }
 
 export async function updateStatus(req: Request, { params }: ParamsInputId) {
-  return orderRepository.updateStatus(params.id, await req.json())
+  return orderRepository.updateStatus(params.id, (await req.json()).orderStatus)
 }
 
 updateStatus.schema = joi.object({
