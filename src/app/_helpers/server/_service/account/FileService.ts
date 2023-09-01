@@ -70,7 +70,7 @@ const getFileByProductId = async (id: string) => {
 
 const softDeleteFileById = async (id: string) => {
   const file = (await fileRepository.getById(id)) || (await Promise.reject('file not found'))
-  const filePath = file.filePath
+  const filePath = './public' + file.filePath
 
   // create archive path
   const archivePath = filePath
