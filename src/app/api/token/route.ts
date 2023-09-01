@@ -9,6 +9,7 @@ async function create(req: Request) {
 create.schema = joi.object({
   tokenSymbol: joi.string().required(),
   tokenAddress: joi.string().required(),
+  tokenDecimals: joi.number().required(),
 })
 
 async function getAll(_req: Request) {

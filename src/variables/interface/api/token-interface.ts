@@ -1,6 +1,7 @@
 export interface TokenInfo {
   tokenSymbol: string
   tokenAddress: string
+  tokenDecimals: number
 }
 
 export interface TokenInfoCreate extends TokenInfo {

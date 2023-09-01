@@ -46,6 +46,7 @@ export const productOptionProjection = {
 
 export const tokenProjection = {
   tokenAddress: true,
+  tokenDecimals: true,
 }
 
 export const orderProjection = {

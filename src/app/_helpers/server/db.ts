@@ -11,6 +11,7 @@ const tokenModel = () => {
     {
       tokenSymbol: { type: String, required: true },
       tokenAddress: { type: String, required: true },
+      tokenDecimals: { type: Number, required: true },
     },
     {
       timestamps: {
