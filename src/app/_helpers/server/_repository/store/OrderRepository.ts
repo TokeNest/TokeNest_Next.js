@@ -89,7 +89,7 @@ const updateStatus = async (id: string, params: any): Promise<void> => {
     throw 'Order Not Found'
   }
   order.orderStatus = params.orderStatus
-  await order.save()
+  return (await order.save())._id
 }
 
 const addOrderOptions = async (id: string, optionId: string): Promise<void> => {
