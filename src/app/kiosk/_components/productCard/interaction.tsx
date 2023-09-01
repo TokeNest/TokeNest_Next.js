@@ -23,9 +23,8 @@ export function ProductCardActionArea({
 }) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
-  const { setProduct, setDrawerIsOpen } = useDrawerContext()
+  const { setDrawerIsOpen } = useDrawerContext()
   const clickEvent = () => {
-    setProduct(product)
     dispatch(setOrderProduct(convertOrderProduct(product)))
     router.push(`kiosk/order/${product.id}`)
     setDrawerIsOpen(true)

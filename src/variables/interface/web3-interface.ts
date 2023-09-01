@@ -1,10 +1,10 @@
-import { MARKET, TOKEN } from '@/variables/enum/web3-enum'
+import { MARKET } from '@/variables/enum/web3-enum'
 
 /**
  * 토큰에 관한 정보.
  * */
 export interface TokenInfo {
-  address: TOKEN
+  address: string
   decimal: number
   price: string
 }

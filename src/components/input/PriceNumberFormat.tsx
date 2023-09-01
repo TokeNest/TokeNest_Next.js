@@ -15,7 +15,7 @@ export default function PriceNumberFormat({
       decimalScale={0}
       thousandSeparator
       value={price}
-      suffix={disableSuffix ? '' : '원'}
+      suffix={disableSuffix ? undefined : '원'}
     />
   )
 }
