@@ -11,7 +11,11 @@ export const orderProduct = createSlice({
   name: 'orderProduct',
   initialState,
   reducers: {
-    setOrderProduct: (_, { payload }: { payload: OrderProduct }) => payload,
+    setOrderProduct: (state, { payload }: { payload: OrderProduct }) => {
+      state.productId = payload.productId
+      state.productQuantity = payload.productQuantity
+      state.optionGroupsInfo = payload.optionGroupsInfo
+    },
     setOrderProductQuantity: (state, { payload }: { payload: boolean }) => {
       if (payload) {
         state.productQuantity = state.productQuantity + 1

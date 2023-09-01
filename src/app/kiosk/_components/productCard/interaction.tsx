@@ -12,6 +12,7 @@ import { convertOrderProduct } from '@/utils/component/redux-util'
 import { setOrderProduct } from '@/redux/slice/order-product-slice'
 import { useRouter } from 'next/navigation'
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
+import PriceNumberFormat from '@/components/input/PriceNumberFormat'
 
 export function ProductCardActionArea({
   children,
@@ -41,7 +42,7 @@ export function ProductCardHeader({
 }: {
   product: ProductInfoClient
 }) {
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
   const getCurrentOptionPrice = useCallback(
     () => getCurrentPrice(productOptionGroups, marketList),
     [productOptionGroups, marketList]
@@ -52,7 +53,11 @@ export function ProductCardHeader({
     <CardHeader
       sx={{ px: 1, py: 0 }}
       title={productName}
-      subheader={<Typography sx={{ textAlign: 'right' }}>{currentPrice.toFixed(0)}</Typography>}
+      subheader={
+        <Typography sx={{ textAlign: 'right' }}>
+          <PriceNumberFormat price={currentPrice} />
+        </Typography>
+      }
     />
   )
 }

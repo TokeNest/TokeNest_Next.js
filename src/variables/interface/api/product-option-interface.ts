@@ -1,11 +1,11 @@
+import { TokenInfo } from '@/variables/interface/api/token-interface'
+
 export interface ProductOptionInfo {
   productOptionName: string
   productOptionPrice: number
   productOptionIsDefault: boolean
   tokenRatio: number | null
-  token: {
-    tokenAddress: string
-  }
+  token: TokenInfo
 }
 
 export interface ProductOptionInfoCreate extends ProductOptionInfo {

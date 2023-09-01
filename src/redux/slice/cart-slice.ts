@@ -12,7 +12,6 @@ export const cart = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    removeCartBasket: (state, { payload }: { payload: OrderProduct }) => {},
     addCartBasket: (state, { payload }: { payload: OrderProduct }) => {
       const index = state.basket.findIndex(
         (orderProduct) =>
@@ -25,11 +24,20 @@ export const cart = createSlice({
         state.basket[index].productQuantity += payload.productQuantity
       }
     },
+    setCartProductQuantity: (
+      state,
+      { payload }: { payload: { isPlus: boolean; orderProductIndex: number } }
+    ) => {
+      state.basket[payload.orderProductIndex].productQuantity += payload.isPlus ? 1 : -1
+      if (state.basket[payload.orderProductIndex].productQuantity <= 0) {
+        state.basket = state.basket.filter((_, i) => i !== payload.orderProductIndex)
+      }
+    },
     clearCartBasket: (state) => {
       state.basket = []
     },
   },
 })
 
-export const { addCartBasket, clearCartBasket } = cart.actions
+export const { addCartBasket, clearCartBasket, setCartProductQuantity } = cart.actions
 export default cart.reducer

@@ -19,29 +19,31 @@ import {
   QuantityButtonGroup,
 } from '@/app/kiosk/_components/drawer/cart/interaction'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
-import { OrderProductOptionGroup } from '@/variables/interface/kiosk-interface'
+import { OrderProduct } from '@/variables/interface/kiosk-interface'
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
-import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
 import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 
 export default function KioskListItem({
   product: { productName, productPrice, productOptionGroups },
-  productQuantity,
-  optionGroupsInfo,
+  orderProduct,
+  orderProductIndex,
 }: {
   product: ProductInfoClient
-  productQuantity: number
-  optionGroupsInfo: OrderProductOptionGroup[]
+  orderProduct: OrderProduct
+  orderProductIndex: number
 }) {
-  const selectGroupOptions = optionGroupsInfo.map(({ optionGroupId: groupId, optionIds }) => {
-    const { productOptionGroupName, productOptions } = productOptionGroups.find(
-      ({ id }) => id === groupId
-    ) as ProductOptionGroupInfoClient
-    return {
-      productOptionGroupName,
-      options: productOptions.find(({ id }) => optionIds.includes(id)) as ProductOptionInfoClient,
+  const selectGroupOptions = orderProduct.optionGroupsInfo.map(
+    ({ optionGroupId: groupId, optionIds }) => {
+      const { productOptionGroupName, productOptions } = productOptionGroups.find(
+        ({ id }) => id === groupId
+      ) as ProductOptionGroupInfoClient
+      return {
+        productOptionGroupName,
+        options: productOptions.find(({ id }) => optionIds.includes(id)) as ProductOptionInfoClient,
+      }
     }
-  })
+  )
   return (
     <>
       <ListItem secondaryAction={<OpenDetailInfoBtn />}>
@@ -56,18 +58,12 @@ export default function KioskListItem({
               <Typography variant="h4" fontWeight="bold">
                 {productName}
               </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexGrow: 1,
-                }}
-              >
+              <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
                 <CloseIcon fontSize="large" color="action" sx={{ mx: 1 }} />
-                <Typography variant="h4">{productQuantity}</Typography>
+                <Typography variant="h4">{orderProduct.productQuantity}</Typography>
               </Box>
               <ListItemCalculatePrice
-                quantity={productQuantity}
+                quantity={orderProduct.productQuantity}
                 productPrice={productPrice}
                 options={selectGroupOptions.map(({ options }) => options)}
               />
@@ -100,14 +96,14 @@ export default function KioskListItem({
                       </>
                     }
                   />
+                  <Divider />
                 </ListItem>
               )
             }
           )}
-          <Divider />
         </List>
         <ButtonGroup orientation="vertical" variant="text" size="large" sx={{ height: 1, px: 2 }}>
-          <QuantityButtonGroup />
+          <QuantityButtonGroup orderProductIndex={orderProductIndex} />
         </ButtonGroup>
       </ListItemDetailInfo>
     </>

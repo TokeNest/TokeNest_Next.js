@@ -11,28 +11,31 @@ const uploadFileByProductId = async (data: FormData, id: string) => {
     (await productRepository.getById(id)) || (await Promise.reject('product not found'))
   const storeId = await productRepository.getStoreIdById(id)
   // ./src/public/images/ <- path is must change to your cloud url
-  const storePath = `./src/public/images/${storeId}`
+
+  const storePath = `/images/${storeId}`
+
+  const publicPath = './public' + storePath
 
   // Check if the directory exists, and if not, create it
   try {
-    await access(storePath)
-    await access(`${storePath}/${id}`)
+    await access(publicPath)
+    await access(`${publicPath}/${id}`)
   } catch (err: any) {
     if (err.code === 'ENOENT') {
-      await createDirectory(`${storePath}/${id}/`)
+      await createDirectory(`${publicPath}/${id}/`)
     } else {
       throw 'error while checking directory'
     }
   }
 
-  if ((await readdir(`${storePath}/${id}`)).length) {
+  if ((await readdir(`${publicPath}/${id}`)).length) {
     throw 'file already exist'
   }
 
   const path = `${storePath}/${id}/${file.name}`
 
   try {
-    await writeFile(path, Buffer.from(await file.arrayBuffer()))
+    await writeFile('./public' + path, Buffer.from(await file.arrayBuffer()))
   } catch (err) {
     throw 'error while creating file'
   }

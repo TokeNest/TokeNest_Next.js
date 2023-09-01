@@ -9,13 +9,14 @@ import {
 } from '@/app/kiosk/_components/drawer/cart/provider'
 import Typography from '@mui/material/Typography'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { getOptionMarketPrice } from '@/utils/component/calculate-util'
+import { setCalculateOptionPrice } from '@/utils/component/calculate-util'
 import { useDispatch } from 'react-redux'
-import { setOrderProductQuantity } from '@/redux/slice/order-product-slice'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
+import PriceNumberFormat from '@/components/input/PriceNumberFormat'
+import { setCartProductQuantity } from '@/redux/slice/cart-slice'
 
 export function OpenDetailInfoBtn() {
   const { open, setOpen } = useKioskListContext()
@@ -55,11 +56,11 @@ export function ListItemCalculatePrice({
   options: ProductOptionInfoClient[]
 }) {
   const { setTotalPrice } = useKioskCartPriceContext()
-  const { marketList } = useAppSelector(({ marketReducer }) => marketReducer)
+  const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
   const totalPrice =
     options.reduce(
-      (pre, { productOptionPrice, productOptionTokenOption }) =>
-        pre + getOptionMarketPrice(productOptionPrice, productOptionTokenOption, marketList),
+      (pre, { productOptionPrice, token, tokenRatio }) =>
+        pre + setCalculateOptionPrice(marketList, productOptionPrice, token, tokenRatio),
       productPrice
     ) * quantity
 
@@ -69,23 +70,24 @@ export function ListItemCalculatePrice({
 
   return (
     <Typography variant="h4" align="right" fontWeight="bold">
-      {totalPrice.toFixed(0)}원
+      <PriceNumberFormat price={totalPrice} />
     </Typography>
   )
 }
 
-export function CartItemTotalPrice({}: {}) {
+export function CartItemTotalPrice() {
   const { totalPrice } = useKioskCartPriceContext()
   return (
     <Typography variant="h4" fontWeight="bold">
-      {totalPrice.toFixed(0)}원
+      <PriceNumberFormat price={totalPrice} />
     </Typography>
   )
 }
 
-export function QuantityButtonGroup() {
+export function QuantityButtonGroup({ orderProductIndex }: { orderProductIndex: number }) {
   const dispatch = useDispatch<AppDispatch>()
-  const handleQuantity = (isPlus: boolean) => dispatch(setOrderProductQuantity(isPlus))
+  const handleQuantity = (isPlus: boolean) =>
+    dispatch(setCartProductQuantity({ isPlus, orderProductIndex }))
 
   return (
     <>

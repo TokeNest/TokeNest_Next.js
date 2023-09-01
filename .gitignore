@@ -9,10 +9,10 @@
 /mongodb
 
 # store
-/src/public/images/*
-!/src/public/images/cuteMockCat.png
-/src/public/imagesArchive/*
-!/src/public/imagesArchive/cuteMockCat.png
+/public/images/*
+!/public/images/cuteMockCat.png
+/public/imagesArchive/*
+!/public/imagesArchive/cuteMockCat.png
 
 .idea
 # testing

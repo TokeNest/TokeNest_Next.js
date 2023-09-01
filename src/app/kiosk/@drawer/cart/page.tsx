@@ -14,11 +14,10 @@ import KioskListItem from '../../_components/drawer/cart/KioskListItem'
 
 export default function KioskCartPage() {
   const { products } = useProductsContext()
-  const { basket } = useAppSelector(({ cartReducer }) => cartReducer)
-  const productOrderList = basket.map(({ productId, optionGroupsInfo, productQuantity }) => ({
-    productQuantity,
-    optionGroupsInfo,
-    product: products.find(({ id }) => productId === id) as ProductInfoClient,
+  const basket = useAppSelector(({ cartReducer }) => cartReducer.basket)
+  const productOrderList = basket.map((orderProduct) => ({
+    orderProduct,
+    product: products.find(({ id }) => orderProduct.productId === id) as ProductInfoClient,
   }))
 
   return (
@@ -32,13 +31,9 @@ export default function KioskCartPage() {
         }}
       >
         <List sx={{ overflow: 'auto' }}>
-          {productOrderList.map(({ product, productQuantity, optionGroupsInfo }, i) => (
+          {productOrderList.map(({ orderProduct, product }, i) => (
             <KioskListProvider key={i}>
-              <KioskListItem
-                product={product}
-                productQuantity={productQuantity}
-                optionGroupsInfo={optionGroupsInfo}
-              />
+              <KioskListItem product={product} orderProduct={orderProduct} orderProductIndex={i} />
             </KioskListProvider>
           ))}
         </List>
