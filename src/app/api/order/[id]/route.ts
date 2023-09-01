@@ -10,11 +10,11 @@ module.exports = apiHandler({
 })
 
 export async function getOrder(_req: Request, { params }: ParamsInputId) {
-  return await orderService.getOrder(params.id)
+  return orderService.getOrder(params.id)
 }
 
 export async function updateStatus(req: Request, { params }: ParamsInputId) {
-  await orderRepository.updateStatus(params.id, await req.json())
+  return orderRepository.updateStatus(params.id, await req.json())
 }
 
 updateStatus.schema = joi.object({
