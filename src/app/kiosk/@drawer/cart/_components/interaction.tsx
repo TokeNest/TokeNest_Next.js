@@ -3,20 +3,17 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { Collapse, IconButton } from '@mui/material'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import {
-  useKioskCartPriceContext,
-  useKioskListContext,
-} from '@/app/kiosk/_components/drawer/cart/provider'
+import { useKioskListContext } from '@/app/kiosk/@drawer/cart/_components/provider'
 import Typography from '@mui/material/Typography'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { setCalculateOptionPrice } from '@/utils/component/calculate-util'
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
 import PriceNumberFormat from '@/components/input/PriceNumberFormat'
-import { setCartProductQuantity } from '@/redux/slice/cart-slice'
+import { setCartProductQuantity, setCartTotalPrice } from '@/redux/slice/cart-slice'
+import { ProductOptionInfoClient } from '@/variables/interface/api/product-option-interface'
+import { setCalculateOptionPrice } from '@/utils/component/calculate-util'
 
 export function OpenDetailInfoBtn() {
   const { open, setOpen } = useKioskListContext()
@@ -50,12 +47,14 @@ export function ListItemCalculatePrice({
   quantity,
   productPrice,
   options,
+  orderProductIndex,
 }: {
   quantity: number
   productPrice: number
   options: ProductOptionInfoClient[]
+  orderProductIndex: number
 }) {
-  const { setTotalPrice } = useKioskCartPriceContext()
+  const dispatch = useDispatch<AppDispatch>()
   const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
   const totalPrice =
     options.reduce(
@@ -63,10 +62,9 @@ export function ListItemCalculatePrice({
         pre + setCalculateOptionPrice(marketList, productOptionPrice, token, tokenRatio),
       productPrice
     ) * quantity
-
   useEffect(() => {
-    setTotalPrice((state) => state + totalPrice)
-  }, [setTotalPrice, totalPrice])
+    dispatch(setCartTotalPrice({ index: orderProductIndex, totalPrice }))
+  }, [dispatch, orderProductIndex, totalPrice])
 
   return (
     <Typography variant="h4" align="right" fontWeight="bold">
@@ -76,7 +74,8 @@ export function ListItemCalculatePrice({
 }
 
 export function CartItemTotalPrice() {
-  const { totalPrice } = useKioskCartPriceContext()
+  const orderProductsPrice = useAppSelector(({ cartReducer }) => cartReducer.orderProductsPrice)
+  const totalPrice = orderProductsPrice.reduce((pre, { totalPrice }) => pre + totalPrice, 0)
   return (
     <Typography variant="h4" fontWeight="bold">
       <PriceNumberFormat price={totalPrice} />
