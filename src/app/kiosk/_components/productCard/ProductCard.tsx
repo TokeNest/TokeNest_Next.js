@@ -2,11 +2,11 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { CardMedia } from '@mui/material'
+import { CardHeader, CardMedia } from '@mui/material'
 import Image from 'next/image'
 import {
   ProductCardActionArea,
-  ProductCardHeader,
+  ProductCardPrice,
 } from '@/app/kiosk/_components/productCard/interaction'
 import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 
@@ -26,7 +26,11 @@ export default function ProductCard({ product }: { product: ProductInfoClient })
             />
           </div>
         </CardMedia>
-        <ProductCardHeader product={product} />
+        <CardHeader
+          sx={{ px: 1, py: 0 }}
+          title={product.productName}
+          subheader={<ProductCardPrice product={product} />}
+        />
         <CardContent>
           <Typography variant="body1" color="text.primary">
             {product.productIntro}

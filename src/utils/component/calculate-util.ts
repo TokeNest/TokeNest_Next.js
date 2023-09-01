@@ -8,7 +8,7 @@ import { TokenInfo } from '@/variables/interface/api/token-interface'
 export const setCalculateOptionPrice = (
   marketList: MarketInfo[],
   optionPrice: number,
-  tokenOption: TokenInfo | undefined,
+  tokenOption: TokenInfo | null,
   tokenRatio: number | null
 ) => {
   if (tokenOption) {
@@ -24,7 +24,8 @@ export const setCalculateOptionPrice = (
 
 export const getCurrentPrice = (
   optionGroups: ProductOptionGroupInfoClient[],
-  marketList: MarketInfo[]
+  marketList: MarketInfo[],
+  productPrice: number
 ) =>
   optionGroups.reduce((pre, optionGroup) => {
     const { productOptionGroupType, productOptions } = optionGroup
@@ -55,7 +56,7 @@ export const getCurrentPrice = (
         )
     }
     return pre
-  }, 0)
+  }, productPrice)
 
 export const calculateTotalPrice = (
   productPrice: number,

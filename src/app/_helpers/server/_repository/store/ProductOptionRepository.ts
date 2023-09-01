@@ -33,7 +33,6 @@ const create = async (
   tokenInfo: TokenInfo | null
 ): Promise<string> => {
   const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
-  console.log(productOption)
   if (tokenInfo) {
     productOption.token = tokenInfo
   } else {
