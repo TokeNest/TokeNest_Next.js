@@ -29,7 +29,7 @@ export default function ProductCard({ product }: { product: ProductInfoClient })
         <ProductCardHeader product={product} />
         <CardContent>
           <Typography variant="body1" color="text.primary">
-            {product.productInfo}
+            {product.productIntro}
           </Typography>
         </CardContent>
       </ProductCardActionArea>

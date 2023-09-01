@@ -5,6 +5,13 @@ import { ReduxProvider } from '@/redux/provider'
 import { Container } from '@mui/material'
 import Web3Provider from '@/web3/Web3Provider'
 
+export const metadata = {
+  title: 'TokeИest',
+  description: 'TokeИest',
+  icons: {
+    icon: '/icon.svg',
+  },
+}
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

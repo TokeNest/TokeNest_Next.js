@@ -5,6 +5,10 @@ import KioskOrderBadge from '@/app/kiosk/_components/KioskOrderBadge'
 import ProductsProvider from '@/app/kiosk/products-provider'
 import KioskDrawer from '@/app/kiosk/_components/drawer/KioskDrawer'
 
+export const metadata = {
+  title: 'TokeИest | Kiosk',
+  description: 'Kiosk',
+}
 export default function KioskLayout({
   children,
   drawer,
