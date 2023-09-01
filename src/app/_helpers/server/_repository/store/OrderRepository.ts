@@ -18,7 +18,7 @@ const optionProjection = {
 }
 
 const getAll = async (): Promise<any> => //Promise<(Omit<OrderInfo, never> & {})[]>
-  await Order.find({ deletedDate: null }, orderProjection)
+  Order.find({ deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
       populate: [
