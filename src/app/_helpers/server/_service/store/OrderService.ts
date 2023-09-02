@@ -41,27 +41,26 @@ const validateParams = async (params: OrderInfoCreate): Promise<void> => {
     return Promise.reject('Store Not Found')
     // throw 'Store Not Found'
   }
+  const productOptions: string[] = []
   await Promise.all(
     params.orderOptions.map(async (orderOption) => {
       if (!(await productRepository.getById(orderOption.product))) {
         console.log('없음')
-        // return Promise.reject('Product Not Found')
-        throw 'Product Not Found'
-      } else {
-        console.log('exists')
+        return Promise.reject('Product Not Found')
+        // throw 'Product Not Found'
       }
       console.log('before promise all')
       orderOption.productOptions.map(async (productOption) => {
-        console.log('ㅁㄽㄷㄱㅁㅇㄴㄻㄴㅇㄻ promise all')
-        console.log(await productOptionRepository.getById(productOption))
-        if (!(await productOptionRepository.getById(productOption))) {
-          console.log('없음')
-          // return Promise.reject('ProductOption Not Found')
-          throw 'ProductOption Not Found'
-        } else {
-          console.log('있음')
-        }
+        productOptions.push(productOption)
       })
+    })
+  )
+
+  await Promise.all(
+    productOptions.map(async (productOption) => {
+      if (!(await productOptionRepository.getById(productOption))) {
+        return Promise.reject('ProductOption Not Found')
+      }
     })
   )
   console.log('finish')
