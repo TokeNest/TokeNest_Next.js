@@ -4,6 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import SvgIcon from '@mui/material/SvgIcon'
+import Web3HealthChecker from '@/app/_components/interaction'
 
 const pages = [{ text: 'KIOSK', href: '/kiosk' }]
 export default function AppHeader() {
@@ -12,9 +13,7 @@ export default function AppHeader() {
       position="fixed"
       sx={{ bgcolor: 'primary.light', zIndex: 1000, height: '4rem', alignItems: 'center' }}
     >
-      <Toolbar
-        sx={{ width: '75rem', flexGrow: 1, display: 'flex', justifyContent: 'space-around' }}
-      >
+      <Toolbar sx={{ width: 1, display: 'flex', justifyContent: 'space-around' }}>
         <TokeNestLogo />
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           <Link href="/" style={{ textDecorationLine: 'none', color: 'white' }}>
@@ -23,11 +22,12 @@ export default function AppHeader() {
         </Typography>
         {pages.map(({ text, href }, i) => (
           <Link href={href} key={i} style={{ textDecorationLine: 'none' }}>
-            <Typography fontWeight="bold" sx={{ my: 2, color: 'white', display: 'block' }}>
+            <Typography noWrap fontWeight="bold" sx={{ px: 3, color: 'white', display: 'block' }}>
               {text}
             </Typography>
           </Link>
         ))}
+        <Web3HealthChecker />
       </Toolbar>
     </AppBar>
   )
