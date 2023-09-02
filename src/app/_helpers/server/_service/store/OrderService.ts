@@ -7,14 +7,8 @@ import { productOptionRepository } from '@/app/_helpers/server/_repository/store
 
 const createOrder = async (params: OrderInfoCreate): Promise<string> => {
   // parameter validate check
-  try {
-    await validateParams(params)
-    console.log('validate function finish')
-  } catch (error) {
-    console.log(error)
-  }
+  await validateParams(params)
 
-  console.log('validate finish')
   const optionIds: string[] = []
 
   await Promise.all(
@@ -28,7 +22,6 @@ const createOrder = async (params: OrderInfoCreate): Promise<string> => {
       await orderRepository.addOrderOptions(id, optionId)
     })
   )
-  console.log('return id')
   return id
 }
 
@@ -45,7 +38,6 @@ const validateParams = async (params: OrderInfoCreate): Promise<void> => {
   await Promise.all(
     params.orderOptions.map(async (orderOption) => {
       if (!(await productRepository.getById(orderOption.product))) {
-        console.log('없음')
         return Promise.reject('Product Not Found')
         // throw 'Product Not Found'
       }
@@ -63,7 +55,6 @@ const validateParams = async (params: OrderInfoCreate): Promise<void> => {
       }
     })
   )
-  console.log('finish')
 }
 
 export const orderService = {
