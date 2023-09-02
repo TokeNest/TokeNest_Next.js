@@ -1,5 +1,5 @@
 import { apiHandler } from '@/app/_helpers/server/api'
-import { tokenService } from '@/app/_helpers/server/_service/token/TokenService'
+import { tokenService } from '@/app/_helpers/server/_service/contract/TokenService'
 import joi from 'joi'
 
 async function create(req: Request) {
@@ -7,7 +7,7 @@ async function create(req: Request) {
 }
 
 create.schema = joi.object({
-  tokenSymbol: joi.string().required(),
+  tokenType: joi.string().required(),
   tokenAddress: joi.string().required(),
 })
 

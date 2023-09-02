@@ -4,7 +4,7 @@ import { productOptionRepository } from '@/app/_helpers/server/_repository/store
 import { ProductOptionInfoCreate } from '@/variables/interface/api/product-option-interface'
 import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
 import { ProductInfoCreate } from '@/variables/interface/api/product-interface'
-import { tokenRepository } from '@/app/_helpers/server/_repository/token/TokenRepository'
+import { tokenRepository } from '@/app/_helpers/server/_repository/contract/TokenRepository'
 import { productOptionService } from '@/app/_helpers/server/_service/store/productOptionService'
 
 const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo) => {

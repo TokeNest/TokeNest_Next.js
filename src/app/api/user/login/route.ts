@@ -5,7 +5,7 @@ import { userService } from '@/app/_helpers/server/_service/account/UserService'
 
 const login = async function (req: Request) {
   const { user, token } = await userService.authenticate(await req.json())
-  // return jwt token in http only cookie
+  // return jwt contract in http only cookie
   cookies().set('authorization', token, { httpOnly: true })
   return user._id
 }

@@ -28,7 +28,7 @@ const authenticate = async ({
   } else if (!bcrypt.compareSync(userPassword, user.userPasswordHash)) {
     throw 'password incorrect'
   }
-  // create jwt token that is valid for 7 days
+  // create jwt contract that is valid for 7 days
   const token = jwt.sign({ sub: user._id }, process.env.jwtSecret!, {
     expiresIn: '7d',
   })
