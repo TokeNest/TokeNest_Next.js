@@ -3,3 +3,9 @@ export interface ParamsInputId {
     id: string
   }
 }
+
+export interface ParamsInputAddress {
+  params: {
+    address: string
+  }
+}

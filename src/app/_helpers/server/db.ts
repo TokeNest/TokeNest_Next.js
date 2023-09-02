@@ -6,11 +6,37 @@ const Schema = mongoose.Schema
 mongoose.connect(process.env.mongodbUrl!)
 mongoose.Promise = global.Promise
 
+const contractModel = () => {
+  const contractSchema = new Schema(
+    {
+      contractType: {
+        type: String,
+        required: true,
+        enum: ['router', 'factory'],
+      },
+      contractAddress: { type: String, required: true },
+      deletedDate: { type: Date, default: null },
+    },
+    {
+      timestamps: {
+        createdAt: 'createdDate',
+      },
+    }
+  )
+  return mongoose.models.Contract || mongoose.model('Contract', contractSchema)
+}
+
 const tokenModel = () => {
   const tokenSchema = new Schema(
     {
-      tokenSymbol: { type: String, required: true },
+      tokenType: {
+        type: String,
+        required: true,
+        enum: ['pair', 'token'],
+      },
       tokenAddress: { type: String, required: true },
+      tokenDecimals: { type: Number, required: true },
+      deletedDate: { type: Date, default: null },
     },
     {
       timestamps: {
@@ -343,6 +369,7 @@ function orderOptionModel() {
 
 export const db = {
   Token: tokenModel(),
+  Contract: contractModel(),
   File: fileModel(),
   Product: productModel(),
   User: userModel(),

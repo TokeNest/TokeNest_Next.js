@@ -1,5 +1,5 @@
 export interface TokenInfo {
-  tokenSymbol: string
+  tokenType: string
   tokenAddress: string
   tokenDecimals: number
 }

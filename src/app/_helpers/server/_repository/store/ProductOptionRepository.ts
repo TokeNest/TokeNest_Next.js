@@ -40,6 +40,8 @@ const create = async (
   const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
   if (tokenInfo) {
     productOption.token = tokenInfo
+  } else {
+    productOption.token = null
   }
   await productOption.save!()
 
