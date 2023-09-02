@@ -41,7 +41,6 @@ const validateParams = async (params: OrderInfoCreate): Promise<void> => {
         return Promise.reject('Product Not Found')
         // throw 'Product Not Found'
       }
-      console.log('before promise all')
       orderOption.productOptions.map(async (productOption) => {
         productOptions.push(productOption)
       })
