@@ -17,8 +17,8 @@ const optionProjection = {
   productOptionPrice: true,
 }
 
-const getAll = async (): Promise<any> => //Promise<(Omit<OrderInfo, never> & {})[]>
-  await Order.find({ deletedDate: null }, orderProjection)
+const getAll = async (): Promise<(Omit<Omit<OrderInfo, never> & {}, never> & {})[]> =>
+  Order.find({ deletedDate: null }, orderProjection)
     .populate({
       path: 'orderOptions',
       populate: [
@@ -72,34 +72,23 @@ const create = async (params: OrderInfoCreate): Promise<string> => {
   return order._id
 }
 
-const update = async (id: string, params: any): Promise<void> => {
+const updateStatus = async (id: string, orderStatus: string): Promise<String> => {
   const order = await Order.findById(id)
   if (!order) {
     throw 'Order Not Found'
   }
-
-  Object.assign(order, params)
-
-  await order.save()
-}
-
-const updateStatus = async (id: string, params: any): Promise<void> => {
-  const order = await Order.findById(id)
-  if (!order) {
-    throw 'Order Not Found'
-  }
-  order.orderStatus = params.orderStatus
+  order.orderStatus = orderStatus
   return (await order.save())._id
 }
 
-const addOrderOptions = async (id: string, optionId: string): Promise<void> => {
+const addOrderOptions = async (id: string, optionId: string): Promise<String> => {
   const order = await Order.findById(id)
   if (!order) {
     throw 'Order Not Found'
   }
 
   order.orderOptions.push(optionId)
-  await order.save()
+  return (await order.save())._id
 }
 
 const _softDelete = async (id: string): Promise<void> => {
@@ -109,7 +98,7 @@ const _softDelete = async (id: string): Promise<void> => {
   }
 
   order.deletedDate = new Date()
-  await order.save()
+  return (await order.save())._id
 }
 
 const _delete = async (id: string): Promise<void> => {
@@ -120,7 +109,6 @@ export const orderRepository = {
   getAll,
   getById,
   create,
-  update,
   addOrderOptions,
   updateStatus,
   softDelete: _softDelete,

@@ -18,14 +18,19 @@ const getAll = async (): Promise<(Omit<ProductOptionInfoClient, never> & {})[]> 
     })
     .exec()
 
-const getById = async (id: string): Promise<ProductOptionInfoClient> =>
-  ProductOption.findOne({ _id: id, deletedDate: null }, productOptionProjection)
+const getById = async (id: string): Promise<ProductOptionInfoClient> => {
+  const productOption = await ProductOption.findOne(
+    { _id: id, deletedDate: null },
+    productOptionProjection
+  )
     .populate({
       path: 'token',
       match: { deletedDate: { $eq: null } },
       select: tokenProjection,
     })
     .exec()
+  return productOption
+}
 
 const create = async (
   productOptionGroupInfo: ProductOptionGroupInfoCreate,
@@ -35,10 +40,9 @@ const create = async (
   const productOption: ProductOptionInfoCreate = new ProductOption(productOptionInfo)
   if (tokenInfo) {
     productOption.token = tokenInfo
-  } else {
-    productOption.token = null
   }
   await productOption.save!()
+
   productOptionGroupInfo.productOptions.push(productOption)
   return (await productOptionGroupInfo.save!())._id
 }
