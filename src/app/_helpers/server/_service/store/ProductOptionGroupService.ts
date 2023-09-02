@@ -21,7 +21,7 @@ const create = async (id: string, productOptionGroupInfo: ProductOptionGroupInfo
 
   for (const productOption of productOptionGroupInfo.productOptions) {
     let tokenInfo = null
-    if (productOption.token.tokenAddress) {
+    if (productOption.token) {
       tokenInfo = await tokenRepository.getByAddress(productOption.token.tokenAddress)
     }
     await productOptionRepository.create(
