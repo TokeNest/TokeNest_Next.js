@@ -3,28 +3,38 @@ import Card from '@mui/material/Card'
 import Grid from '@mui/material/Unstable_Grid2'
 import ProductCard from '@/app/kiosk/_components/productCard/ProductCard'
 import { nextFetcher } from '@/utils/component/api-fetcher-util'
-import { ProductInfoClient } from '@/variables/interface/api/product-interface'
-import ProductListProvide from '@/app/kiosk/_components/ProductListProvide'
+import CategoryTabContext from '@/app/kiosk/_components/category/CategoryTabContext'
+import { CategoryInfoClient } from '@/variables/interface/api/category-interface'
+import { CardContent } from '@mui/material'
+import CategoryProvider from '@/app/kiosk/_components/category/CategoryProvider'
+import CategoryTabPanel from '@/app/kiosk/_components/category/CategoryTabPanel'
 
-const getCategoryList = async (): Promise<ProductInfoClient[]> => {
-  const storeId = '64edd8182040a028b03823c4'
-  const data = await nextFetcher(`product/store/${storeId}`, { cache: 'no-store' })
+const storeId = '64f33895bab8fbcc6cdf194d'
+const getCategoryList = async (): Promise<CategoryInfoClient[]> => {
+  const data = await nextFetcher(`kiosk/${storeId}`, { cache: 'no-store' })
   return data.body
 }
 
 export default async function KioskPage() {
-  const products = await getCategoryList()
+  const categories = await getCategoryList()
   return (
-    <Card sx={{ height: 1, bgcolor: 'primary.light', borderRadius: 2 }}>
-      <ProductListProvide products={products}>
-        <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4}>
-          {products.map((product) => (
-            <Grid xs={3} key={product.id}>
-              <ProductCard product={product} />
-            </Grid>
+    <Card sx={{ height: 1, bgcolor: 'primary.light', borderRadius: 4 }}>
+      <CategoryProvider>
+        <CategoryTabContext categories={categories.map(({ category }) => category)} />
+        <CardContent sx={{ px: 4 }}>
+          {categories.map(({ products }, categoryIndex) => (
+            <CategoryTabPanel index={categoryIndex} key={categoryIndex}>
+              <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4} key={categoryIndex}>
+                {products.map((product) => (
+                  <Grid xs={3} key={product.id}>
+                    <ProductCard product={product} />
+                  </Grid>
+                ))}
+              </Grid>
+            </CategoryTabPanel>
           ))}
-        </Grid>
-      </ProductListProvide>
+        </CardContent>
+      </CategoryProvider>
     </Card>
   )
 }

@@ -11,7 +11,7 @@ export default function AppHeader() {
   return (
     <AppBar
       position="fixed"
-      sx={{ bgcolor: 'primary.light', zIndex: 1000, height: '4rem', alignItems: 'center' }}
+      sx={{ bgcolor: 'primary.main', zIndex: 1000, height: '4rem', alignItems: 'center' }}
     >
       <Toolbar sx={{ width: 1, display: 'flex', justifyContent: 'space-around' }}>
         <TokeNestLogo />
