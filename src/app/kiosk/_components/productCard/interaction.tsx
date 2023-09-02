@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography'
 import { Transition } from 'react-transition-group'
 import ArrowDropUpSharpIcon from '@mui/icons-material/ArrowDropUpSharp'
 import ArrowDropDownSharpIcon from '@mui/icons-material/ArrowDropDownSharp'
+import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
 
 export function ProductCardActionArea({
   children,
@@ -32,16 +33,22 @@ export function ProductCardActionArea({
     setDrawerIsOpen(true)
   }
   return (
-    <CardActionArea onClick={clickEvent} onDragStart={(e) => e.preventDefault()}>
+    <CardActionArea
+      sx={{ height: 1, width: 1 }}
+      onClick={clickEvent}
+      onDragStart={(e) => e.preventDefault()}
+    >
       {children}
     </CardActionArea>
   )
 }
 
 export function ProductCardPrice({
-  product: { productPrice, productOptionGroups },
+  productPrice,
+  productOptionGroups,
 }: {
-  product: ProductInfoClient
+  productPrice: number
+  productOptionGroups: ProductOptionGroupInfoClient[]
 }) {
   const marketList = useAppSelector(({ marketReducer }) => marketReducer.marketList)
   const currentPrice = getCurrentPrice(productOptionGroups, marketList, productPrice)
@@ -64,9 +71,9 @@ export function ProductCardPrice({
         enter: 1500,
         exit: 1500,
       }}
-      onEnter={() => setColor('green')}
+      onEnter={() => setColor(increase ? 'green' : 'red')}
       onEntered={() => setColor('black')}
-      onExit={() => setColor('red')}
+      onExit={() => setColor(increase ? 'green' : 'red')}
       onExited={() => setColor('black')}
     >
       {(_) => (
