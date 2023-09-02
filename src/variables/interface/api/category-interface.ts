@@ -1,20 +1,11 @@
-import { FileInfo } from '@/variables/interface/api/file-interface'
-import { ProductOptionGroupInfo } from '@/variables/interface/api/product-option-group-interface'
+import { ProductInfo, ProductInfoClient } from '@/variables/interface/api/product-interface'
 
 export interface CategoryInfo {
   category: string
-  products: ProductInfoWithCategory[]
-}
-
-export interface ProductInfoWithCategory {
-  productName: string
-  productIntro: string
-  productInfo: string
-  productPrice: number
-  file: FileInfo
-  productOptionGroups: ProductOptionGroupInfo[]
+  products: ProductInfo[]
 }
 
 export interface CategoryInfoClient extends CategoryInfo {
   id: string
+  products: ProductInfoClient[]
 }

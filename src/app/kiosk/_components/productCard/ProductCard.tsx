@@ -33,13 +33,13 @@ function ProductImage({ file }: { file: FileInfo }) {
   const [src, alt] = file ? [file.filePath, file.fileName] : [cuteMockCat.src, 'not found image']
   return (
     <CardMedia sx={{ p: 1, height: 200 }}>
-      <Box sx={{ borderRadius: 3, position: 'relative', width: 1, height: 1 }}>
+      <Box sx={{ position: 'relative', width: 1, height: 1 }}>
         <Image
           fill
           src={src}
           alt={alt}
           sizes="(max-width: 200px) 100vw"
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: 'cover', borderRadius: '6px' }}
         />
       </Box>
     </CardMedia>

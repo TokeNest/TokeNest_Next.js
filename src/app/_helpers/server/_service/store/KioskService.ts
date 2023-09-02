@@ -1,4 +1,4 @@
-import { CategoryInfo } from '@/variables/interface/api/categori-interface'
+import { CategoryInfo } from '@/variables/interface/api/category-interface'
 import { productRepository } from '@/app/_helpers/server/_repository/store/ProductRepository'
 
 const getProductList = async (id: string) => {

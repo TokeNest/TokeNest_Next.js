@@ -11,7 +11,6 @@ const getProductInfo = async (productId: string): Promise<ProductInfoClient> => 
   return data.body
 }
 
-const productInfoHeight = 400
 export default async function KioskDrawerOrder({
   params: { productId },
 }: {
@@ -20,8 +19,8 @@ export default async function KioskDrawerOrder({
   const product = await getProductInfo(productId)
   return (
     <CardContent sx={{ height: 8 / 10 }}>
-      <OrderDetailInfo product={product} productInfoHeight={productInfoHeight} />
-      <Paper elevation={0} sx={{ height: `calc(100% - ${productInfoHeight}px)`, overflow: 'auto' }}>
+      <OrderDetailInfo product={product} />
+      <Paper elevation={0} sx={{ height: `calc(100% - 400px)`, overflow: 'auto' }}>
         <OrderOptionGroups product={product} />
       </Paper>
     </CardContent>
