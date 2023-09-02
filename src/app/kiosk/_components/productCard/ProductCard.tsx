@@ -13,7 +13,7 @@ import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 export default function ProductCard({ product }: { product: ProductInfoClient }) {
   const fileUrl = product.file === null ? '' : product.file?.filePath
   return (
-    <Card sx={{ borderRadius: 3, p: 0 }}>
+    <Card sx={{ borderRadius: 3, p: 0, height: 340 }}>
       <ProductCardActionArea product={product}>
         <CardMedia sx={{ p: 1, height: 200 }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
