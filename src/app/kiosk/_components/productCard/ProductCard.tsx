@@ -13,7 +13,7 @@ import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 export default function ProductCard({ product }: { product: ProductInfoClient }) {
   const fileUrl = product.file === null ? '' : product.file?.filePath
   return (
-    <Card sx={{ borderRadius: 3, p: 0, height: 340 }}>
+    <Card sx={{ borderRadius: 3, p: 0, width: 200, height: 350 }}>
       <ProductCardActionArea product={product}>
         <CardMedia sx={{ p: 1, height: 200 }}>
           <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
@@ -28,11 +28,12 @@ export default function ProductCard({ product }: { product: ProductInfoClient })
         </CardMedia>
         <CardHeader
           sx={{ px: 1, py: 0 }}
+          titleTypographyProps={{ width: 184, noWrap: true }}
           title={product.productName}
           subheader={<ProductCardPrice product={product} />}
         />
         <CardContent>
-          <Typography variant="body1" color="text.primary">
+          <Typography variant="body1" color="text.primary" sx={{ height: 48, overflow: 'hidden' }}>
             {product.productIntro}
           </Typography>
         </CardContent>
