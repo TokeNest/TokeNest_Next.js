@@ -22,7 +22,7 @@ export default function AppHeader() {
         </Typography>
         {pages.map(({ text, href }, i) => (
           <Link href={href} key={i} style={{ textDecorationLine: 'none' }}>
-            <Typography noWrap fontWeight="bold" sx={{ px: 3, color: 'white', display: 'block' }}>
+            <Typography noWrap variant="button" sx={{ px: 3, color: 'white', display: 'block' }}>
               {text}
             </Typography>
           </Link>

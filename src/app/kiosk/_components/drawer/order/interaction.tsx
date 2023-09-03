@@ -45,13 +45,13 @@ export function QuantityButtonGroup() {
   return (
     <>
       <Button startIcon={<AddIcon />} onClick={() => handleQuantity(true)}>
-        더하기
+        <Typography fontWeight="bold">더하기</Typography>
       </Button>
       <Button disableRipple sx={{ px: 4 }}>
-        {productQuantity}
+        <Typography fontWeight="bold">{productQuantity}</Typography>
       </Button>
       <Button endIcon={<RemoveIcon />} onClick={() => handleQuantity(false)}>
-        빼기
+        <Typography fontWeight="bold">빼기</Typography>
       </Button>
     </>
   )

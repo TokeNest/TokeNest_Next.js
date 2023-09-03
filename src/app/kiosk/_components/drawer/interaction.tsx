@@ -51,9 +51,11 @@ export function KioskFooterCardActions() {
         variant={isOrder ? 'outlined' : 'contained'}
         size="large"
         color="primary"
-        sx={{ width: 1, height: 1 }}
+        sx={{ width: 1, height: 1, '& .MuiButton-outlined': {} }}
       >
-        {isOrder ? '장바구니 담기' : '결제하기'}
+        <Typography letterSpacing={6} variant="h5" fontWeight={700}>
+          {isOrder ? '장바구니 담기' : '결제하기'}
+        </Typography>
       </Button>
     </CardActions>
   )
@@ -71,6 +73,8 @@ export function KioskHeaderBackButton({ children }: { children: React.ReactNode 
 export function KioskHeaderTypography() {
   const pathname = usePathname()
   return (
-    <Typography variant="h4">{pathname.includes('order') ? '주문 옵션' : '장바구니'}</Typography>
+    <Typography fontWeight={700} variant="h4">
+      {pathname.includes('order') ? '주문 옵션' : '장바구니'}
+    </Typography>
   )
 }

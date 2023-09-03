@@ -24,9 +24,9 @@ export default function KioskOrderBadge() {
     <SpeedDial
       ariaLabel="SpeedDial controlled open example"
       sx={{ position: 'fixed', left: 16, bottom: 16 }}
-      FabProps={{ sx: { width: 84, height: 84 } }}
+      FabProps={{ sx: { width: 84, height: 84 }, color: 'secondary' }}
       icon={
-        <Badge badgeContent={basket.length} color="secondary" overlap="circular">
+        <Badge badgeContent={basket.length} color="primary" overlap="circular">
           <ShoppingCartIcon sx={{ fontSize: 36 }} />
         </Badge>
       }

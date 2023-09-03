@@ -99,14 +99,14 @@ export function QuantityButtonGroup({ orderProductIndex }: { orderProductIndex: 
   return (
     <>
       <Button startIcon={<AddIcon />} sx={{ height: 1 / 2 }} onClick={() => handleQuantity(true)}>
-        더하기
+        <Typography fontWeight="bold">더하기</Typography>
       </Button>
       <Button
         startIcon={<RemoveIcon />}
         sx={{ height: 1 / 2 }}
         onClick={() => handleQuantity(false)}
       >
-        빼기
+        <Typography fontWeight="bold">더하기</Typography>
       </Button>
     </>
   )
