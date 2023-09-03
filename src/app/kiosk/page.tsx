@@ -24,9 +24,22 @@ export default async function KioskPage() {
         <CardContent sx={{ px: 4 }}>
           {categories.map(({ products }, categoryIndex) => (
             <CategoryTabPanel index={categoryIndex} key={categoryIndex}>
-              <Grid sx={{ p: 2, flexGrow: 1 }} container spacing={4} key={categoryIndex}>
+              <Grid
+                spacing={4}
+                sx={{ p: 2, flexGrow: 1 }}
+                container
+                columns={{ xs: 4, sm: 8, md: 12 }}
+                key={categoryIndex}
+              >
                 {products.map((product) => (
-                  <Grid xs={3} key={product.id}>
+                  <Grid
+                    xs={2}
+                    sm={4}
+                    md={4}
+                    key={product.id}
+                    display="flex"
+                    justifyContent="center"
+                  >
                     <ProductCard product={product} />
                   </Grid>
                 ))}

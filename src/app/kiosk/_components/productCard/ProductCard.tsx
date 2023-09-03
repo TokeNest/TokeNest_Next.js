@@ -15,7 +15,7 @@ import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-
 
 export default function ProductCard({ product }: { product: ProductInfoClient }) {
   return (
-    <Card sx={{ borderRadius: 3, p: 0, width: 200, height: 350 }}>
+    <Card sx={{ borderRadius: 3, p: 0, width: 200, height: 350, justifyContent: 'center' }}>
       <ProductCardActionArea product={product}>
         <ProductImage file={product.file} />
         <ProductInformation

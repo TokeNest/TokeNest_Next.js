@@ -18,7 +18,11 @@ export default function Web3HealthChecker() {
       }}
       avatar={<Avatar src={klaytnLogo.src} />}
       color="secondary"
-      label={<Typography variant="button">BlockHeight | {blockHeight}</Typography>}
+      label={
+        <Typography variant="button">
+          BlockHeight | {Number(blockHeight) ? blockHeight : 'Not Connect'}
+        </Typography>
+      }
     />
   )
 }
