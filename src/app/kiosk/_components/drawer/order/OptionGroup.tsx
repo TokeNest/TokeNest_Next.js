@@ -6,6 +6,7 @@ import { Tab, Tabs } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { setOrderProductOptionIds } from '@/redux/slice/order-product-slice'
 import { ProductOptionGroupInfoClient } from '@/variables/interface/api/product-option-group-interface'
+import Typography from '@mui/material/Typography'
 
 export function RadioOptionGroup({
   optionGroup: { productOptions, id: optionGroupId },
@@ -25,9 +26,14 @@ export function RadioOptionGroup({
   )
 
   return (
-    <Tabs value={tabValue} onChange={handleChange} centered>
+    <Tabs value={tabValue} onChange={handleChange} centered variant="fullWidth">
       {productOptions.map(({ productOptionName, id }) => (
-        <Tab key={id} value={id} label={productOptionName} sx={{ flexGrow: 1 }} />
+        <Tab
+          key={id}
+          value={id}
+          label={<Typography fontWeight="bold">{productOptionName}</Typography>}
+          sx={{ flexGrow: 1 }}
+        />
       ))}
     </Tabs>
   )

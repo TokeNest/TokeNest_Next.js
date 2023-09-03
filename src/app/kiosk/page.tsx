@@ -18,7 +18,7 @@ const getCategoryList = async (): Promise<CategoryInfoClient[]> => {
 export default async function KioskPage() {
   const categories = await getCategoryList()
   return (
-    <Card sx={{ height: 1, bgcolor: 'primary.light', borderRadius: 4 }}>
+    <Card sx={{ height: 1, bgcolor: 'primary.main', borderRadius: 4 }}>
       <CategoryProvider>
         <CategoryTabContext categories={categories.map(({ category }) => category)} />
         <CardContent sx={{ px: 4 }}>
