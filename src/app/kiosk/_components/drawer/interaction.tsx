@@ -44,7 +44,6 @@ export function KioskFooterCardActions() {
     dispatch(isOrder ? addCartBasket(orderProduct) : clearCartBasket())
     setDrawerIsOpen(false)
   }
-
   return (
     <CardActions sx={{ height: 1 / 10 }} onClick={handleCartBasket}>
       <Button

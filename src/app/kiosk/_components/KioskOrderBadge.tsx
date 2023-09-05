@@ -16,8 +16,7 @@ export default function KioskOrderBadge() {
     reason: CloseReason | OpenReason
   ) => {
     if (reason === 'toggle') {
-      router.push(`kiosk/cart`)
-      setDrawerIsOpen(true)
+      router.push(`kiosk/cart`, { scroll: false })
     }
   }
   return (

@@ -29,8 +29,7 @@ export function ProductCardActionArea({
   const { setDrawerIsOpen } = useDrawerContext()
   const clickEvent = () => {
     dispatch(setOrderProduct(convertOrderProduct(product)))
-    router.push(`kiosk/order/${product.id}`)
-    setDrawerIsOpen(true)
+    router.push(`kiosk/order/${product.id}`, { scroll: false })
   }
   return (
     <CardActionArea
