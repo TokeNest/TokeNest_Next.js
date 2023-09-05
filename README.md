@@ -4,15 +4,19 @@ TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://g
 # Install
 
 > clone git
-```cmd
-git clone https://github.com/TokeNest/TokeNest_Next.js
+```
+$ git clone https://github.com/TokeNest/TokeNest_Next.js.git
 ```
 
-> run docker-compose
-```cmd
-docker-compose up
+> run docker-compose.yml
+```
+$ docker-compose up --build
 ```
 
+> run 
+```
+$ yarn run dev
+```
 
 # Documentation
 
