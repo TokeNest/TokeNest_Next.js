@@ -30,7 +30,7 @@ $ yarn run dev
 
 > Open Project
 
-설치가 완료된 후 브라우저에서 http://localhost:3000에 접속하시면 TokeИest를 사용하실 수 있습니다.
+설치가 완료된 후 브라우저에서 [http://localhost:3000](http://localhost:3000)에 접속하시면 TokeИest를 사용하실 수 있습니다.
 
 # Documentation
 
