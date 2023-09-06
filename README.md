@@ -1,14 +1,16 @@
 # TokeИest
 TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://github.com/TokeNest)를 참고해주세요.
 
-## TokeИest - Front
-We used the Material UI with Next.js App Router to create TokeNest
+## TokeИest - Frontend
+Frontend를 구현하기 위해 Next.js App Router와 Material UI를 사용하여 제작하였습니다.
 
-## TokeИest - Back
-We created the TokeNest backend using Next.js and MongoDB<br>
-Click [here](./docs) for more API information
+## TokeИest - Backend
+Backend를 구현하기 위해 Next.js와 MongoDB를 사용하여 제작하였습니다.<br>
+[이곳](./docs)을 클릭하시면 Backend에서 사용하는 Api의 자세한 정보들을 확인할 수 있습니다.
 
 # Install
+TokeИest를 실행하기 위해선 먼저 프로젝트를 다운해야 합니다.<br>
+아래의 과정을 따라 설치를 진행하시면 됩니다.
 
 > clone git repository
 ```
@@ -28,7 +30,7 @@ $ yarn run dev
 
 > Open Project
 
-Open http://localhost:3000 with your browser to use TokeИest.
+설치가 완료된 후 브라우저에서 http://localhost:3000에 접속하시면 TokeИest를 사용하실 수 있습니다.
 
 # Documentation
 
