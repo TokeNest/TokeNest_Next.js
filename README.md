@@ -1,15 +1,15 @@
 # TokeИest
 TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://github.com/TokeNest)를 참고해주세요.
 
-## TokeNest - Front
-blablabla
+## TokeИest - Front
+TokeИest use Material UI to make Next.js App Router
 
-## TokeNest - Back
-blablabla
+## TokeИest - Back
+Click [here](https://github.com/TokeNest/TokeNest_Next.js) for more API information
 
 # Install
 
-> clone git
+> clone git repository
 ```
 $ git clone https://github.com/TokeNest/TokeNest_Next.js.git
 ```
@@ -19,10 +19,15 @@ $ git clone https://github.com/TokeNest/TokeNest_Next.js.git
 $ docker-compose up --build
 ```
 
-> run 
+> install dependencies and run 
 ```
+$ yarn
 $ yarn run dev
 ```
+
+> Open Project
+
+Open http://localhost:3000 with your browser to see the result.
 
 # Documentation
 
