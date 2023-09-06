@@ -5,7 +5,7 @@ TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://g
 TokeИest use Material UI to make Next.js App Router
 
 ## TokeИest - Back
-Click [here](https://github.com/TokeNest/TokeNest_Next.js) for more API information
+Click [here](./docs) for more API information
 
 # Install
 
