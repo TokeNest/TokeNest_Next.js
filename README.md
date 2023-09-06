@@ -2,9 +2,10 @@
 TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://github.com/TokeNest)를 참고해주세요.
 
 ## TokeИest - Front
-TokeИest use Material UI to make Next.js App Router
+We used the Material UI with Next.js App Router to create TokeNest
 
 ## TokeИest - Back
+We created the TokeNest backend using Next.js and MongoDB<br>
 Click [here](./docs) for more API information
 
 # Install
