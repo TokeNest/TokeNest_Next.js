@@ -1,4 +1,4 @@
-# TokeИest
+# ♦️TokeИest♦️
 이 프로젝트는 [Create Next App](https://github.com/vercel/next.js)으로 부트스트랩되었습니다.
 
 TokeИest 프로젝트의 자세한 내용은 [TokeИest Organization](https://github.com/TokeNest)를 참고해주세요.
