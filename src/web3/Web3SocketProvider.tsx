@@ -21,7 +21,7 @@ export const Web3SocketContext = createContext<Web3SocketContextType>({
 
 export default function Web3SocketProvider({ children }: { children: React.ReactNode }) {
   const web3 = useMemo(
-    () => new Web3(new Web3.providers.WebsocketProvider(process.env.klaytnTestnet as string)),
+    () => new Web3(new Web3.providers.WebsocketProvider(process.env.rpcUrl as string)),
     []
   )
   const dexFactoryContract = useMemo(

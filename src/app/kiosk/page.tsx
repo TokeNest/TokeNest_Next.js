@@ -9,7 +9,7 @@ import { CardContent } from '@mui/material'
 import CategoryProvider from '@/app/kiosk/_components/category/CategoryProvider'
 import CategoryTabPanel from '@/app/kiosk/_components/category/CategoryTabPanel'
 
-const storeId = '64f33895bab8fbcc6cdf194d'
+const storeId = process.env.storeId as string
 const getCategoryList = async (): Promise<CategoryInfoClient[]> => {
   const data = await nextFetcher(`kiosk/${storeId}`, { cache: 'no-store' })
   return data.body

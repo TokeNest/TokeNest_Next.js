@@ -6,8 +6,8 @@ import { ProductInfoClient } from '@/variables/interface/api/product-interface'
 import { nextFetcher } from '@/utils/component/api-fetcher-util'
 import CartList from '@/app/kiosk/@drawer/cart/_components/CartList'
 
+const storeId = process.env.storeId as string
 const getCategoryList = async (): Promise<ProductInfoClient[]> => {
-  const storeId = '64edd8182040a028b03823c4'
   const data = await nextFetcher(`product/store/${storeId}`, { cache: 'no-store' })
   return data.body
 }

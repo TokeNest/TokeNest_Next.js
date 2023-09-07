@@ -14,10 +14,11 @@ const nextConfig = {
     infuraKey: process.env.INFURA_KEY,
     alchemyKey: process.env.ALCHEMY_KEY,
     walletConnectProjectId: process.env.WALLET_CONNECT_PROJECT_ID,
-    klaytnTestnet: process.env.BAOBAB_TESTNET_RPC_URL,
+    rpcUrl: process.env.RPC_URL,
     apiBaseUrl: process.env.API_BASE_URL,
     mongodbUrl: process.env.MONGODB_URL,
     jwtSecret: process.env.JWT_SECRET,
+    storeId: process.env.STORE_ID,
   },
 }
 
