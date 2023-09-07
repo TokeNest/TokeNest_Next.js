@@ -183,9 +183,73 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 > ```
 
 ## Product
+> GET | /api/product
+>> 모든 상품 조회
+
 ### [product_id]
+> GET | /api/product/[product_id]
+>> TODO
+
+> PUT | /api/product/[product_id]
+>> TODO
+> ```json
+> {
+>   "productName": 상품명,
+>   "productInfo": 상품정보,
+>   "productStatus": 상품상태,
+>   "productIntro": 상품한줄설명,
+>   "productPrice": 상품가격
+> }
+> ```
+
+> DELETE | /api/product/[product_id]
+>> TODO
+
+#### product option group
+> GET | /api/product/[product_id]/product-option
+>> TODO
+
+> POST | /api/product/[product_id]/product-option
+>> TODO
+> ```json
+> {
+>   "productOptionGroupName": 상품옵션그룹명,
+>   "productOptionGroupType": 상품선택방식,
+>   "productOptions": [{
+>           "productOptionName": 상품옵션명,
+>           "productOptionIsDefault": 상품디폴트여부,
+>           "productOptionPrice": 상품옵션가격,
+>           "tokenRatio": 토큰비율,
+>           "token": {
+>               "tokenAddress": 토큰주소
+>           }
+>   }]
+> }
+> ```
+
 ### product option group
+
+#### [productOptionGroup_id]
+> GET | /api/product/product-option-group/[productOptionGroup_id]
+>> TODO
+
+##### detail
+> GET | /api/product/product-option-group/[productOptionGroup_id]/detail
+>> TODO 
+
 ### [store_id]
+> POST | /api/product/store/[store_id]
+>> TODO
+> ```json
+> {
+>   "productName": 상품명,
+>   "productInfo": 상품정보,
+>   "productStatus": 상품상태,
+>   "productIntro": 상품한줄설명,
+>   "productPrice": 상품가격,
+>   "productCategory": 상품카테고리
+> }
+> ```
 
 ## Order
 > GET | /api/order
@@ -206,6 +270,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >   ]
 > }
 > ```
+
 ### [order_id]
 > GET | /api/order/[order_id]
 >> 주문ID를 사용하여 특정 주문 조회
