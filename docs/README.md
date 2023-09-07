@@ -4,11 +4,10 @@ API를 직접 실행시키려면 [이곳](https://www.postman.com/tokenestpostma
 TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNest)을 참고해주세요.
 
 # API Information
+
 ## User
 > GET | /api/user
 >> 모든 유저 조회
-
-
 
 ### [user_id]
 > GET | /api/user/[user_id]
@@ -38,10 +37,71 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 > ```
 
 ### address
+
+#### [address_id]
+> GET | /api/user/address/[address_id]
+>> TODO
+
+> PUT | /api/user/address/[address_id]
+>> TODO
+> ```json
+> {
+>   "addressName": 주소별명,
+>   "roadAddress": 도로명주소,
+>   "addressDetail": 상세주소
+> }
+> ```
+
+> DELETE | /api/user/address/[address_id]
+>> TODO
+
+#### user
+
+##### [user_id]
+> GET | /api/user/address/user/[user_id]
+>> TODO
+
+> POST | /api/user/address/user/[user_id]
+>> TODO
+> ```json
+> {
+>   "addressName": 주소별명,
+>   "roadAddress": 도로명주소,
+>   "addressDetail": 상세주소
+> }
+> ```
+
 ### current
+> GET | /api/user/current
+>> TODO
+
 ### login
+> POST | /api/user/login
+>> TODO
+> ```json
+> {
+>   "userWalletAddress": 이더리움지갑주소,
+>   "userPassword": 비밀번호
+> }
+> ```
+
 ### logout
+> POST | /api/user/logout
+>> TODO
+
 ### register
+> POST | /api/user/register
+>> TODO
+> ```json
+> {
+>   "userName": 유저명,
+>   "userPassword": 비밀번호,
+>   "userPhone": 전화번호,
+>   "userEmail": 이메일,
+>   "userWalletAddress": 이더리움지갑주소,
+>   "userAccountType": 유저권한
+> }
+> ```
 
 ## File
 ### [file_id]
