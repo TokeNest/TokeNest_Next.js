@@ -56,7 +56,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 유저ID를 사용하여 특정 유저 조회
 
 > PUT | /api/user/[user_id]
->> 유저ID를 사용하여 특정 유저 조회
+>> 유저ID를 사용하여 특정 유저 정보 수정
 > ```json
 > {
 >   "userName": 유저명,
@@ -115,11 +115,12 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### current
 > GET | /api/user/current
->> 헤더 데이터를 사용하여 특정 유저 조회
+>> 현재 로그인한 회원의 정보 조회
 
 ### login
 > POST | /api/user/login
->> 이더리움지갑주소와 비밀번호를 사용하여 로그인
+>> Klaytn 지갑 주소와 비밀번호를 사용하여 로그인<br>
+>> TokeNset는 현재 Klaytn의 테스트넷인 baobab에서 동작합니다.
 > ```json
 > {
 >   "userWalletAddress": 이더리움지갑주소,
@@ -133,7 +134,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### register
 > POST | /api/user/register
->> 유저 생성
+>> 회원가입
 > ```json
 > {
 >   "userName": 유저명,
@@ -157,13 +158,13 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### [file_id]
 > GET | /api/file/download/[file_id]
->> 파일ID를 사용하여 특정 파일 조회
+>> 파일ID를 사용하여 특정 파일 다운로드
 
 #### product
 
 ##### [product_id]
 > GET | /api/file/download/product/[product_id]
->> 상품ID를 사용하여 특정 파일 조회
+>> 상품ID를 사용하여 특정 파일 다운로드
 
 ### product
 
@@ -172,11 +173,11 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 상품ID를 사용하여 특정 파일 조회
 
 > POST | /api/file/product/[product_id]
->> 상품ID와 이미지 파일을 사용하여 파일 생성
+>> 상품ID와 이미지 파일을 사용하여 파일 업로드
 
 |Key|Value|
 |---|---|
-|file|사진파일|
+|file|사진파일(FormData)|
 
 
 ## Store
@@ -328,7 +329,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 ## Kiosk
 ### [store_id]
 > GET | /api/kiosk/[store_id]
->> 매장ID를 사용하여 상품 목록 조회
+>> 매장ID를 사용하여 카테고리별 상품 목록 조회
 
 ## Contract
 > GET | /api/contract
@@ -338,7 +339,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 컨트랙트 생성
 > ```json
 > {
->   "contractType": 컨트랙트종류
+>   "contractType": 컨트랙트종류 (router | factory)
 >   "contractAddress": 컨트랙트주소
 > }
 > ```
@@ -351,7 +352,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 토큰 생성
 > ```json
 > {
->   "tokenType": 토큰종류,
+>   "tokenType": 토큰종류 (pair | token),
 >   "tokenAddress": 토큰주소,
 >   "tokenDecimals": 토큰
 > }
