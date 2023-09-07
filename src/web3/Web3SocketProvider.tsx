@@ -19,11 +19,9 @@ export const Web3SocketContext = createContext<Web3SocketContextType>({
   setBlockHeight: () => {},
 })
 
+const rpcUrl = process.env.rpcUrl ?? 'wss://public-en-baobab.klaytn.net/ws'
 export default function Web3SocketProvider({ children }: { children: React.ReactNode }) {
-  const web3 = useMemo(
-    () => new Web3(new Web3.providers.WebsocketProvider(process.env.rpcUrl as string)),
-    []
-  )
+  const web3 = useMemo(() => new Web3(new Web3.providers.WebsocketProvider(rpcUrl)), [])
   const dexFactoryContract = useMemo(
     () =>
       new web3.eth.Contract(factoryAbi, DEX_CONTRACT.FACTORY) as unknown as FactoryContractContext,
