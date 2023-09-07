@@ -5,6 +5,13 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 # API Information
 
+- [User](#user)
+    - [user_id](#user_id)
+        - [password](#password)
+    - [address](#address)
+        - [address_id](#address_id)
+        - [user](#user_address)
+        
 ## User
 > GET | /api/user
 >> 모든 유저 조회
@@ -55,7 +62,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 > DELETE | /api/user/address/[address_id]
 >> 주소ID를 사용하여 주소 삭제
 
-#### user
+#### user_address
 
 ##### [user_id]
 > GET | /api/user/address/user/[user_id]
