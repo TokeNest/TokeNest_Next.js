@@ -29,7 +29,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### password
 > PUT | /api/user/[user_id]/password
->> 유저ID를 사용하여 특정 유저 비밀번호 변경
+>> 유저ID를 사용하여 특정 유저 비밀번호 수정
 > ```json
 > {
 >   "userPassword": 비밀번호
@@ -40,10 +40,10 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### [address_id]
 > GET | /api/user/address/[address_id]
->> TODO
+>> 주소ID를 사용하여 주소 조회
 
 > PUT | /api/user/address/[address_id]
->> TODO
+>> 주소ID를 사용하여 주소 정보 수정
 > ```json
 > {
 >   "addressName": 주소별명,
@@ -53,16 +53,16 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 > ```
 
 > DELETE | /api/user/address/[address_id]
->> TODO
+>> 주소ID를 사용하여 주소 삭제
 
 #### user
 
 ##### [user_id]
 > GET | /api/user/address/user/[user_id]
->> TODO
+>> 유저ID를 사용하여 주소 조회
 
 > POST | /api/user/address/user/[user_id]
->> TODO
+>> 유저ID를 사용하여 주소 생성
 > ```json
 > {
 >   "addressName": 주소별명,
@@ -73,11 +73,11 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### current
 > GET | /api/user/current
->> TODO
+>> 헤더 데이터를 사용하여 특정 유저 조회
 
 ### login
 > POST | /api/user/login
->> TODO
+>> 이더리움지갑주소와 비밀번호를 사용하여 로그인
 > ```json
 > {
 >   "userWalletAddress": 이더리움지갑주소,
@@ -87,11 +87,11 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### logout
 > POST | /api/user/logout
->> TODO
+>> 로그아웃
 
 ### register
 > POST | /api/user/register
->> TODO
+>> 유저 생성
 > ```json
 > {
 >   "userName": 유저명,
@@ -106,31 +106,31 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 ## File
 ### [file_id]
 > GET | /api/file/[file_id]
->> TODO
+>> 파일ID를 사용하여 특정 파일 조회
 
 > DELETE | /api/file/[file_id]
->> TODO
+>> 파일ID를 사용하여 특정 파일 삭제
 
 ### download
 
 #### [file_id]
 > GET | /api/file/download/[file_id]
->> TODO
+>> 파일ID를 사용하여 특정 파일 조회
 
 #### product
 
 ##### [product_id]
 > GET | /api/file/download/product/[product_id]
->> TODO
+>> 상품ID를 사용하여 특정 파일 조회
 
 ### product
 
 #### [product_id]
 > GET | /api/file/product/[product_id]
->> TODO
+>> 상품ID를 사용하여 특정 파일 조회
 
 > POST | /api/file/product/[product_id]
->> TODO
+>> 상품ID와 이미지 파일을 사용하여 파일 생성
 
 |Key|Value|
 |---|---|
@@ -146,7 +146,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 매장ID를 사용하여 특정 매장 조회
 
 > PUT | /api/store/[store_id]
->> 매장ID를 사용하여 특정 매장 정보 변경
+>> 매장ID를 사용하여 특정 매장 정보 수정
 > ```json
 > {
 >   "storeName": 매장명,
@@ -166,10 +166,10 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### [user_id]
 > GET | /api/store/user/[user_id]
->> TODO
+>> 유저ID를 사용하여 특정 매장 조회
 
 > POST | /api/store/user/[user_id]
->> TODO
+>> 유저ID를 사용하여 매장 생성
 > ```json
 > {
 >   "storeName": 매장명,
@@ -188,10 +188,10 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### [product_id]
 > GET | /api/product/[product_id]
->> TODO
+>> 상품ID를 사용하여 특정 상품 조회
 
 > PUT | /api/product/[product_id]
->> TODO
+>> 상품ID를 사용하여 특정 상품 정보 수정
 > ```json
 > {
 >   "productName": 상품명,
@@ -203,14 +203,14 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 > ```
 
 > DELETE | /api/product/[product_id]
->> TODO
+>> 상품ID를 사용하여 특정 상품 삭제
 
 #### product option group
 > GET | /api/product/[product_id]/product-option
->> TODO
+>> 상품ID를 사용하여 상품 옵션 그룹 조회
 
 > POST | /api/product/[product_id]/product-option
->> TODO
+>> 상품ID를 사용하여 상품 옵션 그룹 생성
 > ```json
 > {
 >   "productOptionGroupName": 상품옵션그룹명,
@@ -231,15 +231,15 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### [productOptionGroup_id]
 > GET | /api/product/product-option-group/[productOptionGroup_id]
->> TODO
+>> 상품옵션그룹ID를 사용하여 특정 상품 옵션 그룹 조회
 
 ##### detail
 > GET | /api/product/product-option-group/[productOptionGroup_id]/detail
->> TODO 
+>> 상품옵션그룹ID를 사용하여 상품 옵션 조회
 
 ### [store_id]
 > POST | /api/product/store/[store_id]
->> TODO
+>> 매장ID를 사용하여 상품 생성
 > ```json
 > {
 >   "productName": 상품명,
@@ -276,7 +276,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 >> 주문ID를 사용하여 특정 주문 조회
 
 > PUT | /api/order/[order_id]
->> 주문ID를 사용하여 특정 주문 상태 변경
+>> 주문ID를 사용하여 특정 주문 상태 수정
 > ```json
 > {
 >   "orderStatus": 결제상태
@@ -290,10 +290,10 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ## Contract
 > GET | /api/contract
->> TODO
+>> 모든 컨트랙트 조회
 
 > POST | /api/contract
->> TODO
+>> 컨트랙트 생성
 > ```json
 > {
 >   "contractType": 컨트랙트종류
@@ -303,10 +303,10 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### token
 > GET | /api/contract/token
->> TODO
+>> 모든 토큰 조회
 
 > POST | /api/contract/token
->> TODO
+>> 토큰 생성
 > ```json
 > {
 >   "tokenType": 토큰종류,
@@ -317,23 +317,23 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 #### [token_id]
 > GET | /api/contract/token/[token_id]
->> TODO
+>> 토큰ID를 사용하여 특정 토큰 조회
 
 > DELETE | /api/contract/token/[token_id]
->> TODO
+>>  토큰ID를 사용하여 특정 토큰 삭제
 
 #### address
 > GET | /api/contract/token/address/[token_address]
->> TODO
+>> 토큰주소를 사용하여 특정 토큰 조회
 
 ### [contract_id]
 > GET | /api/contract/[contract_id]
->> TODO
+>> 컨트랙트ID를 사용하여 특정 컨트랙트 조회
 
 > DELETE | /api/contract/[contract_id]
->> TODO
+>> 컨트랙트ID를 사용하여 특정 컨트랙트 삭제
 
 ### address
 #### [address]
 > GET | /api/contract/address/[address]
->> TODO
+>> 주소를 사용하여 특정 컨트랙트 조회
