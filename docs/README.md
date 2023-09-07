@@ -164,6 +164,24 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ### user
 
+#### [user_id]
+> GET | /api/store/user/[user_id]
+>> TODO
+
+> POST | /api/store/user/[user_id]
+>> TODO
+> ```json
+> {
+>   "storeName": 매장명,
+>   "storeTel": 매장전화번호,
+>   "storeEmail": 매장이메일,
+>   "storeCategory": 매장종류,
+>   "storeOffDay": 매장휴일,
+>   "storeOpenCloseTime": 매장오픈및마감시간,
+>   "storeStatus": 매장상태
+> }
+> ```
+
 ## Product
 ### [product_id]
 ### product option group
