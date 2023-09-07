@@ -5,7 +5,38 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 # API Information
 ## User
+> GET | /api/user
+>> 모든 유저 조회
+
+
+
 ### [user_id]
+> GET | /api/user/[user_id]
+>> 유저ID를 사용하여 특정 유저 조회
+
+> PUT | /api/user/[user_id]
+>> 유저ID를 사용하여 특정 유저 조회
+> ```json
+> {
+>   "userName": 유저명,
+>   "userPhone": 전화번호,
+>   "userEmail": 이메일,
+>   "userAccountType": 사용자권한
+> }
+> ```
+
+> DELETE | /api/user/[user_id]
+>> 유저ID를 사용하여 특정 유저 삭제
+
+#### password
+> PUT | /api/user/[user_id]/password
+>> 유저ID를 사용하여 특정 유저 비밀번호 변경
+> ```json
+> {
+>   "userPassword": 비밀번호
+> }
+> ```
+
 ### address
 ### current
 ### login
@@ -27,14 +58,14 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 > PUT | /api/store/[store_id]
 >> 매장ID를 사용하여 특정 매장 정보 변경
-> ```
+> ```json
 > {
 >   "storeName": 매장명,
 >   "storeTel": 매장전화번호
 >   "storeEmail": 매장이메일,
 >   "storeCategory": 매장종류,
->   "storeOffDay": 휴일,
->   "storeOpenCloseTime": 매장오픈및닫는시간,
+>   "storeOffDay": 매장휴일,
+>   "storeOpenCloseTime": 매장오픈및마감시간,
 >   "storeStatus": 매장상태
 > }
 > ```
@@ -55,8 +86,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 > POST | /api/order
 >> 주문 생성
-> ```
-> example request body
+> ```json
 > {
 >   "orderNum": 주문번호,
 >   "store": 매장ID,
@@ -75,8 +105,7 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 > PUT | /api/order/[order_id]
 >> 주문ID를 사용하여 특정 주문 상태 변경
-> ```
-> example request body
+> ```json
 > {
 >   "orderStatus": 결제상태
 > }
