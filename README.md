@@ -35,7 +35,7 @@ $ yarn run dev
 설치가 완료된 후 브라우저에서 [http://localhost:3000](http://localhost:3000)에 접속하시면 TokeИest를 사용하실 수 있습니다.
 
 [TokeNest Postman](https://www.postman.com/tokenestpostman/workspace/team-workspace/overview)의 Betch파일을 실행시켜 Mock값을 디비에 저장할 수 있습니다.
-- 다만 uploadFile의 경우 local 파일을 기준으로 동작하므로, Postman 저장 폴더에 각 상품의 파일을 넣고 form-data로 이미지 등록 후 API를 호출해야 합니다.
+- Postman에서 API를 호출할 때 uploadFile은 local 파일을 기준으로 동작하므로, Postman 저장 폴더에 각 상품의 파일을 넣고 form-data로 이미지 등록 후 API를 호출해야 합니다.
 
 이후 SmartContract에서 트랜잭션을 통해 토큰의 가격을 변동시키면 웹 단에 반영되는 것을 확인할 수 있습니다.
 
