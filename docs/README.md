@@ -105,8 +105,37 @@ TokeИest 프로젝트의 자세한 내용은 [이곳](https://github.com/TokeNe
 
 ## File
 ### [file_id]
+> GET | /api/file/[file_id]
+>> TODO
+
+> DELETE | /api/file/[file_id]
+>> TODO
+
 ### download
+
+#### [file_id]
+> GET | /api/file/download/[file_id]
+>> TODO
+
+#### product
+
+##### [product_id]
+> GET | /api/file/download/product/[product_id]
+>> TODO
+
 ### product
+
+#### [product_id]
+> GET | /api/file/product/[product_id]
+>> TODO
+
+> POST | /api/file/product/[product_id]
+>> TODO
+
+|Key|Value|
+|---|---|
+|file|사진파일|
+
 
 ## Store
 > GET | /api/store
